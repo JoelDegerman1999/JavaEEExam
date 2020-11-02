@@ -24,14 +24,6 @@ public class ProductController {
     public String index(Model model) {
         List<Product> allProducts = productService.getAllProducts();
         model.addAttribute("products", allProducts);
-        model.addAttribute("emptyProduct", new Product());
         return "Index";
-    }
-
-    @PostMapping("/product/create")
-    public String createProduct(@ModelAttribute Product product, Model model) {
-        productService.createProduct(product);
-        model.addAttribute("products", productService.getAllProducts());
-        return "redirect:/";
     }
 }

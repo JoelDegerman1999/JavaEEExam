@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+</head>
+<body>
+<ul>
+        <p>Hello</p>
+    <li th:each="item : ${shoppingcart.getCartItems()}">
+        <p th:text="${item}"></p>
+    </li>
+</ul>
+</body>
+</html>
