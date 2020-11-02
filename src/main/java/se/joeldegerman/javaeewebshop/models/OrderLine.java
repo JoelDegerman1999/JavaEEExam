@@ -3,6 +3,7 @@ package se.joeldegerman.javaeewebshop.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -13,9 +14,10 @@ public class OrderLine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Order> orders;
 
     public OrderLine() {
+        orders = new ArrayList<>();
     }
 }

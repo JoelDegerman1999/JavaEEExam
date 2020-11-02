@@ -15,19 +15,29 @@ public class CartService {
         this.cart = cart;
     }
 
-    public void addToCart() {
-        Product p1 = new Product();
-        p1.setPrice(124);
-        p1.setName("Test");
-
+    public void addToCart(Product product) {
         CartItem cartItem = new CartItem();
-        cartItem.setProduct(p1);
-        cartItem.setQuantity(2);
+        cartItem.setProduct(product);
         cart.addCartItem(cartItem);
+    }
+
+    public void removeFromCart(Product product) {
+        CartItem cartItem = new CartItem();
+        cartItem.setProduct(product);
+        cart.deleteCartItem(cartItem);
     }
 
     public CartViewModel getCart() {
         return new CartViewModel(cart.getCartItems(), cart.getGrandTotal());
+    }
+
+    public int getCartSize() {
+        return cart.getCartItems().size();
+    }
+
+    public void clearCart() {
+        cart.clearCart();
+        cart.setGrandTotal(0);
     }
 
 }

@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
-
+@import "cart.css";
 
 * {
   font-family: 'DM Sans', sans-serif;
   margin: 0;
   padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 
 li {
@@ -16,8 +21,13 @@ body {
 }
 
 header {
-  text-align: center;
+  padding: 0 3rem;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
 }
+
+
 
 .container {
   margin: 0 auto;
@@ -39,9 +49,11 @@ header {
         background-color: #c6c6c6;
         border-top-right-radius: 5px;
         border-top-left-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         .product-logo {
           width: 100%;
-          height: 100%;
         }
       }
       .product-body {

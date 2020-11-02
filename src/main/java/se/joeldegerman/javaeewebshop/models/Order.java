@@ -15,6 +15,7 @@ public class Order {
     @OneToOne
     private Product product;
     private int quantity;
+    private double total;
 
     public Order() {
     }

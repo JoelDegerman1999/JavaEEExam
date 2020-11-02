@@ -3,13 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Cart</title>
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+          integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 </head>
 <body>
-<ul>
-        <p>Hello</p>
-    <li th:each="item : ${shoppingcart.getCartItems()}">
-        <p th:text="${item}"></p>
-    </li>
-</ul>
+<section class="container">
+    <div class="go-back">
+        <a href="/">Go Back</a>
+    </div>
+    <div class="cart">
+        <article th:each="item : ${cart.getCartItems()}" class="cart-row">
+            <img src="" th:src="${item.product.getImgUrl()}" alt="" class="cart-logo">
+            <p style="display: none" th:text="${item.product.id}" class="cart-product-id"></p>
+            <div class="cart-row-name">
+                <h3 th:text="${item.product.name}"></h3>
+            </div>
+            <h5 th:text="${item.quantity}"></h5>
+            <p th:text="${item.totalPrice} + ' SEK'"></p>
+            <i class="fas fa-trash trash" th:onclick="'deleteRow('+${item.product.id}+')'"></i>
+        </article>
+    </div>
+    <div class="total">
+        <h2 th:text="'Totalt : ' + ${cart.getGrandTotal()} + ' SEK'"></h2>
+    </div>
+    <div class="checkout">
+        <form action="" th:action="@{/cart/checkout}" method="post">
+            <button type="submit" class="checkout-button">Checkout</button>
+        </form>
+    </div>
+
+</section>
+<script src="" th:src="@{js/main.js}"></script>
 </body>
 </html>

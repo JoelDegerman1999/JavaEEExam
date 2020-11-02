@@ -2,24 +2,43 @@ package se.joeldegerman.javaeewebshop.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import se.joeldegerman.javaeewebshop.models.Cart;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import se.joeldegerman.javaeewebshop.models.Product;
+import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
 import se.joeldegerman.javaeewebshop.services.CartService;
+
+import java.nio.file.Path;
+import java.util.Optional;
 
 @Controller
 public class CartController {
 
     private CartService service;
+    private ProductRepository productRepository;
 
-    public CartController(CartService service) {
+    public CartController(CartService service, ProductRepository productRepository) {
         this.service = service;
+        this.productRepository = productRepository;
     }
 
     @GetMapping("/cart")
     public String showCart(Model model) {
-        service.addToCart();
-        System.out.println(service.getCart());
-        model.addAttribute("shoppingcart", service.getCart());
+        model.addAttribute("cart", service.getCart());
         return "Cart";
     }
+
+    @PostMapping("/cart/add/{id}")
+    public String addProductToCart(@PathVariable(name = "id") long productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        if (product.isPresent()) {
+            service.addToCart(product.get());
+        }
+        return "redirect:/cart";
+    }
+
+
+
 }
