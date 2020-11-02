@@ -3,20 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link rel="stylesheet" th:href="@{css/style.css}">
 </head>
 <body>
-<h1>Index page</h1>
-<ul>
-    <li th:each="product : ${products}">
-        <p th:text="${product.getName()}"></p>
-    </li>
-</ul>
+<header>
+    <h1>Joel's Webshop</h1>
+</header>
+<section class="container">
+    <div class="product-card-row">
 
-<h1>Form</h1>
-<form action="#" th:action="@{/product/create}" th:object="${emptyProduct}" method="post">
-    <p>Name: <input type="text" th:field="${emptyProduct.name}"/></p>
-    <p>Price: <input type="text" th:field="*{price}"/></p>
-    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
-</form>
+        <article class="product-card" th:each="product : ${products}">
+            <section class="product-header">
+                <img th:src="${product.imgUrl}" src="" class="product-logo" alt=""/>
+            </section>
+            <div class="product-body">
+                <div class="product-info">
+                    <p th:text="${product.name}"></p>
+                    <p th:text="${product.price} + ' SEK'"></p>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </article>
+
+    </div>
+</section>
 </body>
 </html>
