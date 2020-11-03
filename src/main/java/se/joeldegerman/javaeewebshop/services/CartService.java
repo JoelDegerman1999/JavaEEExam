@@ -3,7 +3,7 @@ package se.joeldegerman.javaeewebshop.services;
 import org.springframework.stereotype.Service;
 import se.joeldegerman.javaeewebshop.models.Cart;
 import se.joeldegerman.javaeewebshop.models.CartItem;
-import se.joeldegerman.javaeewebshop.models.CartViewModel;
+import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
 import se.joeldegerman.javaeewebshop.models.Product;
 
 @Service

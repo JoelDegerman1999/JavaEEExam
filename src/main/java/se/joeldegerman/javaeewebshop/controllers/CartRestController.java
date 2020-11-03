@@ -1,17 +1,12 @@
 package se.joeldegerman.javaeewebshop.controllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import se.joeldegerman.javaeewebshop.models.Cart;
-import se.joeldegerman.javaeewebshop.models.CartItem;
-import se.joeldegerman.javaeewebshop.models.CartViewModel;
+import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
 import se.joeldegerman.javaeewebshop.models.Product;
 import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
 import se.joeldegerman.javaeewebshop.services.CartService;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.Optional;
 
 @RestController

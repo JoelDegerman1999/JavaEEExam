@@ -1,6 +1,7 @@
-package se.joeldegerman.javaeewebshop.models;
+package se.joeldegerman.javaeewebshop.models.viewmodels;
 
 import lombok.Data;
+import se.joeldegerman.javaeewebshop.models.CartItem;
 
 import java.util.List;
 
