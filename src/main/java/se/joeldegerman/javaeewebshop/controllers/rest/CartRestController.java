@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("api")
 public class CartRestController {
     private CartService service;
     private ProductRepository productRepository;
@@ -19,11 +20,11 @@ public class CartRestController {
         this.productRepository = productRepository;
     }
 
-    @PostMapping("/api/cart/add")
+    @PostMapping("cart/add")
     public void addToCart() {
     }
 
-    @DeleteMapping("/cart/delete/{id}")
+    @DeleteMapping("cart/delete/{id}")
     public void deleteProductFromCart(@PathVariable(name = "id") long productId) {
         Optional<Product> product = productRepository.findById(productId);
         if(product.isPresent()) {
@@ -31,18 +32,33 @@ public class CartRestController {
         }
     }
 
-    @GetMapping("/api/cart/size")
+
+    @PutMapping("/cart/decrease/{id}")
+    public void decreaseItemQuantity(@PathVariable(name = "id") long productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        if(product.isPresent()) {
+            service.decreaseItemCount(product.get());
+        }
+    }
+    @PutMapping("/cart/increase/{id}")
+    public void increaseItemQuantity(@PathVariable(name = "id") long productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        if(product.isPresent()) {
+            service.increaseItemCount(product.get());
+        }
+    }
+    @GetMapping("/cart/size")
     public int getCartSize() {
         return service.getCartSize();
     }
 
 
-    @GetMapping("/api/cart")
+    @GetMapping("/cart")
     public CartViewModel getCart() {
         return service.getCartVM();
     }
 
-    @GetMapping("/api/session")
+    @GetMapping("/session")
     public String getSession(HttpSession session) {
         return session.getId();
     }

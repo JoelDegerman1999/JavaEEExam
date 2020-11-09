@@ -3,8 +3,8 @@ package se.joeldegerman.javaeewebshop.services;
 import org.springframework.stereotype.Service;
 import se.joeldegerman.javaeewebshop.models.Cart;
 import se.joeldegerman.javaeewebshop.models.CartItem;
-import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
 import se.joeldegerman.javaeewebshop.models.Product;
+import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
 
 @Service
 public class CartService {
@@ -25,6 +25,18 @@ public class CartService {
         CartItem cartItem = new CartItem();
         cartItem.setProduct(product);
         cart.deleteCartItem(cartItem);
+    }
+
+    public void decreaseItemCount(Product product) {
+        CartItem cartItem = new CartItem();
+        cartItem.setProduct(product);
+        cart.decreaseItemQuantity(cartItem);
+    }
+
+    public void increaseItemCount(Product product) {
+        CartItem cartItem = new CartItem();
+        cartItem.setProduct(product);
+        cart.increaseItemQuantity(cartItem);
     }
 
     public CartViewModel getCartVM() {

@@ -38,6 +38,33 @@ public class Cart {
         calculateGrandTotal();
     }
 
+    public void decreaseItemQuantity(CartItem item) {
+        if (cartItems.contains(item)) {
+            for (CartItem cartItem : cartItems) {
+                if (item.equals(cartItem)) {
+                    if (cartItem.getQuantity() == 1) {
+                        deleteCartItem(cartItem);
+                    }
+                    cartItem.decrementQuantity();
+                    cartItem.setTotalPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
+                }
+            }
+        }
+        calculateGrandTotal();
+    }
+
+    public void increaseItemQuantity(CartItem item) {
+        if (cartItems.contains(item)) {
+            for (CartItem cartItem : cartItems) {
+                if (item.equals(cartItem)) {
+                    cartItem.incrementQuantity();
+                    cartItem.setTotalPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
+                }
+            }
+        }
+        calculateGrandTotal();
+    }
+
     public void calculateGrandTotal() {
         grandTotal = 0;
         for (CartItem item : cartItems) {

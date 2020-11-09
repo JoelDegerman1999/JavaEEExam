@@ -20,7 +20,7 @@
                 <div class="cart-logo has-text-right">
                     <i class="fas fa-shopping-cart" id="shopping-cart"></i>
                 </div>
-                <div class="counter has-text-white" th:if="${cart.getCartSize() != 0}">
+                <div class="counter has-text-white">
                     <p th:text="${cart.getCartSize()}">(0)</p>
                 </div>
             </div>
@@ -28,24 +28,30 @@
 
     </div>
 </header>
-<section class="container">
-    <div class="product-card-row">
-        <article class="product-card" th:each="product : ${products}">
-            <section class="product-header">
-                <img th:src="${product.imgUrl}" src="" class="product-logo" alt=""/>
-            </section>
-            <div class="product-body">
-                <div class="product-info">
-                    <p th:text="${product.name}"></p>
-                    <p th:text="${product.price} + ' SEK'"></p>
-                </div>
-                <form action="#" th:action="@{'/cart/add/' + ${product.id}}" method="post">
-                    <button type="submit">Add to cart</button>
-                </form>
+<main>
+    <section class="container">
+        <div class="columns is-multiline">
+            <div class="column is-4" th:each="product : ${products}" th:object="${product}">
+                <article class="card">
+                    <div class="columns is-multiline has-text-centered is-vcentered is-centered">
+                        <div class="column is-12 my-6">
+                            <img src="" th:src="*{imgUrl}" alt="Item Image" style="max-height: 200px">
+                        </div>
+                        <div class="column is-5 mb-6 has-text-left">
+                            <p class="is-size-5 title text" th:text="*{name}"></p>
+                        </div>
+                        <div class="column is-5 mb-6 has-text-right">
+                            <p class="is-size-6 subtitle" th:text="${product.price} + ' SEK'"></p>
+                        </div>
+                    </div>
+                    <form th:action="@{'/cart/add/' + ${product.id}}" method="post">
+                        <button class="button">Add</button>
+                    </form>
+                </article>
             </div>
-        </article>
-    </div>
-</section>
+        </div>
+    </section>
+</main>
 
 <div id="cart-modal" class="modal">
     <div id="cart-modalbg" class="modal-background"></div>
@@ -68,7 +74,9 @@
                     <p th:text="${cartItem.product.name}"></p>
                 </div>
                 <div class="column has-text-centered">
+                    <p class="plus" th:data-productid="${cartItem.product.id}">+</p>
                     <p th:text="${cartItem.quantity}"></p>
+                    <p class="minus" th:data-productid="${cartItem.product.id}">-</p>
                 </div>
                 <div class="column has-text-centered">
                     <p th:text="${cartItem.totalPrice}"></p>
@@ -77,7 +85,7 @@
         </div>
         <div class="modal-card-foot">
             <form style="margin-left: auto" th:action="@{/order/checkout}" method="post">
-                <button  class="button is-primary">Place Order</button>
+                <button class="button is-primary">Place Order</button>
             </form>
             <button class="button">Close</button>
         </div>
