@@ -5,6 +5,7 @@
     <title>Home</title>
     <link rel="stylesheet" th:href="@{css/style.css}">
     <link rel="stylesheet" th:href="@{bulma/css/bulma.min.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
           integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 </head>
@@ -48,20 +49,37 @@
 
 <div id="cart-modal" class="modal">
     <div id="cart-modalbg" class="modal-background"></div>
-    <div class="modal-content">
-        <div class="columns is-vcentered" th:each="cartItem : ${cart.getCartItems()}">
-            <div class="column">
-                <img src="" alt="" th:src="${cartItem.product.imgUrl}">
+    <div class="modal-card">
+        <div class="modal-card-head">
+            <p class="modal-card-title">Cart</p>
+        </div>
+        <div class="modal-card-body p-6">
+            <div class="columns">
+                <div class="column"></div>
+                <div class="column has-text-centered">Namn</div>
+                <div class="column has-text-centered">Antal</div>
+                <div class="column has-text-centered">Pris</div>
             </div>
-            <div class="column">
-                <p th:text="${cartItem.product.name}"></p>
+            <div class="columns is-vcentered cart-item-row" th:each="cartItem : ${cart.getCartItems()}">
+                <div class="column is-flex is-justify-content-center">
+                    <img src="" alt="" th:src="${cartItem.product.imgUrl}" style="max-height: 70px">
+                </div>
+                <div class="column has-text-centered">
+                    <p th:text="${cartItem.product.name}"></p>
+                </div>
+                <div class="column has-text-centered">
+                    <p th:text="${cartItem.quantity}"></p>
+                </div>
+                <div class="column has-text-centered">
+                    <p th:text="${cartItem.totalPrice}"></p>
+                </div>
             </div>
-            <div class="column">
-                <p th:text="${cartItem.quantity}"></p>
-            </div>
-            <div class="column">
-                <p th:text="${cartItem.totalPrice}"></p>
-            </div>
+        </div>
+        <div class="modal-card-foot">
+            <form style="margin-left: auto" th:action="@{/order/checkout}" method="post">
+                <button  class="button is-primary">Place Order</button>
+            </form>
+            <button class="button">Close</button>
         </div>
     </div>
 </div>

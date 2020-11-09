@@ -9,11 +9,11 @@ import se.joeldegerman.javaeewebshop.models.OrderLine;
 import java.util.List;
 
 @Service
-public class OrderService {
+public class OrderLineService {
 
     private CartService cartService;
 
-    public OrderService(CartService cartService) {
+    public OrderLineService(CartService cartService) {
         this.cartService = cartService;
     }
 
@@ -29,6 +29,7 @@ public class OrderService {
                 order.setTotal(item.getTotalPrice());
                 orderLine.getOrders().add(order);
             }
+            orderLine.setGrandTotal(cart.getGrandTotal());
             cartService.clearCart();
             return orderLine;
         }

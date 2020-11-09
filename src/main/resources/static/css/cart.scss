@@ -1,11 +1,10 @@
 .cart {
   .cart-container {
-
     .counter {
       z-index: -1;
       position: relative;
       bottom: 22px;
-      left: 20px;
+      left: 4px;
       margin-left: auto;
       display: flex;
       justify-content: center;
@@ -17,4 +16,16 @@
       padding: 10px;
     }
   }
+}
+
+#shopping-cart {
+  cursor: pointer;
+  padding: 0 1rem;
+}
+
+.cart-item-row {
+  height: 9rem;
+}
+.cart-item-row:nth-child(even) {
+  background-color: #e3e3e3;
 }

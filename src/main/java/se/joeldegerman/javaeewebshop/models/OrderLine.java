@@ -17,6 +17,8 @@ public class OrderLine {
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Order> orders;
 
+    private int grandTotal;
+
     public OrderLine() {
         orders = new ArrayList<>();
     }
