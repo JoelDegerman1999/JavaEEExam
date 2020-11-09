@@ -1,27 +1,42 @@
-$(function () {
-    $.ajax({
-        url: "/api/cart/size",
-        type: 'GET',
-        success: function (size) {
-            if (size == 0) {
-                disableButton();
-            }
-        }
-    });
+// $(function () {
+//     $.ajax({
+//         url: "/api/cart/size",
+//         type: 'GET',
+//         success: function (size) {
+//             if (size === 0) {
+//                 disableButton();
+//             }
+//         }
+//     });
+//
+// })
+//
+// function deleteRow(id) {
+//     $.ajax({
+//         url: "cart/delete/" + id,
+//         type: 'DELETE',
+//         success: function () {
+//             location.reload()
+//         }
+//     });
+// }
+//
+// function deleteProduct(id) {
+//     console.log("hej")
+//     $.ajax({
+//         url: "/admin/delete/" + id,
+//         type: 'DELETE',
+//         success: function () {
+//             location.reload()
+//         }
+//     })
+// }
+//
+// function disableButton() {
+//     $("button.checkout-button").prop('disabled', true).addClass("checkout-button-disabled");
+// }
 
+/**
+ * ModalCart.html
+ */
 
-})
-
-function deleteRow(id) {
-    $.ajax({
-        url: "cart/delete/" + id,
-        type: 'DELETE',
-        success: function () {
-            location.reload()
-        }
-    });
-}
-
-function disableButton() {
-    $("button.checkout-button").prop('disabled', true).addClass("checkout-button-disabled");
-}

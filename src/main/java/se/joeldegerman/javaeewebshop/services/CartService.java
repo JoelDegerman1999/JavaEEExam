@@ -27,7 +27,7 @@ public class CartService {
         cart.deleteCartItem(cartItem);
     }
 
-    public CartViewModel getCart() {
+    public CartViewModel getCartVM() {
         return new CartViewModel(cart.getCartItems(), cart.getGrandTotal());
     }
 

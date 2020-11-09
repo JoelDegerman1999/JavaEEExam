@@ -14,4 +14,9 @@ public class CartViewModel {
         this.cartItems = cartItems;
         this.grandTotal = grandTotal;
     }
+
+    public int getCartSize() {
+        int size = cartItems.stream().mapToInt(CartItem::getQuantity).sum();
+        return size;
+    }
 }

@@ -10,9 +10,11 @@
 </head>
 <body>
 <section class="container">
-    <div class="go-back">
-        <a href="/">Go Back</a>
-    </div>
+    <a href="/">
+        <div class="go-back">
+            Go Back
+        </div>
+    </a>
     <div class="cart">
         <article th:each="item : ${cart.getCartItems()}" class="cart-row">
             <img src="" th:src="${item.product.getImgUrl()}" alt="" class="cart-logo">
@@ -35,6 +37,6 @@
     </div>
 
 </section>
-<script src="" th:src="@{js/main.js}"></script>
+<script src="" type="text/javascript" th:src="@{js/main.js}"></script>
 </body>
 </html>

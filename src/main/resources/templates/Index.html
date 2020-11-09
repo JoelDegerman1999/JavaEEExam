@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" th:href="@{css/style.css}">
+    <link rel="stylesheet" th:href="@{bulma/css/bulma.min.css}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
           integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 </head>
 <body>
 <header>
-    <h1>Joel's Webbshop</h1>
-        <a href="/cart">
-            <i class="fas fa-shopping-cart"></i>
-        </a>
+    <div class="columns is-centered py-4">
+        <div class="column is-6">
+            <h1>Joel's Webbshop</h1>
+        </div>
+        <div class="column is-6 cart">
+            <div class="cart-container">
+                <div class="cart-logo has-text-right">
+                    <i class="fas fa-shopping-cart" id="shopping-cart"></i>
+                </div>
+                <div class="counter has-text-white" th:if="${cart.getCartSize() != 0}">
+                    <p th:text="${cart.getCartSize()}">(0)</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </header>
 <section class="container">
     <div class="product-card-row">
@@ -30,8 +43,28 @@
                 </form>
             </div>
         </article>
-
     </div>
 </section>
+
+<div id="cart-modal" class="modal">
+    <div id="cart-modalbg" class="modal-background"></div>
+    <div class="modal-content">
+        <div class="columns is-vcentered" th:each="cartItem : ${cart.getCartItems()}">
+            <div class="column">
+                <img src="" alt="" th:src="${cartItem.product.imgUrl}">
+            </div>
+            <div class="column">
+                <p th:text="${cartItem.product.name}"></p>
+            </div>
+            <div class="column">
+                <p th:text="${cartItem.quantity}"></p>
+            </div>
+            <div class="column">
+                <p th:text="${cartItem.totalPrice}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{js/cart.js}"></script>
 </body>
 </html>

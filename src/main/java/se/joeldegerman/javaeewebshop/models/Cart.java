@@ -51,4 +51,8 @@ public class Cart {
         cartItems.clear();
     }
 
+    public int getCartSize() {
+        return cartItems.size();
+    }
+
 }

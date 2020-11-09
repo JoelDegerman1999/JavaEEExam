@@ -18,7 +18,7 @@ public class OrderService {
     }
 
     public OrderLine createOrderLine() {
-        CartViewModel cart = cartService.getCart();
+        CartViewModel cart = cartService.getCartVM();
         List<CartItem> cartItems = cart.getCartItems();
         if (cartItems.size() > 0) {
             OrderLine orderLine = new OrderLine();

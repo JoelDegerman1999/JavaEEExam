@@ -2,9 +2,43 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin</title>
+    <title>Admin - Product List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap/bootstrap.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
-$END$
+<section class="container">
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Date Created</th>
+            <th scope="col">Date Modifed</th>
+            <th scope="col">Actions</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <th scope="row" th:text="${product.id}"></th>
+            <th scope="row" th:text="${product.name}"></th>
+            <th scope="row" th:text="${product.price}"></th>
+            <th scope="row" th:text="${product.dateCreated}"></th>
+            <th scope="row" th:text="${product.dateModified}"></th>
+            <th scope="row" onclick="deleteProduct()">
+                <button class="btn btn-danger" th:onclick="'deleteProduct('+${product.id}+')'">Delete</button>
+                <a th:href="@{'/admin/update/' + ${product.id}}">
+                    <button class="btn btn-primary ml-2">Update</button>
+                </a>
+            </th>
+        </tr>
+        </tbody>
+    </table>
+</section>
+<script src="" th:src="@{../js/main.js}"></script>
 </body>
 </html>
