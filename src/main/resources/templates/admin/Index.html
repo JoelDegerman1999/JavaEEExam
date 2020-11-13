@@ -4,40 +4,45 @@
     <meta charset="UTF-8">
     <title>Admin - Product List</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap/bootstrap.js"></script>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/bulma/css/bulma.min.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+          integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 </head>
 
 <body>
+<nav th:replace="fragments/Navbar.html :: navbar"></nav>
 <section class="container">
-    <table class="table table-dark">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Date Created</th>
-            <th scope="col">Date Modifed</th>
-            <th scope="col">Actions</th>
-        </tr>
-
-        </thead>
-        <tbody>
-        <tr th:each="product : ${products}">
-            <th scope="row" th:text="${product.id}"></th>
-            <th scope="row" th:text="${product.name}"></th>
-            <th scope="row" th:text="${product.price}"></th>
-            <th scope="row" th:text="${product.dateCreated}"></th>
-            <th scope="row" th:text="${product.dateModified}"></th>
-            <th scope="row" onclick="deleteProduct()">
-                <button class="btn btn-danger" th:onclick="'deleteProduct('+${product.id}+')'">Delete</button>
-                <a th:href="@{'/admin/update/' + ${product.id}}">
-                    <button class="btn btn-primary ml-2">Update</button>
-                </a>
-            </th>
-        </tr>
-        </tbody>
-    </table>
+    <div class="columns is-centered">
+        <div class="column is-6-desktop">
+            <div class="box">
+                <table class="table is-center" style="margin: 0 auto">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tbody>
+                    <tr class="" th:each="product : ${products}" th:object="${product}">
+                        <th th:text="*{id}"></th>
+                        <td th:text="*{name}"></td>
+                        <td th:text="*{price}"></td>
+                        <td>
+                            <i class="fas fa-edit has-text-info"></i>
+                            <i class="fas fa-trash has-text-danger"></i>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </thead>
+                </table>
+                <div class="has-text-right">
+                    <a class="button is-primary mt-3" href="/admin/add/product">Add new product</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <script src="" th:src="@{../js/main.js}"></script>
 </body>

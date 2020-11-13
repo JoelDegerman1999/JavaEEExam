@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Sign up</title>
+    <title>Login</title>
     <link rel="stylesheet" th:href="@{css/style.css}">
     <link rel="stylesheet" th:href="@{bulma/css/bulma.min.css}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
@@ -16,21 +16,16 @@
             <section class="container">
                 <div class="columns is-centered">
                     <div class="column is-4-desktop">
-
-                        <form th:action="@{/signup}" th:object="${user}" method="post" class="box">
+                        <div class="subtitle has-text-centered p-4 has-text-danger" th:if="${param.error} != null">
+                            <p>Invalid email and/or password</p>
+                        </div>
+                        <form th:action="@{/login}" method="post" class="box">
                             <div class="field">
-                                <h2 class="subtitle">Sign up and start buying</h2>
+                                <h2 class="subtitle">Login and start buying</h2>
                             </div>
                             <div class="field">
                                 <p class="control has-icons-left">
-                                    <input type="text" class="input" th:field="*{fullName}" placeholder="Full name">
-                                    <span class="icon is-small is-left">
-                                        <i class="fas fa-user"></i>
-                                    </span>
-                                </p>
-                            </div><div class="field">
-                                <p class="control has-icons-left">
-                                    <input type="email" class="input" th:field="*{username}" placeholder="Email">
+                                    <input name="username" type="email" class="input" placeholder="Email">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-envelope"></i>
                                     </span>
@@ -38,23 +33,20 @@
                             </div>
                             <div class="field">
                                 <p class="control has-icons-left">
-                                    <input type="password" class="input" th:field="*{password}" placeholder="Password">
+                                    <input name="password" type="password" class="input" placeholder="Password">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-lock"></i>
                                     </span>
                                 </p>
                             </div>
-                            <div class="field">
+                            <div class="field ">
                                 <p class="control has-text-right">
                                     <button class="button is-success" type="submit">
-                                        Sign up
+                                        Login
                                     </button>
                                 </p>
                             </div>
                         </form>
-                        <div class="has-text-centered">
-                            <h1>Already have an account? <a href="/login">Login here</a></h1>
-                        </div>
                     </div>
                 </div>
             </section>

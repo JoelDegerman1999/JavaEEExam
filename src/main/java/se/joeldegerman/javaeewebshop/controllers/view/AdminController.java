@@ -1,10 +1,10 @@
 package se.joeldegerman.javaeewebshop.controllers.view;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+import se.joeldegerman.javaeewebshop.helpers.UserHelper;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.services.ProductService;
 
@@ -23,6 +23,8 @@ public class AdminController {
     public String showAdminIndex(Model model) {
         List<Product> allProducts = productService.getAllProducts();
         model.addAttribute("products", allProducts);
+        model.addAttribute("nameofuser", UserHelper.getUsernameFromLoggedInUser(SecurityContextHolder.getContext()));
+        model.addAttribute("isAdmin", UserHelper.checkIfUserIsAdmin(SecurityContextHolder.getContext()));
         return "/admin/Index";
     }
 
@@ -39,4 +41,9 @@ public class AdminController {
         return "redirect:/admin/index";
     }
 
+    @GetMapping("/admin/add/product")
+    public String productForm(Model model) {
+        model.addAttribute("product", new Product());
+        return "admin/CreateProduct";
+    }
 }

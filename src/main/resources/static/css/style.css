@@ -21,4 +21,8 @@ button {
   text-overflow: ellipsis;
 }
 
+.fas {
+  cursor: pointer;
+}
+
 /*# sourceMappingURL=style.css.map */

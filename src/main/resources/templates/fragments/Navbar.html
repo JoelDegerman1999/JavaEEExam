@@ -11,6 +11,7 @@
 <nav th:fragment="navbar" class="navbar" role="navigation" aria-label="main navigation">
     <!--/*@thymesVar id="cart" type="se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel"*/-->
     <!--/*@thymesVar id="nameofuser" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="isAdmin" type="java.lang.Boolean"*/-->
 
 
     <div id="navbarBasicExample" class="navbar-menu">
@@ -38,9 +39,12 @@
                         Log in
                     </a>
                 </div>
-                <div class="buttons" th:if="${nameofuser}">
-                    <p th:text="${nameofuser}"></p>
-                    <a class="button is-light ml-3" href="/logout">
+                    <p class="mr-3" th:if="${nameofuser}" th:text="${nameofuser}"></p>
+                <div class="buttons" >
+                    <a href="/admin/index" class="button is-light is-dark" th:if="${isAdmin}">
+                        Admin
+                    </a>
+                    <a class="button is-light" href="/logout">
                         Logout
                     </a>
                 </div>
