@@ -1,7 +1,7 @@
 package se.joeldegerman.javaeewebshop.services;
 
 import org.springframework.stereotype.Service;
-import se.joeldegerman.javaeewebshop.models.Product;
+import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
 
 import java.time.LocalDateTime;

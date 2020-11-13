@@ -1,7 +1,7 @@
 package se.joeldegerman.javaeewebshop.controllers.rest;
 
 import org.springframework.web.bind.annotation.*;
-import se.joeldegerman.javaeewebshop.models.Product;
+import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
 
 import java.util.List;

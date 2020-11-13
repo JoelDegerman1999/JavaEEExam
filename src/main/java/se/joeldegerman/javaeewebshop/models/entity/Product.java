@@ -1,4 +1,4 @@
-package se.joeldegerman.javaeewebshop.models;
+package se.joeldegerman.javaeewebshop.models.entity;
 
 import lombok.AccessLevel;
 import lombok.Data;

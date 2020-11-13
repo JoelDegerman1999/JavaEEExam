@@ -1,6 +1,7 @@
-package se.joeldegerman.javaeewebshop.models;
+package se.joeldegerman.javaeewebshop.models.entity;
 
 import lombok.Data;
+import se.joeldegerman.javaeewebshop.models.entity.Order;
 
 import javax.persistence.*;
 import java.util.ArrayList;

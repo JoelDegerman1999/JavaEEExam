@@ -4,39 +4,45 @@
     <meta charset="UTF-8">
     <title>Cart</title>
     <link rel="stylesheet" th:href="@{css/style.css}">
+    <link rel="stylesheet" th:href="@{bulma/css/bulma.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
           integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 </head>
 <body>
-<section class="container">
-    <a href="/">
-        <div class="go-back">
-            Go Back
-        </div>
-    </a>
-    <div class="cart">
-        <article th:each="item : ${cart.getCartItems()}" class="cart-row">
-            <img src="" th:src="${item.product.getImgUrl()}" alt="" class="cart-logo">
-            <p style="display: none" th:text="${item.product.id}" class="cart-product-id"></p>
-            <div class="cart-row-name">
-                <h3 th:text="${item.product.name}"></h3>
+<nav th:replace="fragments/Navbar.html :: navbar(cart = ${cart})"></nav>
+<section class="container py-6" th:if="${cart.cartSize > 0}">
+    <div class="card p-5" style="max-width: 50rem; margin: 0 auto">
+        <div class="columns has-text-centered" style="border-bottom: 1px dotted rgba(0,0,0,.2)">
+            <div class="column is-flex is-align-items-center is-justify-content-space-around">
+                <p>Bild</p>
+                <p>Namn</p>
             </div>
-            <h5 th:text="${item.quantity}"></h5>
-            <p th:text="${item.totalPrice} + ' SEK'"></p>
-            <i class="fas fa-trash trash" th:onclick="'deleteRow('+${item.product.id}+')'"></i>
-        </article>
+            <div class="column">Antal</div>
+            <div class="column">Pris</div>
+        </div>
+        <div class="columns is-vcentered has-text-centered" th:each="item : ${cart.getCartItems()}" th:object="${item}">
+            <div class="column is-flex is-align-items-center is-justify-content-space-around">
+                <img src="" th:src="*{product.imgUrl}" alt="Product image" style="height: 50px">
+                <p th:text="*{product.name}"></p>
+            </div>
+            <div class="column">
+                <p class="plus" th:data-productid="*{product.id}">+</p>
+                <p th:text="*{quantity}"></p>
+                <p class="minus" th:data-productid="*{product.id}">-</p>
+            </div>
+            <div class="column">
+                <p th:text="*{price}"></p>
+            </div>
+        </div>
     </div>
-    <div class="total">
-        <h2 th:text="'Totalt : ' + ${cart.getGrandTotal()} + ' SEK'"></h2>
-    </div>
-    <div class="checkout">
+    <div class="has-text-right pt-3" style="max-width: 50rem; margin: 0 auto">
         <form action="" th:action="@{/cart/checkout}" method="post">
-            <button type="submit" class="checkout-button">Checkout</button>
+            <button type="submit" class="button is-primary">Checkout</button>
         </form>
     </div>
-
 </section>
-<script src="" type="text/javascript" th:src="@{js/main.js}"></script>
+    <div th:unless="${cart.cartSize > 0}" class="is-flex is-align-items-center is-justify-content-center">No items added to Cart</div>
+<script src="" type="text/javascript" th:src="@{js/cart.js}"></script>
 </body>
 </html>

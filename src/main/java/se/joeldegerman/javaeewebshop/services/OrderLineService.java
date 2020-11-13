@@ -3,8 +3,8 @@ package se.joeldegerman.javaeewebshop.services;
 import org.springframework.stereotype.Service;
 import se.joeldegerman.javaeewebshop.models.CartItem;
 import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
-import se.joeldegerman.javaeewebshop.models.Order;
-import se.joeldegerman.javaeewebshop.models.OrderLine;
+import se.joeldegerman.javaeewebshop.models.entity.Order;
+import se.joeldegerman.javaeewebshop.models.entity.OrderLine;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class OrderLineService {
                 Order order = new Order();
                 order.setProduct(item.getProduct());
                 order.setQuantity(item.getQuantity());
-                order.setTotal(item.getTotalPrice());
+                order.setTotal(item.getPrice());
                 orderLine.getOrders().add(order);
             }
             orderLine.setGrandTotal(cart.getGrandTotal());

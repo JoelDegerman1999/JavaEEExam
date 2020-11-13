@@ -1,15 +1,11 @@
 package se.joeldegerman.javaeewebshop.models;
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 @Data
-@SessionScope
 public class Cart {
     private List<CartItem> cartItems;
     private int grandTotal;
@@ -23,11 +19,11 @@ public class Cart {
             for (CartItem cartItem : cartItems) {
                 if (item.equals(cartItem)) {
                     cartItem.incrementQuantity();
-                    cartItem.setTotalPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
+                    cartItem.setPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
                 }
             }
         } else {
-            item.setTotalPrice(item.getProduct().getPrice());
+            item.setPrice(item.getProduct().getPrice());
             cartItems.add(item);
         }
         calculateGrandTotal();
@@ -43,10 +39,12 @@ public class Cart {
             for (CartItem cartItem : cartItems) {
                 if (item.equals(cartItem)) {
                     if (cartItem.getQuantity() == 1) {
-                        deleteCartItem(cartItem);
+                        deleteCartItem(item);
+                        break;
+                    } else {
+                        cartItem.decrementQuantity();
+                        cartItem.setPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
                     }
-                    cartItem.decrementQuantity();
-                    cartItem.setTotalPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
                 }
             }
         }
@@ -58,7 +56,7 @@ public class Cart {
             for (CartItem cartItem : cartItems) {
                 if (item.equals(cartItem)) {
                     cartItem.incrementQuantity();
-                    cartItem.setTotalPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
+                    cartItem.setPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
                 }
             }
         }

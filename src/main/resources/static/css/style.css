@@ -7,6 +7,13 @@
   box-sizing: border-box;
 }
 
+button {
+  outline: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
 .text {
   width: 172px;
   white-space: nowrap;

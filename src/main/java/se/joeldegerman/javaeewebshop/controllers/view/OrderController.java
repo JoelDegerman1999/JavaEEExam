@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import se.joeldegerman.javaeewebshop.models.OrderLine;
+import se.joeldegerman.javaeewebshop.models.entity.OrderLine;
 import se.joeldegerman.javaeewebshop.repositories.OrderLineRepository;
 import se.joeldegerman.javaeewebshop.services.OrderLineService;
 
@@ -28,6 +28,7 @@ public class OrderController {
             redirectAttributes.addFlashAttribute("orderLine", persistedOrderLine);
             return "redirect:/order/success";
         }
+        //TODO show a error page
         return "Index";
     }
 

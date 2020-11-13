@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{bulma/css/bulma.min.css}">
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+          integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar" role="navigation" aria-label="main navigation">
+    <!--/*@thymesVar id="cart" type="se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel"*/-->
+    <!--/*@thymesVar id="nameofuser" type="java.lang.String"*/-->
+
+
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <a href="/" class="navbar-item">
+                <img th:src="@{/images/logo.png}" alt="">
+            </a>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item mr-6" th:if="${cart}">
+                <a href="/cart">
+                    <div class="cart-container">
+                        <i class="fas fa-shopping-cart has-text-black"></i>
+                        <p class="counter" th:text="${cart.getCartSize()}"></p>
+                        <p class="total has-text-black" th:text="${cart.getGrandTotal()} + '.00'"></p>
+                    </div>
+                </a>
+            </div>
+            <div class="navbar-item">
+                <div class="buttons" th:unless="${nameofuser}">
+                    <a class="button is-primary" href="/signup">
+                        <strong>Sign up</strong>
+                    </a>
+                    <a class="button is-light" href="/login">
+                        Log in
+                    </a>
+                </div>
+                <div class="buttons" th:if="${nameofuser}">
+                    <p th:text="${nameofuser}"></p>
+                    <a class="button is-light ml-3" href="/logout">
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</nav>
+</body>
+</html>

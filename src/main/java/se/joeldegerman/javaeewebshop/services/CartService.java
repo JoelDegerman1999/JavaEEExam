@@ -1,18 +1,20 @@
 package se.joeldegerman.javaeewebshop.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.SessionScope;
 import se.joeldegerman.javaeewebshop.models.Cart;
 import se.joeldegerman.javaeewebshop.models.CartItem;
-import se.joeldegerman.javaeewebshop.models.Product;
+import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
 
 @Service
+@SessionScope
 public class CartService {
 
     private final Cart cart;
 
-    public CartService(Cart cart) {
-        this.cart = cart;
+    public CartService() {
+        this.cart = new Cart();
     }
 
     public void addToCart(Product product) {

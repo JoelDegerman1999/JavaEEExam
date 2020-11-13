@@ -1,9 +1,11 @@
 package se.joeldegerman.javaeewebshop.controllers.view;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import se.joeldegerman.javaeewebshop.models.Product;
+import se.joeldegerman.javaeewebshop.helpers.UserHelper;
+import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
 import se.joeldegerman.javaeewebshop.services.CartService;
 import se.joeldegerman.javaeewebshop.services.ProductService;
@@ -11,12 +13,12 @@ import se.joeldegerman.javaeewebshop.services.ProductService;
 import java.util.List;
 
 @Controller
-public class ProductController {
+public class HomeController {
 
     final ProductService productService;
     final CartService cartService;
 
-    public ProductController(ProductService productService, CartService cartService) {
+    public HomeController(ProductService productService, CartService cartService) {
         this.productService = productService;
         this.cartService = cartService;
     }
@@ -27,6 +29,8 @@ public class ProductController {
         CartViewModel cartVM = cartService.getCartVM();
         model.addAttribute("products", allProducts);
         model.addAttribute("cart", cartVM);
+        model.addAttribute("nameofuser", UserHelper.getUsernameFromLoggedInUser(SecurityContextHolder.getContext()));
+
         return "Index";
     }
 

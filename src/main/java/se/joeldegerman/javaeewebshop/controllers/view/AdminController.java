@@ -5,11 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import se.joeldegerman.javaeewebshop.models.Product;
+import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.services.ProductService;
 
-import javax.print.DocFlavor;
 import java.util.List;
 
 @Controller

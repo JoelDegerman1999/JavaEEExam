@@ -1,7 +1,7 @@
 package se.joeldegerman.javaeewebshop.controllers.rest;
 
 import org.springframework.web.bind.annotation.*;
-import se.joeldegerman.javaeewebshop.models.OrderLine;
+import se.joeldegerman.javaeewebshop.models.entity.OrderLine;
 import se.joeldegerman.javaeewebshop.repositories.OrderLineRepository;
 import se.joeldegerman.javaeewebshop.services.OrderLineService;
 

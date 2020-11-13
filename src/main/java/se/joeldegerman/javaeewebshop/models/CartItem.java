@@ -1,6 +1,7 @@
 package se.joeldegerman.javaeewebshop.models;
 
 import lombok.Data;
+import se.joeldegerman.javaeewebshop.models.entity.Product;
 
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ import java.util.Objects;
 public class CartItem {
     private Product product;
     private int quantity = 1;
-    private double totalPrice;
+    private double price;
 
     public void incrementQuantity() {
         quantity++;

@@ -10,26 +10,9 @@
           integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 </head>
 <body>
-<header>
-    <div class="columns is-centered py-4">
-        <div class="column is-6">
-            <h1>Joel's Webbshop</h1>
-        </div>
-        <div class="column is-6 cart">
-            <div class="cart-container">
-                <div class="cart-logo has-text-right">
-                    <i class="fas fa-shopping-cart" id="shopping-cart"></i>
-                </div>
-                <div class="counter has-text-white">
-                    <p th:text="${cart.getCartSize()}">(0)</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</header>
+<nav th:replace="fragments/Navbar.html :: navbar(cart=${cart}, nameofuser=${nameofuser})"></nav>
 <main>
-    <section class="container">
+    <section class="container py-6">
         <div class="columns is-multiline">
             <div class="column is-4" th:each="product : ${products}" th:object="${product}">
                 <article class="card">
@@ -44,53 +27,17 @@
                             <p class="is-size-6 subtitle" th:text="${product.price} + ' SEK'"></p>
                         </div>
                     </div>
-                    <form th:action="@{'/cart/add/' + ${product.id}}" method="post">
-                        <button class="button">Add</button>
-                    </form>
+                    <div class="column has-text-right">
+                        <button class="button addbtn is-success" th:data-productid="${product.id}">Add Product</button>
+                    </div>
+                    <!--                    <form th:action="@{'/cart/add/' + ${product.id}}" method="post">-->
+                    <!--                    </form>-->
                 </article>
             </div>
         </div>
     </section>
 </main>
 
-<div id="cart-modal" class="modal">
-    <div id="cart-modalbg" class="modal-background"></div>
-    <div class="modal-card">
-        <div class="modal-card-head">
-            <p class="modal-card-title">Cart</p>
-        </div>
-        <div class="modal-card-body p-6">
-            <div class="columns">
-                <div class="column"></div>
-                <div class="column has-text-centered">Namn</div>
-                <div class="column has-text-centered">Antal</div>
-                <div class="column has-text-centered">Pris</div>
-            </div>
-            <div class="columns is-vcentered cart-item-row" th:each="cartItem : ${cart.getCartItems()}">
-                <div class="column is-flex is-justify-content-center">
-                    <img src="" alt="" th:src="${cartItem.product.imgUrl}" style="max-height: 70px">
-                </div>
-                <div class="column has-text-centered">
-                    <p th:text="${cartItem.product.name}"></p>
-                </div>
-                <div class="column has-text-centered">
-                    <p class="plus" th:data-productid="${cartItem.product.id}">+</p>
-                    <p th:text="${cartItem.quantity}"></p>
-                    <p class="minus" th:data-productid="${cartItem.product.id}">-</p>
-                </div>
-                <div class="column has-text-centered">
-                    <p th:text="${cartItem.totalPrice}"></p>
-                </div>
-            </div>
-        </div>
-        <div class="modal-card-foot">
-            <form style="margin-left: auto" th:action="@{/order/checkout}" method="post">
-                <button class="button is-primary">Place Order</button>
-            </form>
-            <button class="button">Close</button>
-        </div>
-    </div>
-</div>
-<script th:src="@{js/cart.js}"></script>
+<script th:src="@{js/main.js}"></script>
 </body>
 </html>

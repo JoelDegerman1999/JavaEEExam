@@ -1,22 +1,30 @@
-.cart {
-  .cart-container {
-    .counter {
-      z-index: -1;
-      position: relative;
-      bottom: 22px;
-      left: 4px;
-      margin-left: auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50%;
-      width: 1rem;
-      height: 1rem;
-      background-color: indianred;
-      padding: 10px;
-    }
+
+.cart-container {
+  text-align: center;
+  width: 40px;
+  .total {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  .counter {
+    transform: translate(50%, 50%);
+    position: absolute;
+    top: -9px;
+    right: 12px;
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    background-color: indianred;
+    padding: 12px;
+    color: white;
   }
 }
+
 
 #shopping-cart {
   cursor: pointer;
@@ -26,6 +34,11 @@
 .cart-item-row {
   height: 9rem;
 }
+
 .cart-item-row:nth-child(even) {
   background-color: #e3e3e3;
+}
+
+.minus, .plus {
+  cursor: pointer;
 }

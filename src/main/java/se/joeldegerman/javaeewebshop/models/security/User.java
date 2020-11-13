@@ -11,10 +11,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String fullName;
     private String username;
     private String password;
-    private boolean isActive;
-    private String roles;
+    private boolean isActive = true;
+    private String roles = "ROLE_USER";
 
     public User() {
     }
