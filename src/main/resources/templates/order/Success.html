@@ -2,16 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Order - Success</title>
     <link rel="stylesheet" th:href="@{/bulma/css/bulma.min.css}">
 </head>
 <body>
+<nav th:replace="fragments/Navbar.html :: navbar"></nav>
 <div class="container has-text-centered py-3">
     <h1 class="title">Order successfully placed</h1>
-    <h3 class="subtitle" th:text="'Order id : ' + ${orderLine.getId()}"></h3>
+    <h3 class="subtitle" th:text="'Order id : ' + ${order.id}"></h3>
 
     <!--       -->
-
 
     <section class="columns is-centered">
         <article class="column is-8">
@@ -19,8 +19,8 @@
             <div class="card">
 
                 <div class="card-content">
-                    <div class="columns is-vcentered" th:each="order : ${orderLine.getOrders()}"
-                         th:object="${order.product}">
+                    <div class="columns is-vcentered" th:each="orderItem : ${order.orderItems}"
+                         th:object="${orderItem.product}">
 
                         <div class="column is-flex is-justify-content-center">
                             <img src="" alt="" th:src="*{imgUrl}" style="max-height: 70px">
@@ -29,10 +29,10 @@
                             <p th:text="*{name}"></p>
                         </div>
                         <div class="column has-text-centered">
-                            <p th:text="${order.quantity}"></p>
+                            <p th:text="${orderItem.quantity}"></p>
                         </div>
                         <div class="column has-text-centered">
-                            <p th:text="${order.total}"></p>
+                            <p th:text="${orderItem.orderItemTotal}"></p>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,8 @@
                     <div class="column"></div>
                     <div class="column"></div>
                     <div class="column"></div>
-                    <div style="border-top: 1px solid rgba(0,0,0,0.4)" class="column has-text-centered" th:text="'Totalt ' +${orderLine.grandTotal} + ' SEK'"></div>
+                    <div style="border-top: 1px solid rgba(0,0,0,0.4)" class="column"
+                         th:text="'Totalt : ' +${order.orderGrandTotal} + ' SEK'"></div>
                 </div>
             </div>
         </article>

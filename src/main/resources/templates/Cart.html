@@ -22,9 +22,11 @@
             <div class="column">Pris</div>
         </div>
         <div class="columns is-vcentered has-text-centered" th:each="item : ${cart.getCartItems()}" th:object="${item}">
-            <div class="column is-flex is-align-items-center is-justify-content-space-around">
-                <img src="" th:src="*{product.imgUrl}" alt="Product image" style="height: 50px">
-                <p th:text="*{product.name}"></p>
+            <div class="column has-text-right">
+                <div class="is-flex is-align-items-center is-justify-content-space-around">
+                    <img src="" th:src="*{product.imgUrl}" alt="Product image" style="height: 50px">
+                    <p th:text="*{product.name}"></p>
+                </div>
             </div>
             <div class="column">
                 <p class="plus" th:data-productid="*{product.id}">+</p>
@@ -37,12 +39,14 @@
         </div>
     </div>
     <div class="has-text-right pt-3" style="max-width: 50rem; margin: 0 auto">
-        <form action="" th:action="@{/cart/checkout}" method="post">
+        <form action="" th:action="@{/order/checkout}" method="post">
             <button type="submit" class="button is-primary">Checkout</button>
         </form>
     </div>
 </section>
-    <div th:unless="${cart.cartSize > 0}" class="is-flex is-align-items-center is-justify-content-center">No items added to Cart</div>
+<div th:unless="${cart.cartSize > 0}" class="is-flex is-align-items-center is-justify-content-center">No items added to
+    Cart
+</div>
 <script src="" type="text/javascript" th:src="@{js/cart.js}"></script>
 </body>
 </html>

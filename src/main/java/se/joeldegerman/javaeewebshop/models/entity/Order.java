@@ -3,6 +3,8 @@ package se.joeldegerman.javaeewebshop.models.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -10,13 +12,16 @@ import javax.persistence.*;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    private long id;
 
-    @OneToOne
-    private Product product;
-    private int quantity;
-    private double total;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List<OrderItem> orderItems;
+
+    private int orderGrandTotal;
+
+    private boolean orderSent;
 
     public Order() {
+        orderItems = new ArrayList<>();
     }
 }

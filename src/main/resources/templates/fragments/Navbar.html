@@ -44,7 +44,7 @@
                     <a href="/admin/index" class="button is-light is-dark" th:if="${isAdmin}">
                         Admin
                     </a>
-                    <a class="button is-light" href="/logout">
+                    <a th:if="${nameofuser}" class="button is-light" href="/logout">
                         Logout
                     </a>
                 </div>

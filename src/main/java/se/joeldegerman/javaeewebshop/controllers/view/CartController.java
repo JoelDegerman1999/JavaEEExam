@@ -1,10 +1,12 @@
 package se.joeldegerman.javaeewebshop.controllers.view;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import se.joeldegerman.javaeewebshop.helpers.UserHelper;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
 import se.joeldegerman.javaeewebshop.services.CartService;
@@ -25,6 +27,8 @@ public class CartController {
     @GetMapping("/cart")
     public String showCart(Model model) {
         model.addAttribute("cart", service.getCartVM());
+        model.addAttribute("nameofuser", UserHelper.getUsernameFromLoggedInUser(SecurityContextHolder.getContext()));
+        model.addAttribute("isAdmin", UserHelper.checkIfUserIsAdmin(SecurityContextHolder.getContext()));
         return "Cart";
     }
 

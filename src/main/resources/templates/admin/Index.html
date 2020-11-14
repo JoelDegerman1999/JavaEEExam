@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Admin - Product List</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
     <link rel="stylesheet" th:href="@{/bulma/css/bulma.min.css}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
           integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
@@ -22,7 +22,7 @@
                         <th>Id</th>
                         <th>Name</th>
                         <th>Price</th>
-                        <th>Actions</th>
+                        <th>Action</th>
                     </tr>
                     <tbody>
                     <tr class="" th:each="product : ${products}" th:object="${product}">
@@ -30,8 +30,8 @@
                         <td th:text="*{name}"></td>
                         <td th:text="*{price}"></td>
                         <td>
-                            <i class="fas fa-edit has-text-info"></i>
-                            <i class="fas fa-trash has-text-danger"></i>
+                            <i id="edit" th:data-productid="*{id}" class="fas fa-edit has-text-info"></i>
+                            <i id="delete" th:data-productid="*{id}" class="fas fa-trash has-text-danger"></i>
                         </td>
                     </tr>
                     </tbody>
@@ -44,6 +44,6 @@
         </div>
     </div>
 </section>
-<script src="" th:src="@{../js/main.js}"></script>
+<script src="" th:src="@{/js/admin.js}"></script>
 </body>
 </html>
