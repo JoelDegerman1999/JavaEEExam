@@ -1,29 +1,30 @@
 package se.joeldegerman.javaeewebshop.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import se.joeldegerman.javaeewebshop.models.security.User;
+import se.joeldegerman.javaeewebshop.exceptions.UsernameAlreadyExistsException;
+import se.joeldegerman.javaeewebshop.models.entity.User;
 import se.joeldegerman.javaeewebshop.repositories.UserRepository;
-import se.joeldegerman.javaeewebshop.services.interfaces.UserService;
+import se.joeldegerman.javaeewebshop.services.interfaces.AuthService;
 
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public AuthServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
 
-    public User registerNewUser(User user) throws IllegalArgumentException{
+    public User registerNewUser(User user) throws UsernameAlreadyExistsException {
         Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
         if(optionalUser.isPresent())  {
-            //TODO create my own custom exception
-            throw new IllegalArgumentException();
+            throw new UsernameAlreadyExistsException("Username already exists");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);

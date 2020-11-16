@@ -6,6 +6,7 @@ import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
 import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,16 +33,13 @@ public class ProductServiceImpl implements ProductService {
         repository.delete(getProductById(id));
     }
 
-    public Product updateProduct(Product product, long id) {
-        Product productById = getProductById(id);
-        productById.setName(product.getName());
-        productById.setPrice(product.getPrice());
-        productById.setImgUrl(product.getImgUrl());
-        productById.setDateModified(LocalDateTime.now());
-        return repository.save(productById);
+    public Product updateProduct(Product product) {
+        return repository.save(product);
     }
 
     public List<Product> getAllProducts() {
-        return repository.findAll();
+        List<Product> products = repository.findAll();
+        products.sort(Comparator.comparing(Product::getId));
+        return products;
     }
 }

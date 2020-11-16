@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import se.joeldegerman.javaeewebshop.helpers.UserHelper;
 import se.joeldegerman.javaeewebshop.models.entity.Order;
-import se.joeldegerman.javaeewebshop.models.security.User;
+import se.joeldegerman.javaeewebshop.models.entity.User;
 import se.joeldegerman.javaeewebshop.repositories.OrderRepository;
 import se.joeldegerman.javaeewebshop.repositories.UserRepository;
 import se.joeldegerman.javaeewebshop.services.OrderServiceImpl;

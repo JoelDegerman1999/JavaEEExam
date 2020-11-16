@@ -31,6 +31,7 @@ public class AdminController {
     @GetMapping("/admin/index")
     public String showAdminIndex(Model model) {
         List<Product> allProducts = productService.getAllProducts();
+        System.out.println(allProducts);
         model.addAttribute("products", allProducts);
         model.addAttribute("nameofuser", UserHelper.getUsernameFromLoggedInUser(SecurityContextHolder.getContext()));
         model.addAttribute("isAdmin", UserHelper.checkIfUserIsAdmin(SecurityContextHolder.getContext()));
@@ -42,6 +43,14 @@ public class AdminController {
         Product product = productService.getProductById(productId);
         model.addAttribute("product", product);
         return "admin/Update";
+    }
+
+    @PostMapping("/admin/update/{id}")
+    public String updateProduct(@ModelAttribute Product product, @PathVariable long id) {
+        product.setId(id);
+        Product updatedProduct = productService.updateProduct(product);
+        if(updatedProduct != null) return "redirect:/admin/index";
+        return "redirect:/admin/update/" + product.getId();
     }
 
     @GetMapping("/admin/add/product")

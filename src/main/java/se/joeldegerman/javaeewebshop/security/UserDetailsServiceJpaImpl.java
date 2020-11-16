@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import se.joeldegerman.javaeewebshop.models.security.User;
+import se.joeldegerman.javaeewebshop.models.entity.User;
 import se.joeldegerman.javaeewebshop.models.security.UserDetail;
 import se.joeldegerman.javaeewebshop.repositories.UserRepository;
 

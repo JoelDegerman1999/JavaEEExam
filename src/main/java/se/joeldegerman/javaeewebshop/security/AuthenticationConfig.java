@@ -26,6 +26,7 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests().mvcMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/api/test").permitAll()
                 .mvcMatchers("/cart/**").hasAnyRole("USER", "ADMIN")
                 .mvcMatchers("/order/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/**").hasAnyRole("USER", "ADMIN")

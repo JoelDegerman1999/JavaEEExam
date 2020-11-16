@@ -30,7 +30,9 @@
                         <td th:text="*{name}"></td>
                         <td th:text="*{price}"></td>
                         <td>
-                            <i id="edit" th:data-productid="*{id}" class="fas fa-edit has-text-info"></i>
+                            <form th:action="@{'/admin/update/' + ${product.id}}" method="get">
+                                <button type="submit"><i id="edit" th:data-productid="*{id}" class="fas fa-edit has-text-info"></i></button>
+                            </form>
                             <i id="delete" th:data-productid="*{id}" class="fas fa-trash has-text-danger"></i>
                         </td>
                     </tr>

@@ -2,7 +2,7 @@ package se.joeldegerman.javaeewebshop.services;
 
 import org.springframework.stereotype.Service;
 import se.joeldegerman.javaeewebshop.models.CartItem;
-import se.joeldegerman.javaeewebshop.models.security.User;
+import se.joeldegerman.javaeewebshop.models.entity.User;
 import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
 import se.joeldegerman.javaeewebshop.models.entity.OrderItem;
 import se.joeldegerman.javaeewebshop.models.entity.Order;

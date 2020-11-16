@@ -3,6 +3,7 @@ package se.joeldegerman.javaeewebshop.models.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import se.joeldegerman.javaeewebshop.models.entity.User;
 
 import java.util.Arrays;
 import java.util.Collection;

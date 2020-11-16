@@ -1,7 +1,7 @@
 package se.joeldegerman.javaeewebshop.services.interfaces;
 
 import se.joeldegerman.javaeewebshop.models.entity.Order;
-import se.joeldegerman.javaeewebshop.models.security.User;
+import se.joeldegerman.javaeewebshop.models.entity.User;
 
 import java.util.Optional;
 

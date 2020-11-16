@@ -1,7 +1,6 @@
 package se.joeldegerman.javaeewebshop.models.entity;
 
 import lombok.Data;
-import se.joeldegerman.javaeewebshop.models.security.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,6 +22,7 @@ public class Order {
     private boolean orderSent;
 
     @ManyToOne
+    @JoinColumn(name = "customer_id")
     private User user;
 
     public Order() {

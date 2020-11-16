@@ -16,7 +16,12 @@
             <section class="container">
                 <div class="columns is-centered">
                     <div class="column is-4-desktop">
-
+                        <div th:if="${param.error != null}" class="has-text-centered mb-6">
+                            <p class="has-text-danger subtitle">Email already exist | <a href="/login">Login instead</a></p>
+                        </div>
+                        <div th:if="${param.notnull != null}" class="has-text-centered mb-6">
+                            <p class="has-text-danger subtitle">Cant register nothing</p>
+                        </div>
                         <form th:action="@{/signup}" th:object="${user}" method="post" class="box">
                             <div class="field">
                                 <h2 class="subtitle">Sign up and start buying</h2>

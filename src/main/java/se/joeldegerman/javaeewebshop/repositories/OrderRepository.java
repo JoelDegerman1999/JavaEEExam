@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o from Order o WHERE o.orderSent = false")
     Optional<List<Order>> getNonSentOrders();
+
+    @Query("SELECT o from Order o WHERE o.orderSent = true")
+    Optional<List<Order>> getSentOrders();
 }
