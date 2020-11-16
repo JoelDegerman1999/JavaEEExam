@@ -3,7 +3,8 @@ package se.joeldegerman.javaeewebshop.controllers.rest;
 import org.springframework.web.bind.annotation.*;
 import se.joeldegerman.javaeewebshop.models.entity.Order;
 import se.joeldegerman.javaeewebshop.repositories.OrderRepository;
-import se.joeldegerman.javaeewebshop.services.ProductService;
+import se.joeldegerman.javaeewebshop.services.ProductServiceImpl;
+import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +14,11 @@ import java.util.Optional;
 @RequestMapping("/api/")
 public class AdminRestController {
 
-    private ProductService productService;
+    private final ProductService productService;
 
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    public AdminRestController(ProductService productService, OrderRepository orderRepository) {
+    public AdminRestController(ProductServiceImpl productService, OrderRepository orderRepository) {
         this.productService = productService;
         this.orderRepository = orderRepository;
     }

@@ -6,14 +6,17 @@ import se.joeldegerman.javaeewebshop.models.Cart;
 import se.joeldegerman.javaeewebshop.models.CartItem;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
+import se.joeldegerman.javaeewebshop.services.interfaces.CartService;
+
+import java.util.List;
 
 @Service
 @SessionScope
-public class CartService {
+public class CartServiceImpl  implements CartService {
 
     private final Cart cart;
 
-    public CartService() {
+    public CartServiceImpl() {
         this.cart = new Cart();
     }
 
@@ -46,7 +49,10 @@ public class CartService {
     }
 
     public int getCartSize() {
-        return cart.getCartItems().size();
+        int size = 0;
+        List<CartItem> cartItems = cart.getCartItems();
+        size = cartItems.stream().mapToInt(CartItem::getQuantity).sum();
+        return size;
     }
 
     public void clearCart() {

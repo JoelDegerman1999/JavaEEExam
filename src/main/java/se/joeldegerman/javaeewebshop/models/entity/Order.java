@@ -1,6 +1,7 @@
 package se.joeldegerman.javaeewebshop.models.entity;
 
 import lombok.Data;
+import se.joeldegerman.javaeewebshop.models.security.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,6 +21,9 @@ public class Order {
     private int orderGrandTotal;
 
     private boolean orderSent;
+
+    @ManyToOne
+    private User user;
 
     public Order() {
         orderItems = new ArrayList<>();

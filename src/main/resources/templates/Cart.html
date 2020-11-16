@@ -10,7 +10,7 @@
           integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 </head>
 <body>
-<nav th:replace="fragments/Navbar.html :: navbar(cart = ${cart})"></nav>
+<nav th:replace="fragments/Navbar.html :: navbar(useCart = ${true})"></nav>
 <section class="container py-6" th:if="${cart.cartSize > 0}">
     <div class="card p-5" style="max-width: 50rem; margin: 0 auto">
         <div class="columns has-text-centered" style="border-bottom: 1px dotted rgba(0,0,0,.2)">

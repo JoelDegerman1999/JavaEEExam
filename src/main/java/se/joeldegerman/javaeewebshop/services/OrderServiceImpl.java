@@ -2,27 +2,29 @@ package se.joeldegerman.javaeewebshop.services;
 
 import org.springframework.stereotype.Service;
 import se.joeldegerman.javaeewebshop.models.CartItem;
+import se.joeldegerman.javaeewebshop.models.security.User;
 import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
 import se.joeldegerman.javaeewebshop.models.entity.OrderItem;
 import se.joeldegerman.javaeewebshop.models.entity.Order;
 import se.joeldegerman.javaeewebshop.repositories.OrderRepository;
+import se.joeldegerman.javaeewebshop.services.interfaces.OrderService;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrderService {
+public class OrderServiceImpl implements OrderService {
 
-    private CartService cartService;
+    private CartServiceImpl cartService;
 
     private OrderRepository orderRepository;
 
-    public OrderService(CartService cartService, OrderRepository orderRepository) {
+    public OrderServiceImpl(CartServiceImpl cartService, OrderRepository orderRepository) {
         this.cartService = cartService;
         this.orderRepository = orderRepository;
     }
 
-    public Optional<Order> createOrder() {
+    public Optional<Order> createAndReturnOrder(User user) {
         CartViewModel cart = cartService.getCartVM();
         List<CartItem> cartItems = cart.getCartItems();
         if (cartItems.size() > 0) {
@@ -35,6 +37,7 @@ public class OrderService {
                 order.getOrderItems().add(orderItem);
             }
             order.setOrderGrandTotal(cart.getGrandTotal());
+            order.setUser(user);
             cartService.clearCart();
             return Optional.of(order);
         }

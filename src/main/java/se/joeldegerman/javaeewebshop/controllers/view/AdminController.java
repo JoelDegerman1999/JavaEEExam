@@ -11,7 +11,8 @@ import se.joeldegerman.javaeewebshop.helpers.UserHelper;
 import se.joeldegerman.javaeewebshop.models.entity.Order;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.OrderRepository;
-import se.joeldegerman.javaeewebshop.services.ProductService;
+import se.joeldegerman.javaeewebshop.services.ProductServiceImpl;
+import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,7 @@ public class AdminController {
     private ProductService productService;
     private OrderRepository orderRepository;
 
-    public AdminController(ProductService productService, OrderRepository orderRepository) {
+    public AdminController(ProductServiceImpl productService, OrderRepository orderRepository) {
         this.productService = productService;
         this.orderRepository = orderRepository;
     }

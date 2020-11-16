@@ -9,24 +9,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import se.joeldegerman.javaeewebshop.helpers.UserHelper;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
-import se.joeldegerman.javaeewebshop.services.CartService;
+import se.joeldegerman.javaeewebshop.services.interfaces.CartService;
+import se.joeldegerman.javaeewebshop.services.CartServiceImpl;
 
 import java.util.Optional;
 
 @Controller
 public class CartController {
 
-    private CartService service;
+    private CartService cartService;
     private ProductRepository productRepository;
 
-    public CartController(CartService service, ProductRepository productRepository) {
-        this.service = service;
+    public CartController(CartServiceImpl service, ProductRepository productRepository) {
+        this.cartService = service;
         this.productRepository = productRepository;
     }
 
     @GetMapping("/cart")
     public String showCart(Model model) {
-        model.addAttribute("cart", service.getCartVM());
+        model.addAttribute("cart", cartService.getCartVM());
         model.addAttribute("nameofuser", UserHelper.getUsernameFromLoggedInUser(SecurityContextHolder.getContext()));
         model.addAttribute("isAdmin", UserHelper.checkIfUserIsAdmin(SecurityContextHolder.getContext()));
         return "Cart";
@@ -36,7 +37,7 @@ public class CartController {
     public String addProductToCart(@PathVariable(name = "id") long productId) {
         Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent()) {
-            service.addToCart(product.get());
+            cartService.addToCart(product.get());
         }
         return "redirect:/";
     }

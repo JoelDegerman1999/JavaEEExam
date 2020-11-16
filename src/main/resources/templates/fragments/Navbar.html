@@ -8,25 +8,26 @@
           integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 </head>
 <body>
-<nav th:fragment="navbar" class="navbar" role="navigation" aria-label="main navigation">
+<nav th:fragment="navbar" class="navbar is-light py-4" role="navigation" aria-label="main navigation">
     <!--/*@thymesVar id="cart" type="se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel"*/-->
     <!--/*@thymesVar id="nameofuser" type="java.lang.String"*/-->
     <!--/*@thymesVar id="isAdmin" type="java.lang.Boolean"*/-->
+    <!--/*@thymesVar id="useCart" type="java.lang.Boolean"*/-->
 
 
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             <a href="/" class="navbar-item">
-                <img th:src="@{/images/logo.png}" alt="">
+                <h1 class="title">Webbshop</h1>
             </a>
         </div>
         <div class="navbar-end">
-            <div class="navbar-item mr-6" th:if="${cart}">
+            <div class="navbar-item mr-6">
                 <a href="/cart">
                     <div class="cart-container">
                         <i class="fas fa-shopping-cart has-text-black"></i>
-                        <p class="counter" th:text="${cart.getCartSize()}"></p>
-                        <p class="total has-text-black" th:text="${cart.getGrandTotal()} + '.00'"></p>
+                        <p id="cart-counter" th:unless="${useCart}" class="counter">0</p>
+                        <p  class="counter" th:if="${useCart}" th:text="${cart.cartSize}"></p>
                     </div>
                 </a>
             </div>
@@ -39,7 +40,7 @@
                         Log in
                     </a>
                 </div>
-                    <p class="mr-3" th:if="${nameofuser}" th:text="${nameofuser}"></p>
+                    <p id="loggedInUser" class="mr-3" th:if="${nameofuser}" th:text="${nameofuser}"></p>
                 <div class="buttons" >
                     <a href="/admin/index" class="button is-light is-dark" th:if="${isAdmin}">
                         Admin

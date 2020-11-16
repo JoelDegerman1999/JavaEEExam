@@ -1,6 +1,5 @@
 package se.joeldegerman.javaeewebshop.controllers.view;
 
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,8 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import se.joeldegerman.javaeewebshop.helpers.UserHelper;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
-import se.joeldegerman.javaeewebshop.services.CartService;
-import se.joeldegerman.javaeewebshop.services.ProductService;
+import se.joeldegerman.javaeewebshop.services.CartServiceImpl;
+import se.joeldegerman.javaeewebshop.services.ProductServiceImpl;
+import se.joeldegerman.javaeewebshop.services.interfaces.CartService;
+import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class HomeController {
     final ProductService productService;
     final CartService cartService;
 
-    public HomeController(ProductService productService, CartService cartService) {
+    public HomeController(ProductServiceImpl productService, CartServiceImpl cartService) {
         this.productService = productService;
         this.cartService = cartService;
     }
@@ -33,6 +34,11 @@ public class HomeController {
         model.addAttribute("nameofuser", UserHelper.getUsernameFromLoggedInUser(SecurityContextHolder.getContext()));
         model.addAttribute("isAdmin", UserHelper.checkIfUserIsAdmin(SecurityContextHolder.getContext()));
         return "Index";
+    }
+
+    @GetMapping("/content")
+    public String content() {
+        return "Content";
     }
 
 }

@@ -3,16 +3,17 @@ package se.joeldegerman.javaeewebshop.services;
 import org.springframework.stereotype.Service;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
+import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductService {
+public class ProductServiceImpl implements ProductService {
     private ProductRepository repository;
 
-    public ProductService(ProductRepository repository) {
+    public ProductServiceImpl(ProductRepository repository) {
         this.repository = repository;
     }
 
