@@ -9,15 +9,16 @@ import se.joeldegerman.javaeewebshop.models.entity.Order;
 import se.joeldegerman.javaeewebshop.repositories.OrderRepository;
 import se.joeldegerman.javaeewebshop.services.interfaces.OrderService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    private CartServiceImpl cartService;
+    private final CartServiceImpl cartService;
 
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
     public OrderServiceImpl(CartServiceImpl cartService, OrderRepository orderRepository) {
         this.cartService = cartService;
@@ -42,6 +43,20 @@ public class OrderServiceImpl implements OrderService {
             return Optional.of(order);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Order> getAllNonSentOrders() {
+        Optional<List<Order>> optionalNonSentOrders = orderRepository.getNonSentOrders();
+        if(optionalNonSentOrders.isPresent()) return optionalNonSentOrders.get();
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<Order> getAllSentOrders() {
+        Optional<List<Order>> optionalSentOrders = orderRepository.getSentOrders();
+        if(optionalSentOrders.isPresent()) return optionalSentOrders.get();
+        return new ArrayList<>();
     }
 
     public Order saveOrder(Order order) {

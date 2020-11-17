@@ -1,51 +1,47 @@
-package se.joeldegerman.javaeewebshop.controllers.view;
+package se.joeldegerman.javaeewebshop.controllers.view.admin;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import se.joeldegerman.javaeewebshop.helpers.UserHelper;
-import se.joeldegerman.javaeewebshop.models.entity.Order;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.OrderRepository;
 import se.joeldegerman.javaeewebshop.services.ProductServiceImpl;
 import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
-public class AdminController {
+@RequestMapping("/admin/")
+public class AdminProductController {
 
     private ProductService productService;
     private OrderRepository orderRepository;
 
-    public AdminController(ProductServiceImpl productService, OrderRepository orderRepository) {
+    public AdminProductController(ProductServiceImpl productService, OrderRepository orderRepository) {
         this.productService = productService;
         this.orderRepository = orderRepository;
     }
 
-    @GetMapping("/admin/index")
+    @GetMapping("index")
     public String showAdminIndex(Model model) {
         List<Product> allProducts = productService.getAllProducts();
         System.out.println(allProducts);
         model.addAttribute("products", allProducts);
         model.addAttribute("nameofuser", UserHelper.getUsernameFromLoggedInUser(SecurityContextHolder.getContext()));
         model.addAttribute("isAdmin", UserHelper.checkIfUserIsAdmin(SecurityContextHolder.getContext()));
-        return "/admin/Index";
+        return "/admin/product/Index";
     }
 
-    @GetMapping("/admin/update/{id}")
+    @GetMapping("update/{id}")
     public String showUpdatePage(@PathVariable(name = "id") long productId, Model model) {
         Product product = productService.getProductById(productId);
         model.addAttribute("product", product);
-        return "admin/Update";
+        return "admin/product/Update";
     }
 
-    @PostMapping("/admin/update/{id}")
+    @PostMapping("update/{id}")
     public String updateProduct(@ModelAttribute Product product, @PathVariable long id) {
         product.setId(id);
         Product updatedProduct = productService.updateProduct(product);
@@ -53,37 +49,18 @@ public class AdminController {
         return "redirect:/admin/update/" + product.getId();
     }
 
-    @GetMapping("/admin/add/product")
+    @GetMapping("add/product")
     public String productForm(Model model) {
         model.addAttribute("product", new Product());
         model.addAttribute("nameofuser", UserHelper.getUsernameFromLoggedInUser(SecurityContextHolder.getContext()));
         model.addAttribute("isAdmin", UserHelper.checkIfUserIsAdmin(SecurityContextHolder.getContext()));
-        return "admin/CreateProduct";
+        return "admin/product/CreateProduct";
 
     }
 
-    @PostMapping("/admin/add/product")
+    @PostMapping("add/product")
     public String productForm(@ModelAttribute Product product) {
         productService.createProduct(product);
         return "redirect:/admin/index";
-    }
-
-    @GetMapping("/admin/get/order/nonsent")
-    public String getNonSentOrders(Model model) {
-        Optional<List<Order>> nonSentOrders = orderRepository.getNonSentOrders();
-        if (nonSentOrders.isPresent()) model.addAttribute("nonSentOrders", nonSentOrders.get());
-        return "admin/Test";
-    }
-
-    @GetMapping("/admin/get/order/send")
-    public String sendOrders() {
-        Optional<List<Order>> nonSentOrders = orderRepository.getNonSentOrders();
-        if (nonSentOrders.isPresent()) {
-            for (var order: nonSentOrders.get()) {
-                order.setOrderSent(true);
-                orderRepository.save(order);
-            }
-        }
-        return "redirect:/admin/get/order/nonsent";
     }
 }
