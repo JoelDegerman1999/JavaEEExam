@@ -59,6 +59,24 @@ public class OrderServiceImpl implements OrderService {
         return new ArrayList<>();
     }
 
+    @Override
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    @Override
+    public Order sendOrder(long id) {
+        Optional<Order> optionalOrder = orderRepository.findById(id);
+        if(optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+            if(order.isOrderSent() == false) {
+                order.setOrderSent(true);
+            }
+            return orderRepository.save(order);
+        }
+        return null;
+    }
+
     public Order saveOrder(Order order) {
         return orderRepository.save(order);
     }

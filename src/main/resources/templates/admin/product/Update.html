@@ -1,44 +1,47 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin - Update Product</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="stylesheet" th:href="@{/bulma/css/bulma.min.css}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
-          integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 </head>
 <body>
-<form th:action="@{'/admin/update/' + ${product.id}}" th:object="${product}" method="post" class="box">
-    <div class="field">
-        <p class="control has-icons-left">
-            <input type="text" class="input" th:field="*{name}" placeholder="Name">
-            <span class="icon is-small is-left"><i class="fas fa-signature"></i></span>
-        </p>
-    </div>
-    <div class="field">
-        <p class="control has-icons-left">
-            <input type="text" class="input" th:field="*{price}" placeholder="Price">
-            <span class="icon is-small is-left">
-                                        <i class="fas fa-money-bill-alt"></i>
-                                    </span>
-        </p>
-    </div>
-    <div class="field">
-        <p class="control has-icons-left">
-            <input type="text" class="input" th:field="*{imgUrl}" placeholder="Image URL">
-            <span class="icon is-small is-left">
-                                        <i class="fas fa-image"></i>
-                                    </span>
-        </p>
-    </div>
-    <div class="field">
-        <p class="control has-text-right">
-            <button class="button is-success" type="submit">
-                Update
-            </button>
-        </p>
-    </div>
-</form>
+<div layout:fragment="content">
+
+    <form class="box" method="post" th:action="@{'/admin/update/' + ${product.id}}" th:object="${product}">
+        <div class="field">
+            <p class="control has-icons-left">
+                <input class="input" placeholder="Category" th:field="*{category}" type="text">
+                <span class="icon is-small is-left"><i class="fas fa-border-all"></i></span>
+            </p>
+        </div>
+        <div class="field">
+            <p class="control has-icons-left">
+                <input class="input" placeholder="Price" th:field="*{price}" type="text">
+                <span class="icon is-small is-left"><i class="fas fa-money-bill-alt"></i></span>
+            </p>
+        </div>
+        <div class="field">
+            <p class="control has-icons-left">
+                <input class="input" placeholder="Name" th:field="*{name}" type="text">
+                <span class="icon is-small is-left"><i class="fas fa-signature"></i></span>
+            </p>
+        </div>
+        <div class="field">
+            <p class="control has-icons-left">
+                <input class="input" placeholder="Image URL" th:field="*{imgUrl}" type="text">
+                <span class="icon is-small is-left"> <i class="fas fa-image"></i></span>
+            </p>
+        </div>
+        <div class="field">
+            <p class="control has-text-right">
+                <button class="button is-success" type="submit">
+                    Update
+                </button>
+            </p>
+        </div>
+    </form>
+</div>
 </body>
 </html>

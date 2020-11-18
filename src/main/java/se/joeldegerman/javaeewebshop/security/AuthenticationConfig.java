@@ -33,7 +33,7 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/").permitAll()
                 .mvcMatchers("/signup").permitAll()
                 .and().formLogin().loginPage("/login").permitAll()
-                .and().logout().permitAll().logoutSuccessUrl("/");
+                .and().logout().permitAll().logoutSuccessUrl("/login?logout");
     }
 
     @Bean

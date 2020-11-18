@@ -15,7 +15,7 @@ button {
 }
 
 .text {
-  width: 172px;
+  width: 142px;
   white-space: nowrap;
   overflow: hidden !important;
   text-overflow: ellipsis;

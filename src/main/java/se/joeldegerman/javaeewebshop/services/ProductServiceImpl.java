@@ -6,6 +6,7 @@ import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
 import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -41,5 +42,19 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = repository.findAll();
         products.sort(Comparator.comparing(Product::getId));
         return products;
+    }
+
+    @Override
+    public List<Product> searchProducts(String keyword) {
+        Optional<List<Product>> optionalProducts = repository.searchProduct(keyword);
+        if(optionalProducts.isPresent()) {
+            return optionalProducts.get();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<Product> findAllProductsByCategory(String category) {
+        return null;
     }
 }

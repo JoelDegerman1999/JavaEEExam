@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 @import "cart.css";
 @import "modal.css";
+@import "admin";
 
 
 * {
@@ -17,7 +18,7 @@ button {
 }
 
 .text {
-  width: 172px;
+  width: 142px;
   white-space: nowrap;
   overflow: hidden !important;
   text-overflow: ellipsis;

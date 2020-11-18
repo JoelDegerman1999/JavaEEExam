@@ -1,38 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{bulma/css/bulma.min.css}">
-    <link rel="stylesheet" th:href="@{css/style.css}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
-          integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 </head>
 <body>
-<nav th:fragment="navbar" class="navbar is-light py-4" role="navigation" aria-label="main navigation">
+<nav aria-label="main navigation" class="navbar is-light py-4" role="navigation" th:fragment="navbar">
     <!--/*@thymesVar id="cart" type="se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel"*/-->
     <!--/*@thymesVar id="nameofuser" type="java.lang.String"*/-->
     <!--/*@thymesVar id="isAdmin" type="java.lang.Boolean"*/-->
     <!--/*@thymesVar id="useCart" type="java.lang.Boolean"*/-->
 
 
-    <div id="navbarBasicExample" class="navbar-menu container">
+    <div class="navbar-menu container" id="navbarBasicExample">
         <div class="navbar-start">
-            <a href="/" class="navbar-item">
-                <h1 class="title">Webbshop</h1>
+            <a class="navbar-item" href="/">
+                <h1 class="subtitle">Webbshop</h1>
             </a>
         </div>
         <div class="navbar-end">
-            <div class="navbar-item mr-6">
+            <div class="navbar-item mr-6" sec:authorize="!hasRole('ROLE_ADMIN')">
                 <a href="/cart">
                     <div class="cart-container">
                         <i class="fas fa-shopping-cart has-text-black"></i>
-                        <p id="cart-counter" th:unless="${useCart}" class="counter">0</p>
-                        <p  class="counter" th:if="${useCart}" th:text="${cart.cartSize}"></p>
+                        <p class="counter" id="cart-counter" th:unless="${useCart}">0</p>
+                        <p class="counter" th:if="${useCart}" th:text="${cart.cartSize}"></p>
                     </div>
                 </a>
             </div>
             <div class="navbar-item">
-                <div class="buttons" th:unless="${nameofuser}">
+                <div class="buttons" sec:authorize="${isAnonymous()}">
                     <a class="button is-primary" href="/signup">
                         <strong>Sign up</strong>
                     </a>
@@ -40,12 +37,32 @@
                         Log in
                     </a>
                 </div>
-                    <p id="loggedInUser" class="mr-3" th:if="${nameofuser}" th:text="${nameofuser}"></p>
-                <div class="buttons" >
-                    <a href="/admin/index" class="button is-light is-dark" th:if="${isAdmin}">
-                        Admin
-                    </a>
-                    <a th:if="${nameofuser}" class="button is-light" href="/logout">
+                <p sec:authorize="isAuthenticated()" class="p-2"><strong>Welcome</strong></p>
+                <p class="mr-3" id="loggedInUser" sec:authorize="isAuthenticated()"
+                   th:text="${#authentication.getName()}"></p>
+                <div class="buttons">
+                    <div class="mr-3 dropdown is-hoverable" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <div class="dropdown-trigger">
+                            <button aria-controls="dropdown-menu" aria-haspopup="true" class="button is-dark">
+                                <span>Admin</span>
+                                <span class="icon is-small">
+                                    <i aria-hidden="true" class="fas fa-angle-down">
+                                    </i></span>
+                            </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                            <div class="dropdown-content">
+                                <a class="dropdown-item" href="/admin/product/all">
+                                    Products
+                                </a>
+                                <a class="is-info dropdown-item" href="/admin/order/all">
+                                    Orders
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <a class="button is-success" href="/logout" sec:authorize="${isAuthenticated()}">
                         Logout
                     </a>
                 </div>
@@ -54,5 +71,6 @@
     </div>
 
 </nav>
+
 </body>
 </html>

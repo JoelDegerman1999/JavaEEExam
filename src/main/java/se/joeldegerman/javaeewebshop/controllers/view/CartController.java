@@ -28,8 +28,6 @@ public class CartController {
     @GetMapping("/cart")
     public String showCart(Model model) {
         model.addAttribute("cart", cartService.getCartVM());
-        model.addAttribute("nameofuser", UserHelper.getUsernameFromLoggedInUser(SecurityContextHolder.getContext()));
-        model.addAttribute("isAdmin", UserHelper.checkIfUserIsAdmin(SecurityContextHolder.getContext()));
         return "Cart";
     }
 

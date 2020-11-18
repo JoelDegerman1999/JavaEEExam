@@ -1,10 +1,9 @@
 package se.joeldegerman.javaeewebshop.controllers.view;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import se.joeldegerman.javaeewebshop.helpers.UserHelper;
+import org.springframework.web.bind.annotation.RequestParam;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
 import se.joeldegerman.javaeewebshop.services.CartServiceImpl;
@@ -26,19 +25,17 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
-        List<Product> allProducts = productService.getAllProducts();
+    public String index(Model model, @RequestParam(value = "keyword", required = false) String keyword) {
         CartViewModel cartVM = cartService.getCartVM();
-        model.addAttribute("products", allProducts);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("cart", cartVM);
-        model.addAttribute("nameofuser", UserHelper.getUsernameFromLoggedInUser(SecurityContextHolder.getContext()));
-        model.addAttribute("isAdmin", UserHelper.checkIfUserIsAdmin(SecurityContextHolder.getContext()));
+        if (keyword == null) {
+            List<Product> allProducts = productService.getAllProducts();
+            model.addAttribute("products", allProducts);
+        } else {
+            List<Product> products = productService.searchProducts(keyword);
+            model.addAttribute("products", products);
+        }
         return "Index";
     }
-
-    @GetMapping("/content")
-    public String content() {
-        return "Content";
-    }
-
 }

@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
     <title>Order - Success</title>
-    <link rel="stylesheet" th:href="@{/bulma/css/bulma.min.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-<nav th:replace="fragments/Navbar.html :: navbar"></nav>
-<div class="container has-text-centered py-3">
+<div layout:fragment="content" class="container has-text-centered py-3">
     <h1 class="title">Order successfully placed</h1>
     <h3 class="subtitle" th:text="'Order id : ' + ${order.id}"></h3>
-
-    <!--       -->
-
     <section class="columns is-centered">
         <article class="column is-8">
 

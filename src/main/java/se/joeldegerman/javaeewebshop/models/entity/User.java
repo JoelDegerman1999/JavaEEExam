@@ -25,6 +25,9 @@ public class User {
     private boolean isActive = true;
     private String roles = "ROLE_USER";
 
+    @Embedded
+    private Address address;
+
     public User() {
     }
 }

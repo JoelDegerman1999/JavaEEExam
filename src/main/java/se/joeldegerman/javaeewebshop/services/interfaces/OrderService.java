@@ -13,5 +13,9 @@ public interface OrderService {
 
     List<Order> getAllSentOrders();
 
+    List<Order> getAllOrders();
+
     Order saveOrder(Order order);
+
+    Order sendOrder(long id);
 }

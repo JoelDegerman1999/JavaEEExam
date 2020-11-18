@@ -1,30 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link rel="stylesheet" th:href="@{css/style.css}">
-    <link rel="stylesheet" th:href="@{bulma/css/bulma.min.css}">
-    <script src="https://www.jsdelivr.com/package/npm/@creativebulma/bulma-tooltip"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
-          integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 </head>
 <body>
-<nav th:replace="fragments/Navbar.html :: navbar(useCart = ${false}, nameofuser=${nameofuser}, isAdmin=${isAdmin})"></nav>
-<main>
+<main layout:fragment="content">
     <section class="container py-6">
+        <div class="columns is-centered mb-3">
+            <div class="column is-half">
+                <form th:action="@{/}">
+                    <div class="field">
+                        <p class="control is-flex">
+                            <input class="input" name="keyword" placeholder="Search" th:value="${keyword}" type="text">
+                            <button class="button" type="submit"><span class=""><i class="fas fa-search"></i></span>
+                            </button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="columns is-multiline">
-            <div class="column is-4" th:each="product : ${products}" th:object="${product}">
-                <article class="card" >
+            <div class="column is-3" th:each="product : ${products}" th:object="${product}">
+                <article class="card">
                     <div class="columns is-multiline has-text-centered is-vcentered is-centered">
                         <div class="column is-12 my-6">
-                            <img src="" th:src="*{imgUrl}" alt="Item Image" style="max-height: 200px">
+                            <img alt="Item Image" src="" style="max-height: 130px" th:src="*{imgUrl}">
                         </div>
-                        <div class="column is-5 mb-6 has-text-left has-tooltip-bottom" th:data-tooltip="*{name}">
-                            <p class="is-size-5 title text"  th:text="*{name}" ></p>
+                        <div class="column is-12 has-text-centered has-tooltip-bottom" th:data-tooltip="*{name}">
+                            <p class="is-size-5 title" th:text="*{name}"></p>
                         </div>
-                        <div class="column is-5 mb-6 has-text-right">
+                        <div class="column is-12">
                             <p class="is-size-6 subtitle" th:text="${product.price} + ' SEK'"></p>
                         </div>
                     </div>
@@ -39,6 +47,8 @@
     </section>
 </main>
 
-<script th:src="@{js/main.js}"></script>
+<th:block layout:fragment="optional">
+    <script th:src="@{js/main.js}"></script>
+</th:block>
 </body>
 </html>

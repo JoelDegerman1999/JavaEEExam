@@ -18,6 +18,7 @@ public class Product {
     private String name;
     private double price;
     private String imgUrl;
+    private String category;
 
     @Setter(AccessLevel.NONE)
     private LocalDateTime dateCreated;

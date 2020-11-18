@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - New Orders</title>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+<body>
+
+<div class="container" layout:fragment="content">
+    <div class="columns box" th:each="order : ${orders}" th:object="${order}">
+        <div class="column">
+            <p th:text="*{id}"></p>
+        </div>
+        <div class="column">
+            <p th:text="*{orderSent}"></p>
+        </div>
+        <div class="column">
+            <form th:action="@{'/admin/order/send/' + ${order.id}}" method="post">
+                <button class="button is-success" type="submit">Mark Sent</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<th:block layout:fragment="optional">
+</th:block>
+
+</body>
+</html>

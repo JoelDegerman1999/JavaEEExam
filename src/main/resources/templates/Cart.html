@@ -1,18 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Cart</title>
-    <link rel="stylesheet" th:href="@{css/style.css}">
-    <link rel="stylesheet" th:href="@{bulma/css/bulma.css}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
-          integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 </head>
 <body>
-<nav th:replace="fragments/Navbar.html :: navbar(useCart = ${true})"></nav>
-<section class="container py-6" th:if="${cart.cartSize > 0}">
-    <div class="card p-5" style="max-width: 50rem; margin: 0 auto">
+<section class="container py-6" layout:fragment="content" th:if="${cart.cartSize > 0}">
+    <div class="card p-5" style="max-width: 60rem; margin: 0 auto">
         <div class="columns has-text-centered" style="border-bottom: 1px dotted rgba(0,0,0,.2)">
             <div class="column is-flex is-align-items-center is-justify-content-space-around">
                 <p>Bild</p>
@@ -22,9 +18,9 @@
             <div class="column">Pris</div>
         </div>
         <div class="columns is-vcentered has-text-centered" th:each="item : ${cart.getCartItems()}" th:object="${item}">
-            <div class="column has-text-right">
-                <div class="is-flex is-align-items-center is-justify-content-space-around">
-                    <img src="" th:src="*{product.imgUrl}" alt="Product image" style="height: 50px">
+            <div class="column">
+                <div class="is-flex is-align-items-center is-justify-content-space-between">
+                    <img alt="Product image" src="" style="height: 50px" th:src="*{product.imgUrl}">
                     <p th:text="*{product.name}"></p>
                 </div>
             </div>
@@ -38,15 +34,23 @@
             </div>
         </div>
     </div>
-    <div class="has-text-right pt-3" style="max-width: 50rem; margin: 0 auto">
-        <form action="" th:action="@{/order/checkout}" method="post">
-            <button type="submit" class="button is-primary">Checkout</button>
+    <div class="columns has-text-centered" style="max-width: 50rem; margin: 0 auto">
+        <div class="column is-12 is-flex is-justify-content-flex-end">
+            <p><strong>Totalt :</strong></p>
+            <p class="px-3" th:text="${cart.grandTotal} + ' SEK'"></p>
+        </div>
+    </div>
+    <div class="has-text-right pt-3" style="max-width: 60rem; margin: 0 auto">
+        <form action="" method="post" th:action="@{/order/checkout}">
+            <button class="button is-primary" type="submit">Checkout</button>
         </form>
     </div>
 </section>
-<div th:unless="${cart.cartSize > 0}" class="is-flex is-align-items-center is-justify-content-center">No items added to
+<div class="is-flex is-align-items-center is-justify-content-center" th:unless="${cart.cartSize > 0}">No items added to
     Cart
 </div>
-<script src="" type="text/javascript" th:src="@{js/cart.js}"></script>
+<th:block layout:fragment="optional">
+    <script src="" th:src="@{js/main.js}" type="text/javascript"></script>
+</th:block>
 </body>
 </html>

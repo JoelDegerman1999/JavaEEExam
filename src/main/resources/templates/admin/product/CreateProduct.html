@@ -1,41 +1,53 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin - Create product</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/admin.css}">
-    <link rel="stylesheet" th:href="@{/bulma/css/bulma.min.css}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
-          integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 </head>
 <body>
-<nav th:replace="fragments/Navbar.html :: navbar"></nav>
-<section class="container">
+<section class="container" layout:fragment="content">
     <div class="columns is-centered is-vcentered">
         <div class="column box is-3-desktop">
-            <form th:action="@{/admin/add/product}" th:object="${product}" method="post">
+            <form method="post" th:action="@{/admin/add/product}" th:object="${product}">
                 <div class="field">
                     <h2 class="subtitle">Add product</h2>
                 </div>
                 <div class="field">
                     <label class="label">Name</label>
                     <p class="control has-icons-left">
-                        <input type="text" th:field="*{name}" class="input" placeholder="Name">
+                        <input class="input" placeholder="Name" th:field="*{name}" type="text">
                         <span class="icon is-small is-left"><i class="fas fa-signature"></i></span>
                     </p>
                 </div>
                 <div class="field">
+                    <label class="label">Category</label>
+                    <div class="control has-icons-left">
+
+                        <div class="select">
+                            <select th:field="*{category}">
+                                <option value="Laptop">Laptop</option>
+                                <option value="Console">Console</option>
+                                <option value="VR">VR</option>
+                                <option value="Mobile">Mobile</option>
+                                <option value="Printer">Printer</option>
+                            </select>
+                        </div>
+                        <span class="icon is-small is-left"><i class="fas fa-border-all"></i></span>
+                    </div>
+                </div>
+                <div class="field">
                     <label class="label">Price</label>
                     <p class="control has-icons-left">
-                        <input type="text" class="input" th:field="*{price}" placeholder="Price">
+                        <input class="input" placeholder="Price" th:field="*{price}" type="text">
                         <span class="icon is-small is-left"><i class="fas fa-money-check"></i></span>
                     </p>
                 </div>
                 <div class="field">
                     <label class="label">Image Url</label>
                     <p class="control has-icons-left">
-                        <input type="text" class="input" th:field="*{imgUrl}" placeholder="Image Url">
+                        <input class="input" placeholder="Image Url" th:field="*{imgUrl}" type="text">
                         <span class="icon is-small is-left"><i class="fas fa-image"></i></span>
                     </p>
                 </div>

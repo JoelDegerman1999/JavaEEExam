@@ -4,6 +4,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 import se.joeldegerman.javaeewebshop.helpers.UserHelper;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.OrderRepository;
@@ -24,7 +25,7 @@ public class AdminProductController {
         this.orderRepository = orderRepository;
     }
 
-    @GetMapping("index")
+    @GetMapping("product/all")
     public String showAdminIndex(Model model) {
         List<Product> allProducts = productService.getAllProducts();
         System.out.println(allProducts);
@@ -42,11 +43,16 @@ public class AdminProductController {
     }
 
     @PostMapping("update/{id}")
-    public String updateProduct(@ModelAttribute Product product, @PathVariable long id) {
+    public RedirectView updateProduct(@ModelAttribute Product product, @PathVariable long id) {
+        var redirectView = new RedirectView();
         product.setId(id);
         Product updatedProduct = productService.updateProduct(product);
-        if(updatedProduct != null) return "redirect:/admin/index";
-        return "redirect:/admin/update/" + product.getId();
+        if (updatedProduct != null) {
+            redirectView.setUrl("/admin/product/all");
+        } else {
+            redirectView.setUrl("/admin/update/" + id);
+        }
+        return redirectView;
     }
 
     @GetMapping("add/product")
@@ -61,6 +67,6 @@ public class AdminProductController {
     @PostMapping("add/product")
     public String productForm(@ModelAttribute Product product) {
         productService.createProduct(product);
-        return "redirect:/admin/index";
+        return "redirect:/admin/product/all";
     }
 }

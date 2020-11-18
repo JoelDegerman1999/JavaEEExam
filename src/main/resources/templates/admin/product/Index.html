@@ -1,18 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
     <title>Admin - Product List</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/admin.css}">
-    <link rel="stylesheet" th:href="@{/bulma/css/bulma.min.css}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
-          integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
-<nav th:replace="fragments/Navbar.html :: navbar"></nav>
-<section class="container">
+<section layout:fragment="content" class="container">
     <div class="columns is-centered">
         <div class="column is-6-desktop">
             <div class="box">
@@ -21,6 +17,7 @@
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
+                        <th>Image</th>
                         <th>Price</th>
                         <th>Action</th>
                     </tr>
@@ -28,6 +25,7 @@
                     <tr class="" th:each="product : ${products}" th:object="${product}">
                         <th th:text="*{id}"></th>
                         <td th:text="*{name}"></td>
+                        <td th:text="*{category}"></td>
                         <td th:text="*{price}"></td>
                         <td>
                             <form th:action="@{'/admin/update/' + ${product.id}}" method="get">
