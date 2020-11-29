@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Category</title>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <div class="columns is-centered mt-3">
+        <div class="column is-4">
+            <h1 class="title">Categories</h1>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="category : ${categories}" th:object="${category}">
+                    <th th:text="*{id}"></th>
+                    <td th:text="*{categoryName}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <a class="button is-primary" href="/admin/category/create">
+                Add Category
+            </a>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="optional">
+
+</th:block>
+</body>
+</html>

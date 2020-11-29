@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Order - Success</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 </head>
 <body>
-<div layout:fragment="content" class="container has-text-centered py-3">
-    <h1 class="title">Order successfully placed</h1>
-    <h3 class="subtitle" th:text="'Order id : ' + ${order.id}"></h3>
-    <section class="columns is-centered">
+<div class="container has-text-centered py-3" layout:fragment="content">
+    <div th:if="${order != null}">
+        <h1 class="title">Order successfully placed</h1>
+        <h3 class="subtitle" th:text="'Order id : ' + ${order.id}"></h3>
+    </div>
+    <section class="columns is-centered mt-5">
         <article class="column is-8">
 
             <div class="card">
@@ -20,7 +22,7 @@
                          th:object="${orderItem.product}">
 
                         <div class="column is-flex is-justify-content-center">
-                            <img src="" alt="" th:src="*{imgUrl}" style="max-height: 70px">
+                            <img alt="" src="" style="max-height: 70px" th:src="*{imgUrl}">
                         </div>
                         <div class="column has-text-centered">
                             <p th:text="*{name}"></p>
@@ -33,12 +35,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="columns">
-                    <div class="column"></div>
-                    <div class="column"></div>
-                    <div class="column"></div>
-                    <div style="border-top: 1px solid rgba(0,0,0,0.4)" class="column"
-                         th:text="'Totalt : ' +${order.orderGrandTotal} + ' SEK'"></div>
+                <div class="columns pb-4">
+                    <div class="column is-3"></div>
+                    <div class="column is-3"></div>
+                    <div class="column is-3"></div>
+                    <div class="column has-text-centered subtitle" style="border-top: 1px solid rgba(0,0,0,0.4)"
+                         th:text="'Total : ' +${order.orderGrandTotal} + ' SEK'"></div>
                 </div>
             </div>
         </article>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Orders</title>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+<body>
+
+<div class="container" layout:fragment="content">
+    <div class="box">
+        <table class="table" style="margin: 0 auto">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Sent</th>
+                <th>Action</th>
+            </tr>
+            <tbody>
+            <tr th:each="order : ${orders}" th:object="${order}">
+                <th>[[*{id}]]</th>
+                <td>[[*{orderSent}]]</td>
+                <td>
+                    <form th:action="@{'/admin/order/' + ${order.id}}">
+                        <button type="submit" class=""><i class="fas fa-info has-background-info px-2 py-1 box"></i></button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+<th:block layout:fragment="optional">
+</th:block>
+
+</body>
+</html>

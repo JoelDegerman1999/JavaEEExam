@@ -1,27 +1,27 @@
 const cartCounter = document.querySelector("#cart-counter")
 const loggedInUser = document.querySelector("#loggedInUser");
 let cartAmount = 0;
-$(function () {
 
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        if (settings.type == 'POST' || settings.type == 'PUT'
+            || settings.type == 'DELETE') {
+            if (!(/^http:.*/.test(settings.url) || /^https:.*/
+                .test(settings.url))) {
+                // Only send the token to relative URLs i.e. locally.
+                xhr.setRequestHeader("X-XSRF-TOKEN",
+                    Cookies.get('XSRF-TOKEN'));
+            }
+        }
+    }
+});
+
+$(function () {
     if (loggedInUser) {
         getCartSizeAndSetCounterToSize()
     }
-
-
-    $('.addbtn').each(function () {
-        let btn = this;
-        let id = btn.dataset.productid;
-        btn.addEventListener('click', function () {
-            $.ajax({
-                url: "/api/cart/add/" + id,
-                type: "POST",
-                success: function () {
-                    cartAmount++;
-                    cartCounter.innerHTML = cartAmount.toString();
-                }
-            })
-        })
-    })
+    highlightCategoryChosen()
+    addToCart()
 })
 
 function getCartSizeAndSetCounterToSize() {
@@ -31,11 +31,40 @@ function getCartSizeAndSetCounterToSize() {
         success: function (e) {
             cartAmount = e;
             cartCounter.innerHTML = cartAmount.toString();
-
         }
 
     })
 }
+
+function highlightCategoryChosen() {
+    let split = window.location.href.split("/");
+    let category = split[split.length - 1];
+    let categoryBtns = document.querySelectorAll("#category");
+    categoryBtns.forEach(value => {
+        if (value.dataset.categoryname === category) {
+            value.classList.add("is-info")
+        }
+    })
+}
+
+function addToCart() {
+    $('.addbtn').each(function () {
+        let btn = this;
+        let id = btn.dataset.productid;
+        btn.addEventListener('click', function () {
+            $.ajax({
+                url: "/api/cart/add/" + id,
+
+                type: "POST",
+                success: function () {
+                    cartAmount++;
+                    cartCounter.innerHTML = cartAmount.toString();
+                }
+            })
+        })
+    })
+}
+
 
 const changeCartItemQuantity = () => {
     $('.minus').each(function () {
@@ -59,7 +88,9 @@ function ajaxDecreaseQuantity(id) {
             location.reload();
         }
     })
-}function ajaxIncreaseQuantity(id) {
+}
+
+function ajaxIncreaseQuantity(id) {
     $.ajax({
         url: "/api/cart/increase/" + id,
         type: "PUT",
@@ -68,6 +99,7 @@ function ajaxDecreaseQuantity(id) {
         }
     })
 }
+
 changeCartItemQuantity();
 
 

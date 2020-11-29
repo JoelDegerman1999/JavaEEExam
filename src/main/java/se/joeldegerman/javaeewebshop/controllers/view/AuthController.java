@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 import se.joeldegerman.javaeewebshop.exceptions.UsernameAlreadyExistsException;
 import se.joeldegerman.javaeewebshop.models.entity.User;
 import se.joeldegerman.javaeewebshop.services.AuthServiceImpl;
@@ -26,23 +27,26 @@ public class AuthController {
     @GetMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("user", new User());
-        return "auth/SignUp";
+        return "Auth/SignUp";
     }
 
     @PostMapping("/signup")
-    public String signupSubmit(@Valid @ModelAttribute User user) {
+    public RedirectView signupSubmit(@Valid @ModelAttribute User user) {
+        var redirectView = new RedirectView();
         try {
             userService.registerNewUser(user);
-            return "redirect:/login";
+            redirectView.setUrl("/login");
+            return redirectView;
         } catch (UsernameAlreadyExistsException e) {
-            return "redirect:/signup?error";
+            redirectView.setUrl("/signup/?error");
+            return redirectView;
         }
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @GetMapping("/login")
     public String login() {
-        return "auth/Login";
+        return "Auth/Login";
     }
 
 }

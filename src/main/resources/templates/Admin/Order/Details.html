@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Order Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="columns is-multiline">
+        <div class="column is-12 has-text-centered">
+            <h1 class="title">Order number : [[${order.id}]]</h1>
+        </div>
+        <div class="column is-12">
+            <div class="box">
+                <div class="columns is-vcentered" th:each="orderItem : ${order.orderItems}"
+                     th:object="${orderItem.product}">
+
+                    <div class="column is-flex is-justify-content-center">
+                        <img src="" alt="" th:src="*{imgUrl}" style="max-height: 70px">
+                    </div>
+                    <div class="column has-text-centered">
+                        <p th:text="*{name}"></p>
+                    </div>
+                    <div class="column has-text-centered">
+                        <p th:text="${orderItem.quantity}"></p>
+                    </div>
+                    <div class="column has-text-centered">
+                        <p th:text="${orderItem.orderItemTotal}"></p>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column is-3"></div>
+                    <div class="column is-3"></div>
+                    <div class="column is-3"></div>
+                    <div class="column has-text-centered">
+                        <p class="subtitle" th:text="'Total : ' + ${order.orderGrandTotal} + '.0 SEK'" ></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column has-text-right">
+            <form th:action="@{'send/' + ${order.id}}" method="post">
+                <button type="submit" class="button is-success">Send Order</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+<th:block layout:fragment="optional">
+</th:block>
+</body>
+</html>

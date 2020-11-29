@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 import se.joeldegerman.javaeewebshop.models.entity.Order;
 import se.joeldegerman.javaeewebshop.services.interfaces.OrderService;
 
@@ -25,13 +26,21 @@ public class AdminOrderController {
     @GetMapping("order/all")
     public String getOrders(Model model) {
         model.addAttribute("orders", orderService.getAllOrders());
-        return "admin/order/Index";
+        return "Admin/Order/Index";
+    }
+    @GetMapping("order/{id}")
+    public String getOrderById(@PathVariable long id, Model model) {
+        Order order = orderService.getOrderById(id);
+        if(order != null) {
+            model.addAttribute("order", order);
+        }
+        return "Admin/Order/Details";
     }
 
     @PostMapping("order/send/{id}")
-    public String sendOrder(@PathVariable long id) {
+    public RedirectView sendOrder(@PathVariable long id) {
         orderService.sendOrder(id);
-        return "redirect:/admin/order/all";
+        return new RedirectView("/admin/order/all");
     }
 
 //    @GetMapping("get/order/newOrder")

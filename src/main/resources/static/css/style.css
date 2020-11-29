@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 @import "cart.css";
-@import "modal.css";
 * {
   margin: 0;
   padding: 0;
@@ -14,15 +13,33 @@ button {
   cursor: pointer;
 }
 
-.text {
-  width: 142px;
+.active {
+  border-bottom: 1px solid pink;
+}
+
+a {
+  width: 100%;
+}
+a .text {
+  width: 100%;
   white-space: nowrap;
   overflow: hidden !important;
   text-overflow: ellipsis;
+  padding: 0 1rem;
+  margin: auto;
 }
 
 .fas {
   cursor: pointer;
+}
+
+.flex-test {
+  display: flex;
+  gap: 1rem;
+}
+.flex-test div {
+  padding: 1rem;
+  background-color: pink;
 }
 
 /*# sourceMappingURL=style.css.map */

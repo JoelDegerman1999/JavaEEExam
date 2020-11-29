@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <form th:action="@{/admin/category/create}" method="post">
+        <div class="field">
+            <label class="label">Category name</label>
+            <p class="control has-icons-left">
+                <input class="input" placeholder="Category name" th:field="${category.categoryName}" type="text">
+                <span class="icon is-small is-left"><i class="fas fa-signature"></i></span>
+            </p>
+        </div>
+        <div class="field">
+            <button type="submit" class="button is-success">Add Category</button>
+        </div>
+    </form>
+</div>
+<th:block layout:fragment="optional">
+</th:block>
+</body>
+</html>

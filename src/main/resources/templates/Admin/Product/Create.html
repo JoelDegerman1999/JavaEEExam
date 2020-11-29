@@ -7,15 +7,17 @@
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 </head>
 <body>
-<section class="container" layout:fragment="content">
+<section layout:fragment="content">
     <div class="columns is-centered is-vcentered">
-        <div class="column box is-3-desktop">
+        <div class="column box is-5-desktop">
             <form method="post" th:action="@{/admin/add/product}" th:object="${product}">
                 <div class="field">
                     <h2 class="subtitle">Add product</h2>
                 </div>
                 <div class="field">
                     <label class="label">Name</label>
+                    <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{name}"
+                       th:if="${#fields.hasErrors('name')}"></p>
                     <p class="control has-icons-left">
                         <input class="input" placeholder="Name" th:field="*{name}" type="text">
                         <span class="icon is-small is-left"><i class="fas fa-signature"></i></span>
@@ -23,15 +25,13 @@
                 </div>
                 <div class="field">
                     <label class="label">Category</label>
+                    <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{category}"
+                       th:if="${#fields.hasErrors('category')}"></p>
                     <div class="control has-icons-left">
-
                         <div class="select">
                             <select th:field="*{category}">
-                                <option value="Laptop">Laptop</option>
-                                <option value="Console">Console</option>
-                                <option value="VR">VR</option>
-                                <option value="Mobile">Mobile</option>
-                                <option value="Printer">Printer</option>
+                                <option th:each="category : ${categories}" th:text="${category.categoryName}"
+                                        th:value="${category.id}"></option>
                             </select>
                         </div>
                         <span class="icon is-small is-left"><i class="fas fa-border-all"></i></span>
@@ -39,16 +39,29 @@
                 </div>
                 <div class="field">
                     <label class="label">Price</label>
+                    <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{price}"
+                       th:if="${#fields.hasErrors('price')}"></p>
                     <p class="control has-icons-left">
                         <input class="input" placeholder="Price" th:field="*{price}" type="text">
                         <span class="icon is-small is-left"><i class="fas fa-money-check"></i></span>
+
                     </p>
                 </div>
                 <div class="field">
-                    <label class="label">Image Url</label>
+                    <label class="label">Image URL</label>
+                    <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{imgUrl}"
+                       th:if="${#fields.hasErrors('imgUrl')}"></p>
                     <p class="control has-icons-left">
                         <input class="input" placeholder="Image Url" th:field="*{imgUrl}" type="text">
                         <span class="icon is-small is-left"><i class="fas fa-image"></i></span>
+                    </p>
+                </div>
+                <div class="field">
+                    <label class="label">Description</label>
+                    <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{description}"
+                       th:if="${#fields.hasErrors('description')}"></p>
+                    <p class="control">
+                        <textarea class="textarea" rows="10" th:field="*{description}"></textarea>
                     </p>
                 </div>
                 <div class="field has-text-right">

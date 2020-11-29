@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div th:fragment="pagination">
+    <div class="columns" th:if="${totalPages > 1}">
+        <div class="column is-2">
+            Total Items : [[${totalItems}]]
+        </div>
+        <div class="column is-2">
+                    <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                        <a th:href="@{'/page?pageNo=' + ${i}}" th:if="${currentPage != i}">[[${i}]]</a>
+                        <span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+                    </span>
+        </div>
+        <div class="column is-1">
+                <span th:if="${currentPage > 1}">
+                    <a th:href="@{'/page?pageNo=' + ${currentPage - 1}}">Previous</a>
+                </span>
+            <span th:unless="${currentPage > 1}">Previous</span>
+        </div>
+        <div class="column is-1">
+                <span th:if="${currentPage < totalPages}">
+                    <a th:href="@{'/page?pageNo=' + ${currentPage + 1}}">Next</a>
+                </span>
+            <span th:unless="${currentPage < totalPages}">Next</span>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="optional">
+</th:block>
+</body>
+</html>

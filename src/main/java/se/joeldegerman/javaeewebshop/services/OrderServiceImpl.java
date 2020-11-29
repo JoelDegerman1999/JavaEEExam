@@ -77,6 +77,13 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+    @Override
+    public Order getOrderById(long id) {
+        Optional<Order> optionalOrder = orderRepository.findById(id);
+        if(optionalOrder.isPresent()) return optionalOrder.get();
+        return null;
+    }
+
     public Order saveOrder(Order order) {
         return orderRepository.save(order);
     }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="hero">
+        <div class="hero-body">
+            <div class="columns is-centered">
+                <div class="column is-4-desktop">
+                    <div class="subtitle has-text-centered mb-4 box py-4 has-background-danger has-text-light"
+                         th:if="${param.error} != null">
+                        <p>Invalid email and/or password</p>
+                    </div>
+                    <div class="subtitle has-text-centered mb-4 box p-4 has-background-success has-text-light"
+                         th:if="${param.logout} != null">
+                        <p>You have been logged out</p>
+                    </div>
+                    <form class="box" method="post" th:action="@{/login}">
+                        <div class="field">
+                            <h2 class="subtitle">Login and start buying</h2>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" name="username" placeholder="Email" type="email">
+                                <span class="icon is-small is-left">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" name="password" placeholder="Password" type="password">
+                                <span class="icon is-small is-left">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <label class="checkbox">
+                                <input type="checkbox" name="remember-me">
+                                Remember me?
+                            </label>
+                        </div>
+                        <div class="field ">
+                            <p class="control has-text-right">
+                                <button class="button is-success" type="submit">
+                                    Login
+                                </button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>

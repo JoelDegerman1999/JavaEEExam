@@ -32,7 +32,7 @@ public class OrderController {
     }
 
     @PostMapping("/order/checkout")
-    public String createOrderLine(RedirectAttributes redirectAttributes, Principal principal) {
+    public String createOrderLine(RedirectAttributes redirectAttributes, Principal principal, Model model) {
         Optional<User> optionalUser = userRepository.findByUsername(principal.getName());
         if (optionalUser.isPresent()) {
             Optional<Order> optionalOrder = orderService.createAndReturnOrder(optionalUser.get());
@@ -41,17 +41,16 @@ public class OrderController {
                 redirectAttributes.addFlashAttribute("order", persistedOrder);
                 return "redirect:/order/success";
             }
+
         }
         //TODO show a error page
         return "Index";
     }
 
     @GetMapping("/order/success")
-    public String orderSuccess(@ModelAttribute("order") Order order, Model model) {
-        model.addAttribute("nameofuser", UserHelper.getUsernameFromLoggedInUser(SecurityContextHolder.getContext()));
-        model.addAttribute("" +
-                "isAdmin", UserHelper.checkIfUserIsAdmin(SecurityContextHolder.getContext()));
-        return "order/Success";
+    public String orderSuccess(@ModelAttribute("order") Order order) {
+
+        return "Order/Success";
     }
 
 }

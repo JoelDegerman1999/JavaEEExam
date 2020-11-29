@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin - Product List</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 </head>
 
 <body>
-<section layout:fragment="content" class="container">
+<section class="" layout:fragment="content">
     <div class="columns is-centered">
         <div class="column is-6-desktop">
             <div class="box">
@@ -25,13 +25,16 @@
                     <tr class="" th:each="product : ${products}" th:object="${product}">
                         <th th:text="*{id}"></th>
                         <td th:text="*{name}"></td>
-                        <td th:text="*{category}"></td>
+                        <td th:text="*{category.categoryName}"></td>
                         <td th:text="*{price}"></td>
                         <td>
-                            <form th:action="@{'/admin/update/' + ${product.id}}" method="get">
-                                <button type="submit"><i id="edit" th:data-productid="*{id}" class="fas fa-edit has-text-info"></i></button>
+                            <form method="get" th:action="@{'/admin/update/' + ${product.id}}">
+                                <button type="submit"><i class="fas fa-edit has-text-info" id="edit"
+                                                         th:data-productid="*{id}"></i></button>
                             </form>
-                            <i id="delete" th:data-productid="*{id}" class="fas fa-trash has-text-danger"></i>
+                            <form th:action="@{'/admin/delete/product/' + ${product.id}}" method="post">
+                                <button type="submit"><i class="fas fa-trash has-text-danger" id="delete" th:data-productid="*{id}"></i></button>
+                            </form>
                         </td>
                     </tr>
                     </tbody>

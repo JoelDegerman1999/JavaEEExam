@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="hero">
+        <div class="hero-body">
+            <section class="container">
+                <div class="columns is-centered">
+                    <div class="column is-4-desktop">
+                        <div class="subtitle has-text-centered mb-4 box py-4 has-background-danger has-text-light"
+                             th:if="${param.error != null}">
+                            <p>Email already exist | <a class="has-text-primary" href="/login">Login instead</a></p>
+                        </div>
+                        <form class="box" method="post" th:action="@{/signup}" th:object="${user}">
+                            <div class="field">
+                                <h2 class="subtitle">Sign up and start buying</h2>
+                            </div>
+                            <div class="field">
+                                <label class="label">
+                                    Full Name
+                                </label>
+                                <p class="control has-icons-left">
+                                    <input class="input" placeholder="Full name" th:field="*{fullName}" type="text">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <label class="label">Address</label>
+                                <p class="control has-icons-left">
+                                    <input class="input" placeholder="Street" th:field="*{address.street}" type="text">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-road"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <input class="input" placeholder="City" th:field="*{address.city}" type="text">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-city"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <input class="input" placeholder="Zip code" th:field="*{address.zipCode}" type="text">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-code"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <input class="input" placeholder="Country" th:field="*{address.country}" type="text">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-globe-europe"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <label class="label">
+                                    Credentials
+                                </label>
+                                <p class="control has-icons-left">
+                                    <input class="input" placeholder="Email" th:field="*{username}" type="email">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <input class="input" placeholder="Password" th:field="*{password}" type="password">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control has-text-right">
+                                    <button class="button is-success" type="submit">
+                                        Sign up
+                                    </button>
+                                </p>
+                            </div>
+                        </form>
+                        <div class="has-text-centered">
+                            <h1>Already have an account? <a href="/login">Login here</a></h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>

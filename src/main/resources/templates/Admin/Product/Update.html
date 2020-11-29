@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Update Product</title>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+</head>
+<body>
+<div layout:fragment="content">
+
+    <form class="box" method="post" th:action="@{'/admin/update/' + ${product.id}}" th:object="${product}">
+        <div class="field">
+            <label class="label">Name</label>
+            <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{name}"
+               th:if="${#fields.hasErrors('name')}"></p>
+            <p class="control has-icons-left">
+                <input class="input" placeholder="Name" th:field="*{name}" type="text">
+                <span class="icon is-small is-left"><i class="fas fa-signature"></i></span>
+            </p>
+        </div>
+        <div class="field">
+            <label class="label">Category</label>
+            <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{category}"
+               th:if="${#fields.hasErrors('category')}"></p>
+            <div class="control has-icons-left">
+                <div class="select">
+                    <select th:field="*{category}">
+                        <option th:each="category : ${categories}" th:text="${category.categoryName}"
+                                th:value="${category.id}"></option>
+                    </select>
+                </div>
+                <span class="icon is-small is-left"><i class="fas fa-border-all"></i></span>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Price</label>
+            <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{price}"
+               th:if="${#fields.hasErrors('price')}"></p>
+            <p class="control has-icons-left">
+                <input class="input" placeholder="Price" th:field="*{price}" type="text">
+                <span class="icon is-small is-left"><i class="fas fa-money-bill-alt"></i></span>
+            </p>
+        </div>
+        <div class="field">
+            <label class="label">Image URL</label>
+            <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{imgUrl}"
+               th:if="${#fields.hasErrors('imgUrl')}"></p>
+            <p class="control has-icons-left">
+                <input class="input" placeholder="Image URL" th:field="*{imgUrl}" type="text">
+                <span class="icon is-small is-left"> <i class="fas fa-image"></i></span>
+            </p>
+        </div>
+
+        <div class="field">
+            <label class="label">Description</label>
+            <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{description}"
+               th:if="${#fields.hasErrors('description')}"></p>
+            <p class="control">
+                <textarea class="textarea" rows="10" th:field="*{description}"></textarea>
+            </p>
+        </div>
+        <div class="field">
+            <p class="control has-text-right">
+                <button class="button is-success" type="submit">
+                    Update
+                </button>
+            </p>
+        </div>
+    </form>
+</div>
+</body>
+</html>

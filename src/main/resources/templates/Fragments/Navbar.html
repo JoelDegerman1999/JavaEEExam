@@ -19,8 +19,8 @@
             </a>
         </div>
         <div class="navbar-end">
-            <div class="navbar-item mr-6" sec:authorize="!hasRole('ROLE_ADMIN')">
-                <a href="/cart">
+            <div class="navbar-item mr-6" sec:authorize="isAuthenticated()">
+                <a href="/cart" sec:authorize="!hasRole('ROLE_ADMIN')">
                     <div class="cart-container">
                         <i class="fas fa-shopping-cart has-text-black"></i>
                         <p class="counter" id="cart-counter" th:unless="${useCart}">0</p>
@@ -37,7 +37,7 @@
                         Log in
                     </a>
                 </div>
-                <p sec:authorize="isAuthenticated()" class="p-2"><strong>Welcome</strong></p>
+                <p class="p-2" sec:authorize="isAuthenticated()"><strong>Welcome</strong></p>
                 <p class="mr-3" id="loggedInUser" sec:authorize="isAuthenticated()"
                    th:text="${#authentication.getName()}"></p>
                 <div class="buttons">
@@ -57,14 +57,18 @@
                                 </a>
                                 <a class="is-info dropdown-item" href="/admin/order/all">
                                     Orders
-                                </a>
+                                </a><a class="is-info dropdown-item" href="/admin/category/all">
+                                Category
+                            </a>
                             </div>
                         </div>
 
                     </div>
-                    <a class="button is-success" href="/logout" sec:authorize="${isAuthenticated()}">
-                        Logout
-                    </a>
+                    <form METHOD="post" sec:authorize="${isAuthenticated()}" th:action="@{/logout}">
+                        <button class="button is-success" type="submit">
+                            Logout
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
