@@ -25,9 +25,9 @@
                 </div>
             </div>
             <div class="column">
-                <p class="plus" th:data-productid="*{product.id}">+</p>
+                <a class="plus" th:data-productid="*{product.id}">+</a>
                 <p th:text="*{quantity}"></p>
-                <p class="minus" th:data-productid="*{product.id}">-</p>
+                <a class="minus" th:data-productid="*{product.id}">-</a>
             </div>
             <div class="column">
                 <p th:text="*{price}"></p>
@@ -42,7 +42,7 @@
     </div>
     <div class="has-text-right pt-3" style="max-width: 60rem; margin: 0 auto">
         <form action="" method="post" th:action="@{/order/checkout}">
-            <button class="button is-primary" type="submit">Checkout</button>
+            <button class="button is-primary" type="submit">Proceed to checkout</button>
         </form>
     </div>
 </section>

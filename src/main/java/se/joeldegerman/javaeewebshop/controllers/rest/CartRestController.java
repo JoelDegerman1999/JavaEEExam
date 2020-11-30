@@ -34,17 +34,7 @@ public class CartRestController {
         product.ifPresent(cartService::removeFromCart);
     }
 
-    @PutMapping("/cart/decrease/{id}")
-    public void decreaseItemQuantity(@PathVariable(name = "id") long productId) {
-        Optional<Product> product = productRepository.findById(productId);
-        product.ifPresent(cartService::decreaseItemCount);
-    }
 
-    @PutMapping("/cart/increase/{id}")
-    public void increaseItemQuantity(@PathVariable(name = "id") long productId) {
-        Optional<Product> product = productRepository.findById(productId);
-        product.ifPresent(cartService::increaseItemCount);
-    }
 
     @GetMapping("/cart/size")
     public int getCartSize() {

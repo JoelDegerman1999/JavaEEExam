@@ -1,4 +1,4 @@
-package se.joeldegerman.javaeewebshop.controllers.rest;
+package se.joeldegerman.javaeewebshop.controllers.rest.admin;
 
 import org.springframework.web.bind.annotation.*;
 import se.joeldegerman.javaeewebshop.models.entity.Product;

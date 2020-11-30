@@ -45,4 +45,17 @@ button {
   background-color: pink;
 }
 
+.cart-icon-container {
+  position: relative;
+}
+.cart-icon-container .cart-blue-dot {
+  position: absolute;
+  bottom: -3px;
+  right: -7px;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: #1d72aa;
+}
+
 /*# sourceMappingURL=style.css.map */

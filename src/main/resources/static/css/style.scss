@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
-//@import "cart.css";
 
 
 * {
@@ -49,3 +48,18 @@ button {
     background-color: pink;
   }
 }
+
+.cart-icon-container {
+  position: relative;
+  .cart-blue-dot {
+    position: absolute;
+    bottom: -3px;
+    right: -7px;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: #1d72aa;
+  }
+}
+
+

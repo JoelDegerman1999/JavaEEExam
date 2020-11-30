@@ -1,7 +1,3 @@
-const cartCounter = document.querySelector("#cart-counter")
-const loggedInUser = document.querySelector("#loggedInUser");
-let cartAmount = 0;
-
 $.ajaxSetup({
     beforeSend: function (xhr, settings) {
         if (settings.type == 'POST' || settings.type == 'PUT'
@@ -17,26 +13,16 @@ $.ajaxSetup({
 });
 
 $(function () {
-    if (loggedInUser) {
-        getCartSizeAndSetCounterToSize()
+    if (checkIfCartIsEmpty()) {
+        $('.cart-blue-dot').hide()
     }
+    checkIfCartIsEmpty()
     highlightCategoryChosen()
+    checkIfCartIsEmpty()
     addToCart()
     getAllOrders()
     changeCartItemQuantity();
 })
-
-function getCartSizeAndSetCounterToSize() {
-    $.ajax({
-        url: "/api/cart/size",
-        type: "GET",
-        success: function (e) {
-            cartAmount = e;
-            cartCounter.innerHTML = cartAmount.toString();
-        }
-
-    })
-}
 
 function highlightCategoryChosen() {
     let split = window.location.href.split("/");
@@ -45,6 +31,18 @@ function highlightCategoryChosen() {
     categoryBtns.forEach(value => {
         if (value.dataset.categoryname === category) {
             value.classList.add("is-info")
+        }
+    })
+}
+
+function checkIfCartIsEmpty() {
+    $.ajax({
+        url: "/ajax/cart/notempty",
+        type: "get",
+        success: function (isEmpty) {
+            if(!isEmpty) {
+                $('.cart-blue-dot').show()
+            }
         }
     })
 }
@@ -58,8 +56,7 @@ function addToCart() {
                 url: "/ajax/cart/add/" + id,
                 type: "post",
                 success: function () {
-                    cartAmount++;
-                    cartCounter.innerHTML = cartAmount.toString();
+                    $('.cart-blue-dot').fadeIn()
                 }
             })
         })
@@ -68,14 +65,50 @@ function addToCart() {
 
 function getAllOrders() {
     $('#loadOrders').on('click', function () {
+        $(this).addClass('is-loading')
         $.ajax({
             url: "/ajax/order",
             type: "get",
             success: function (resp) {
                 console.log(resp)
+                $('#loadOrders').removeClass('is-loading').hide()
+                $('#order-container').append('<div class="box">' + createOrderTable(resp) + '</div>')
             }
         })
     })
+}
+
+function createOrderTable(orderList) {
+    let tableStart = '<table class="table is-center" style="margin: 0 auto">'
+    let tableEnd = '</table>'
+    let thead = '<thead>' +
+        '<tr>' +
+        '<th>Id</th>' +
+        '<th>Item</th>' +
+        '<th>Quantity</th>' +
+        '<th>Grand Total</th>' +
+        '</tr>' +
+        '</thead>'
+
+    let tbodyStart = '<tbody>'
+    let tbodyEnd = '</tbody>'
+
+    let tableRows = [];
+
+    orderList.forEach(order => {
+        tableRows.push(`<tr>
+        <th>${order.id}</th>
+        <th>${order.id}</th>
+        <th>${order.id}</th>
+        <th>${order.orderGrandTotal}</th>
+        </tr>`)
+    })
+
+    let table = tableStart + thead + tbodyStart + tableRows + tbodyEnd + tableEnd
+
+    return table
+
+
 }
 
 
@@ -95,7 +128,7 @@ const changeCartItemQuantity = () => {
 
 function ajaxDecreaseQuantity(id) {
     $.ajax({
-        url: "/api/cart/decrease/" + id,
+        url: "/ajax/cart/decrease/" + id,
         type: "PUT",
         success: function () {
             location.reload();
@@ -105,7 +138,7 @@ function ajaxDecreaseQuantity(id) {
 
 function ajaxIncreaseQuantity(id) {
     $.ajax({
-        url: "/api/cart/increase/" + id,
+        url: "/ajax/cart/increase/" + id,
         type: "PUT",
         success: function () {
             location.reload();

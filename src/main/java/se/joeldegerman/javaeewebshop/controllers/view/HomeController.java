@@ -8,9 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import se.joeldegerman.javaeewebshop.models.entity.Order;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.models.security.CustomUserDetail;
 import se.joeldegerman.javaeewebshop.repositories.CategoryRepository;
+import se.joeldegerman.javaeewebshop.repositories.OrderRepository;
 import se.joeldegerman.javaeewebshop.repositories.UserRepository;
 import se.joeldegerman.javaeewebshop.services.CartServiceImpl;
 import se.joeldegerman.javaeewebshop.services.ProductServiceImpl;
@@ -26,12 +28,14 @@ public class HomeController {
     final CartService cartService;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+    private final OrderRepository orderRepository;
 
-    public HomeController(ProductServiceImpl productService, CategoryRepository categoryRepository, CartServiceImpl cartService, UserRepository userRepository) {
+    public HomeController(ProductServiceImpl productService, CategoryRepository categoryRepository, CartServiceImpl cartService, UserRepository userRepository, OrderRepository orderRepository) {
         this.productService = productService;
         this.categoryRepository = categoryRepository;
         this.cartService = cartService;
         this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
     }
 
     @GetMapping("/")
@@ -41,7 +45,8 @@ public class HomeController {
 
     @GetMapping("/profile")
     public String getUserProfile(@AuthenticationPrincipal CustomUserDetail user, Model model) {
-        userRepository.findByUsername(user.getUsername());
+        List<Order> orders = orderRepository.findByUser(user.getUsername());
+        model.addAttribute("orders", orders);
         model.addAttribute("user",user);
         return "Profile";
     }

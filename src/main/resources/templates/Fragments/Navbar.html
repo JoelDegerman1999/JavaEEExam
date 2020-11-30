@@ -23,6 +23,14 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <a href="/cart">
+                    <div class="cart-icon-container">
+                        <i class="fas fa-shopping-cart"></i>
+                        <div class="cart-blue-dot" hidden></div>
+                    </div>
+                </a>
+            </div>
+            <div class="navbar-item">
+                <a href="/cart">
 
                 </a>
             </div>
@@ -64,7 +72,7 @@
                     <a class="button is-info" href="/profile">
                         My Profile
                     </a>
-                    <form th:action="@{/logout}" method="post">
+                    <form method="post" th:action="@{/logout}">
                         <button class="button is-danger" type="submit">Logout</button>
                     </form>
                 </div>

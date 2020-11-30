@@ -3,10 +3,7 @@ package se.joeldegerman.javaeewebshop.controllers.view;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import se.joeldegerman.javaeewebshop.helpers.UserHelper;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
@@ -50,6 +47,27 @@ public class CartController {
         if (product.isPresent()) {
             cartService.addToCart(product.get());
         }
+    }
+
+    @PutMapping("/ajax/cart/decrease/{id}")
+    @ResponseBody
+    public void decreaseItemQuantity(@PathVariable(name = "id") long productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        product.ifPresent(cartService::decreaseItemCount);
+    }
+
+    @PutMapping("/ajax/cart/increase/{id}")
+    @ResponseBody
+    public void increaseItemQuantity(@PathVariable(name = "id") long productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        product.ifPresent(cartService::increaseItemCount);
+    }
+
+    @GetMapping("/ajax/cart/notempty")
+    @ResponseBody
+    public boolean checkIfCartIsNotEmpty() {
+        boolean b = cartService.getCartSize() > 0;
+        return !b;
     }
 
 
