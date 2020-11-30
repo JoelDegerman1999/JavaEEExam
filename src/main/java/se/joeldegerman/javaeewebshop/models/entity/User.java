@@ -1,9 +1,13 @@
 package se.joeldegerman.javaeewebshop.models.entity;
 
 import lombok.Data;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import se.joeldegerman.javaeewebshop.security.UserRole;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "my_user")
@@ -23,10 +27,15 @@ public class User {
     private String password;
 
     private boolean isActive = true;
-    private String roles = "ROLE_USER";
+
+    @Enumerated(EnumType.ORDINAL)
+    private UserRole userRole;
 
     @Embedded
     private Address address;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Order> orders;
 
     public User() {
     }

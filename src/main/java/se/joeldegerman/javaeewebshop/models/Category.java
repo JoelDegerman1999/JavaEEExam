@@ -1,14 +1,14 @@
 package se.joeldegerman.javaeewebshop.models;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Data
 @Entity
+@Data
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,5 +16,12 @@ public class Category {
 
     private String categoryName;
 
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public Category() {
+
+    }
 }
 

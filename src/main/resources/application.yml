@@ -7,3 +7,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/webshop
     password: root
     username: root
+application:
+  jwt:
+    secret: secret1234secret1234secret1234secret1234secret1234
+    token-expiration-after-days: 14
+    token-prefix: Bearer

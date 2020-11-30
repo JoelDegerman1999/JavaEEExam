@@ -35,7 +35,7 @@ public class AuthController {
         var redirectView = new RedirectView();
         try {
             userService.registerNewUser(user);
-            redirectView.setUrl("/login");
+            redirectView.setUrl("/login?success");
             return redirectView;
         } catch (UsernameAlreadyExistsException e) {
             redirectView.setUrl("/signup/?error");
@@ -43,7 +43,6 @@ public class AuthController {
         }
     }
 
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @GetMapping("/login")
     public String login() {
         return "Auth/Login";

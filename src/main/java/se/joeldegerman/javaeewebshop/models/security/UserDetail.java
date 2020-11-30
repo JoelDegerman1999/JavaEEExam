@@ -22,7 +22,7 @@ public class UserDetail implements UserDetails {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.isActive = user.isActive();
-        this.authorities = Arrays.stream(user.getRoles().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        this.authorities = user.getUserRole().getGrantedAuthorities().stream().collect(Collectors.toList());
         this.fullName = user.getFullName();
     }
 

@@ -31,8 +31,8 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
-    public void createProduct(Product product) {
-        repository.save(product);
+    public Product createProduct(Product product) {
+        return repository.save(product);
     }
 
     public void deleteProduct(long id) {

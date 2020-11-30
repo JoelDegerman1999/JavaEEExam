@@ -1,11 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
-@import "cart.css";
+//@import "cart.css";
 
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+#logo {
+  letter-spacing: 0.2rem;
 }
 
 button {
@@ -19,7 +23,7 @@ button {
   border-bottom: 1px solid pink;
 }
 
-a {
+.product-link {
   width: 100%;
   .text {
     width: 100%;

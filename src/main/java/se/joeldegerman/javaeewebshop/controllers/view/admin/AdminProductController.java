@@ -1,15 +1,11 @@
 package se.joeldegerman.javaeewebshop.controllers.view.admin;
 
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
-import se.joeldegerman.javaeewebshop.helpers.UserHelper;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.CategoryRepository;
 import se.joeldegerman.javaeewebshop.repositories.OrderRepository;
@@ -20,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin/product/")
 public class AdminProductController {
 
     private final ProductService productService;
@@ -33,14 +29,22 @@ public class AdminProductController {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("product/all")
+    @GetMapping("all")
     public String showAdminIndex(Model model) {
-        List<Product> allProducts = productService.getAllProducts();
-        System.out.println(allProducts);
-        model.addAttribute("products", allProducts);
-        model.addAttribute("nameofuser", UserHelper.getUsernameFromLoggedInUser(SecurityContextHolder.getContext()));
-        model.addAttribute("isAdmin", UserHelper.checkIfUserIsAdmin(SecurityContextHolder.getContext()));
-        return "/Admin/Product/Index";
+        return productsPaginated(1, model);
+    }
+
+    @GetMapping("page")
+    public String productsPaginated(@RequestParam(value = "pageNo", required = false) Integer pageNo, Model model) {
+        if (pageNo != null) {
+            Page<Product> productPage = productService.findPaginated(pageNo, 10);
+            List<Product> products = productPage.getContent();
+            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("totalPages", productPage.getTotalPages());
+            model.addAttribute("totalItems", productPage.getTotalElements());
+            model.addAttribute("products", products);
+        }
+        return "Admin/Product/Index";
     }
 
     @GetMapping("update/{id}")
@@ -59,12 +63,12 @@ public class AdminProductController {
         if (updatedProduct != null) {
             redirectView.setUrl("/admin/product/all");
         } else {
-            redirectView.setUrl("/admin/update/" + id);
+            redirectView.setUrl("/admin/product/update/" + id);
         }
         return redirectView;
     }
 
-    @GetMapping("add/product")
+    @GetMapping("create")
     public String productForm(Model model) {
         model.addAttribute("product", new Product());
         model.addAttribute("categories", categoryRepository.findAll());
@@ -72,9 +76,9 @@ public class AdminProductController {
 
     }
 
-    @PostMapping("add/product")
+    @PostMapping("create")
     public String productForm(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categoryRepository.findAll());
             return "Admin/Product/Create";
         }
@@ -82,14 +86,7 @@ public class AdminProductController {
         return "redirect:/admin/product/all";
     }
 
-    @GetMapping("test")
-    public String test() {
-        return "Test";
-    }
-
-
-
-    @PostMapping("delete/product/{id}")
+    @PostMapping("delete/{id}")
     public RedirectView deleteProduct(@PathVariable long id) {
         productService.deleteProduct(id);
         RedirectView redirectView = new RedirectView();

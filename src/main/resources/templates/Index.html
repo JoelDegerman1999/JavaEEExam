@@ -35,7 +35,7 @@
             <div class="column is-3" th:each="product : ${products}" th:object="${product}">
                 <article class="card">
                     <div class="columns is-multiline has-text-centered is-vcentered is-centered">
-                        <a th:href="@{'/product/' + ${product.id} + '?name=' + ${product.name}}">
+                        <a class="product-link" th:href="@{'/product/' + ${product.id} + '?name=' + ${product.name}}">
                             <div class="column is-12 my-6">
                                 <img alt="Item Image" src="" style="max-height: 130px" th:src="*{imgUrl}">
                             </div>
@@ -54,7 +54,11 @@
                 </article>
             </div>
         </div>
-        <div th:replace="Fragments/PaginationBar :: pagination"></div>
+        <div class="columns is-centered">
+            <div class="column is-6">
+                <div th:replace="Fragments/PaginationBar :: pagination('page')"></div>
+            </div>
+        </div>
     </section>
 </main>
 

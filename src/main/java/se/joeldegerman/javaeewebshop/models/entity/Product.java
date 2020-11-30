@@ -2,7 +2,6 @@ package se.joeldegerman.javaeewebshop.models.entity;
 
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.Setter;
 import se.joeldegerman.javaeewebshop.models.Category;
 
@@ -38,7 +37,17 @@ public class Product {
     private LocalDateTime dateCreated;
     private LocalDateTime dateModified;
 
-//    @Version
+    public Product(@NotBlank(message = "Product name need to be provided") String name,
+                   @Min(value = 1, message = "Price cant be less than 1 SEK") double price,
+                   @NotBlank(message = "Image url need to be provided") String imgUrl,
+                   @NotBlank(message = "Description needs to be provided") String description) {
+        this.name = name;
+        this.price = price;
+        this.imgUrl = imgUrl;
+        this.description = description;
+    }
+
+    //    @Version
 //    @Setter(AccessLevel.NONE)
 //    @Column(name = "product_version")
 //    private long version;

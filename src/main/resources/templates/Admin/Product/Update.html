@@ -9,7 +9,7 @@
 <body>
 <div layout:fragment="content">
 
-    <form class="box" method="post" th:action="@{'/admin/update/' + ${product.id}}" th:object="${product}">
+    <form class="box" method="post" th:action="@{'/admin/product/update/' + ${product.id}}" th:object="${product}">
         <div class="field">
             <label class="label">Name</label>
             <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{name}"

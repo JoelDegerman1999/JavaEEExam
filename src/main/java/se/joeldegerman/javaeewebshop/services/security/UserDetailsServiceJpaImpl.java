@@ -1,4 +1,4 @@
-package se.joeldegerman.javaeewebshop.security;
+package se.joeldegerman.javaeewebshop.services.security;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;

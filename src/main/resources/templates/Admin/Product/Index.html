@@ -28,11 +28,11 @@
                         <td th:text="*{category.categoryName}"></td>
                         <td th:text="*{price}"></td>
                         <td>
-                            <form method="get" th:action="@{'/admin/update/' + ${product.id}}">
+                            <form method="get" th:action="@{'/admin/product/update/' + ${product.id}}">
                                 <button type="submit"><i class="fas fa-edit has-text-info" id="edit"
                                                          th:data-productid="*{id}"></i></button>
                             </form>
-                            <form th:action="@{'/admin/delete/product/' + ${product.id}}" method="post">
+                            <form th:action="@{'/admin/product/product' + ${product.id}}" method="post">
                                 <button type="submit"><i class="fas fa-trash has-text-danger" id="delete" th:data-productid="*{id}"></i></button>
                             </form>
                         </td>
@@ -40,8 +40,9 @@
                     </tbody>
                     </thead>
                 </table>
+                <div th:replace="Fragments/PaginationBar :: pagination('/admin/product/page')"></div>
                 <div class="has-text-right">
-                    <a class="button is-primary mt-3" href="/admin/add/product">Add new product</a>
+                    <a class="button is-primary mt-3" href="/admin/product/create">Add new product</a>
                 </div>
             </div>
         </div>

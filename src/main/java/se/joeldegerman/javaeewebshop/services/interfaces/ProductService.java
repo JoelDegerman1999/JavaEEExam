@@ -13,7 +13,7 @@ public interface ProductService {
 
     Product getProductById(long id);
 
-    void createProduct(Product product);
+    Product createProduct(Product product);
 
     void deleteProduct(long id);
 

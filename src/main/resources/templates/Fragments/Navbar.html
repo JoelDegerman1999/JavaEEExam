@@ -5,49 +5,46 @@
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 </head>
 <body>
-<nav aria-label="main navigation" class="navbar is-light py-4" role="navigation" th:fragment="navbar">
+<nav aria-label="main navigation" class="navbar is-light py-3" role="navigation" th:fragment="navbar">
     <!--/*@thymesVar id="cart" type="se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel"*/-->
     <!--/*@thymesVar id="nameofuser" type="java.lang.String"*/-->
     <!--/*@thymesVar id="isAdmin" type="java.lang.Boolean"*/-->
     <!--/*@thymesVar id="useCart" type="java.lang.Boolean"*/-->
-
-
-    <div class="navbar-menu container" id="navbarBasicExample">
-        <div class="navbar-start">
-            <a class="navbar-item" href="/">
-                <h1 class="subtitle">Webbshop</h1>
-            </a>
-        </div>
-        <div class="navbar-end">
-            <div class="navbar-item mr-6" sec:authorize="isAuthenticated()">
-                <a href="/cart" sec:authorize="!hasRole('ROLE_ADMIN')">
-                    <div class="cart-container">
-                        <i class="fas fa-shopping-cart has-text-black"></i>
-                        <p class="counter" id="cart-counter" th:unless="${useCart}">0</p>
-                        <p class="counter" th:if="${useCart}" th:text="${cart.cartSize}"></p>
+    <div class="navbar-menu">
+        <div class="navbar-brand">
+            <div class="navbar-item">
+                <a href="/">
+                    <div class="has-background-dark box p-3" style="opacity: 0.9">
+                        <p class="title has-text-weight-light has-text-light" id="logo">E-Commerce</p>
                     </div>
                 </a>
             </div>
+        </div>
+        <div class="navbar-end">
             <div class="navbar-item">
-                <div class="buttons" sec:authorize="${isAnonymous()}">
-                    <a class="button is-primary" href="/signup">
-                        <strong>Sign up</strong>
+                <a href="/cart">
+
+                </a>
+            </div>
+            <div class="navbar-item">
+                <div class="buttons" sec:authorize="isAnonymous()">
+                    <a class="button is-info" href="/login">
+                        Login
                     </a>
-                    <a class="button is-light" href="/login">
-                        Log in
+                    <a class="button is-success" href="/signup">
+                        <strong>Signup</strong>
                     </a>
                 </div>
-                <p class="p-2" sec:authorize="isAuthenticated()"><strong>Welcome</strong></p>
-                <p class="mr-3" id="loggedInUser" sec:authorize="isAuthenticated()"
-                   th:text="${#authentication.getName()}"></p>
-                <div class="buttons">
+                <div class="buttons" sec:authorize="isAuthenticated()">
+
+
                     <div class="mr-3 dropdown is-hoverable" sec:authorize="hasRole('ROLE_ADMIN')">
                         <div class="dropdown-trigger">
                             <button aria-controls="dropdown-menu" aria-haspopup="true" class="button is-dark">
                                 <span>Admin</span>
                                 <span class="icon is-small">
-                                    <i aria-hidden="true" class="fas fa-angle-down">
-                                    </i></span>
+                                        <i aria-hidden="true" class="fas fa-angle-down">
+                                        </i></span>
                             </button>
                         </div>
                         <div class="dropdown-menu" id="dropdown-menu" role="menu">
@@ -64,15 +61,58 @@
                         </div>
 
                     </div>
-                    <form METHOD="post" sec:authorize="${isAuthenticated()}" th:action="@{/logout}">
-                        <button class="button is-success" type="submit">
-                            Logout
-                        </button>
+                    <a class="button is-info" href="#">
+                        My Profile
+                    </a>
+                    <form th:action="@{/logout}" method="post">
+                        <button class="button is-danger" type="submit">Logout</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <!--    <div class="navbar-menu container" id="navbarBasicExample">-->
+    <!--        <div class="navbar-start">-->
+
+    <!--        </div>-->
+    <!--        <div class="navbar-end">-->
+    <!--            <div class="navbar-item" sec:authorize="isAuthenticated()">-->
+    <!--                <a href="/cart" sec:authorize="!hasRole('ROLE_ADMIN')">-->
+    <!--                    <div class="cart-container">-->
+    <!--                        <i class="fas fa-shopping-cart has-text-black"></i>-->
+    <!--                        <p class="counter" id="cart-counter" th:unless="${useCart}">0</p>-->
+    <!--                        <p class="counter" th:if="${useCart}" th:text="${cart.cartSize}"></p>-->
+    <!--                    </div>-->
+    <!--                </a>-->
+    <!--            </div>-->
+    <!--            <div class="navbar-item">-->
+    <!--                <div class="columns is-vcentered">-->
+    <!--                    <div class="column">-->
+    <!--                        <div class="" sec:authorize="${isAnonymous()}">-->
+    <!--                            <a class="button is-primary" href="/signup">-->
+    <!--                                <strong>Sign up</strong>-->
+    <!--                            </a>-->
+    <!--                            <a class="button is-light" href="/login">-->
+    <!--                                Log in-->
+    <!--                            </a>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--                <p class="p-2" sec:authorize="isAuthenticated()"><strong>Welcome</strong></p>-->
+    <!--                <p class="mr-3" id="loggedInUser" sec:authorize="isAuthenticated()"-->
+    <!--                   th:text="${#authentication.getName()}"></p>-->
+    <!--                <div class="buttons">-->
+
+    <!--                    <form METHOD="post" sec:authorize="${isAuthenticated()}" th:action="@{/logout}">-->
+    <!--                        <button class="button is-success" type="submit">-->
+    <!--                            Logout-->
+    <!--                        </button>-->
+    <!--                    </form>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
 
 </nav>
 
