@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import se.joeldegerman.javaeewebshop.helpers.UserHelper;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
@@ -40,6 +41,16 @@ public class CartController {
         return "redirect:/";
     }
 
+
+//    AJAX METHODS
+    @PostMapping("/ajax/cart/add/{id}")
+    @ResponseBody
+    public void addProductToCartAjax(@PathVariable(name = "id") long productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        if (product.isPresent()) {
+            cartService.addToCart(product.get());
+        }
+    }
 
 
 }

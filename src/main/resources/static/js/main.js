@@ -22,6 +22,8 @@ $(function () {
     }
     highlightCategoryChosen()
     addToCart()
+    getAllOrders()
+    changeCartItemQuantity();
 })
 
 function getCartSizeAndSetCounterToSize() {
@@ -53,14 +55,25 @@ function addToCart() {
         let id = btn.dataset.productid;
         btn.addEventListener('click', function () {
             $.ajax({
-                url: "/api/cart/add/" + id,
-
-                type: "POST",
+                url: "/ajax/cart/add/" + id,
+                type: "post",
                 success: function () {
                     cartAmount++;
                     cartCounter.innerHTML = cartAmount.toString();
                 }
             })
+        })
+    })
+}
+
+function getAllOrders() {
+    $('#loadOrders').on('click', function () {
+        $.ajax({
+            url: "/ajax/order",
+            type: "get",
+            success: function (resp) {
+                console.log(resp)
+            }
         })
     })
 }
@@ -99,8 +112,6 @@ function ajaxIncreaseQuantity(id) {
         }
     })
 }
-
-changeCartItemQuantity();
 
 
 

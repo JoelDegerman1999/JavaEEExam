@@ -34,9 +34,6 @@ public class User {
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Order> orders;
-
     public User() {
     }
 }

@@ -3,7 +3,7 @@ package se.joeldegerman.javaeewebshop.helpers;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import se.joeldegerman.javaeewebshop.models.security.UserDetail;
+import se.joeldegerman.javaeewebshop.models.security.CustomUserDetail;
 
 import java.util.Collection;
 
@@ -13,7 +13,7 @@ public class UserHelper {
 
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
 
-            var details = (UserDetail) securityContext.getAuthentication().getPrincipal();
+            var details = (CustomUserDetail) securityContext.getAuthentication().getPrincipal();
             return details.getFullName();
         }
         return null;

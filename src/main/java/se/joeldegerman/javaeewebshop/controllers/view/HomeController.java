@@ -2,13 +2,16 @@ package se.joeldegerman.javaeewebshop.controllers.view;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
+import se.joeldegerman.javaeewebshop.models.security.CustomUserDetail;
 import se.joeldegerman.javaeewebshop.repositories.CategoryRepository;
+import se.joeldegerman.javaeewebshop.repositories.UserRepository;
 import se.joeldegerman.javaeewebshop.services.CartServiceImpl;
 import se.joeldegerman.javaeewebshop.services.ProductServiceImpl;
 import se.joeldegerman.javaeewebshop.services.interfaces.CartService;
@@ -21,18 +24,28 @@ public class HomeController {
 
     final ProductService productService;
     final CartService cartService;
+    private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
 
-    public HomeController(ProductServiceImpl productService, CategoryRepository categoryRepository, CartServiceImpl cartService) {
+    public HomeController(ProductServiceImpl productService, CategoryRepository categoryRepository, CartServiceImpl cartService, UserRepository userRepository) {
         this.productService = productService;
         this.categoryRepository = categoryRepository;
         this.cartService = cartService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/")
     public String index(Model model) {
         return findPaginated(1, model);
     }
+
+    @GetMapping("/profile")
+    public String getUserProfile(@AuthenticationPrincipal CustomUserDetail user, Model model) {
+        userRepository.findByUsername(user.getUsername());
+        model.addAttribute("user",user);
+        return "Profile";
+    }
+
 
     @GetMapping("/product/{id}")
     public String product(@PathVariable long id, Model model) {
