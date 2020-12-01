@@ -6,19 +6,19 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static se.joeldegerman.javaeewebshop.security.UserAuthorities.*;
+import static se.joeldegerman.javaeewebshop.security.EUserAuthorities.*;
 
-public enum UserRole {
+public enum EUserRole {
     CUSTOMER(Sets.newHashSet()),
     ADMIN(Sets.newHashSet(CATEGORY_READ, CATEGORY_WRITE, PRODUCT_READ, PRODUCT_WRITE, ORDER_READ, ORDER_WRITE));
 
-    private final Set<UserAuthorities> authorities;
+    private final Set<EUserAuthorities> authorities;
 
-    UserRole(Set<UserAuthorities> authorities) {
+    EUserRole(Set<EUserAuthorities> authorities) {
         this.authorities = authorities;
     }
 
-    public Set<UserAuthorities> getAuthorities() {
+    public Set<EUserAuthorities> getAuthorities() {
         return authorities;
     }
 

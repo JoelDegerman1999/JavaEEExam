@@ -20,8 +20,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import se.joeldegerman.javaeewebshop.security.jwt.JwtTokenVerifier;
 
-import static se.joeldegerman.javaeewebshop.security.UserRole.ADMIN;
-import static se.joeldegerman.javaeewebshop.security.UserRole.CUSTOMER;
+import static se.joeldegerman.javaeewebshop.security.EUserRole.ADMIN;
+import static se.joeldegerman.javaeewebshop.security.EUserRole.CUSTOMER;
 
 @Configuration
 @EnableWebSecurity

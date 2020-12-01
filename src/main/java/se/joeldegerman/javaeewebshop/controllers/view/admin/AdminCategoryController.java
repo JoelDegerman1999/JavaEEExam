@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
-import se.joeldegerman.javaeewebshop.models.Category;
+import se.joeldegerman.javaeewebshop.models.entity.Category;
+import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.CategoryRepository;
 
 import java.util.List;

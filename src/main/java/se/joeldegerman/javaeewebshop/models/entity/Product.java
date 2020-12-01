@@ -3,7 +3,6 @@ package se.joeldegerman.javaeewebshop.models.entity;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
-import se.joeldegerman.javaeewebshop.models.Category;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -26,6 +25,7 @@ public class Product {
     @NotBlank(message = "Image url need to be provided")
     private String imgUrl;
     @NotBlank(message = "Description needs to be provided")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @ManyToOne
@@ -40,17 +40,14 @@ public class Product {
     public Product(@NotBlank(message = "Product name need to be provided") String name,
                    @Min(value = 1, message = "Price cant be less than 1 SEK") double price,
                    @NotBlank(message = "Image url need to be provided") String imgUrl,
-                   @NotBlank(message = "Description needs to be provided") String description) {
+                   @NotBlank(message = "Description needs to be provided") String description,
+                   @NotNull(message = "Category must be chosen") Category category) {
         this.name = name;
         this.price = price;
         this.imgUrl = imgUrl;
         this.description = description;
+        this.category = category;
     }
-
-    //    @Version
-//    @Setter(AccessLevel.NONE)
-//    @Column(name = "product_version")
-//    private long version;
 
     public Product() {
         dateCreated = LocalDateTime.now();

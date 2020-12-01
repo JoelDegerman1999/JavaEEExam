@@ -13,7 +13,10 @@ import se.joeldegerman.javaeewebshop.services.ProductServiceImpl;
 import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin/product/")

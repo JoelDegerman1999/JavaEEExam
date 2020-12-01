@@ -1,6 +1,6 @@
-package se.joeldegerman.javaeewebshop.models;
+package se.joeldegerman.javaeewebshop.models.entity;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,4 +24,3 @@ public class Category {
 
     }
 }
-

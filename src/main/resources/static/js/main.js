@@ -22,6 +22,10 @@ $(function () {
     addToCart()
     getAllOrders()
     changeCartItemQuantity();
+
+    $('#desc').change(function () {
+        console.log($(this).val())
+    })
 })
 
 function highlightCategoryChosen() {
@@ -72,7 +76,6 @@ function getAllOrders() {
             success: function (resp) {
                 console.log(resp)
                 $('#loadOrders').removeClass('is-loading').hide()
-                $('#order-container').append('<div class="box">' + createOrderTable(resp) + '</div>')
             }
         })
     })

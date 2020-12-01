@@ -3,8 +3,9 @@ package se.joeldegerman.javaeewebshop.services;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import se.joeldegerman.javaeewebshop.models.Category;
+import se.joeldegerman.javaeewebshop.models.entity.Category;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.CategoryRepository;
 import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -64,7 +66,9 @@ public class ProductServiceImpl implements ProductService {
         if (optionalCategory.isPresent()) {
             Optional<List<Product>> optionalProducts = repository.findAllByCategory(optionalCategory.get().getId());
             if (optionalProducts.isPresent()) {
-                return optionalProducts.get();
+                List<Product> products = optionalProducts.get();
+                products.sort(Comparator.comparing(Product::getId));
+                return products;
             }
         }
         return new ArrayList<>();
@@ -72,7 +76,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> findPaginated(int page, int size) {
-        Pageable pageable = PageRequest.of(page -1, size);
-        return repository.findAll(pageable);
+        Pageable pageable = PageRequest.of(page -1, size, Sort.by("id"));
+        Page<Product> products = repository.findAll(pageable);
+        return products;
     }
 }

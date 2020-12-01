@@ -58,10 +58,10 @@
                 </div>
                 <div class="field">
                     <label class="label">Description</label>
-                    <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{description}"
+                    <p  class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{description}"
                        th:if="${#fields.hasErrors('description')}"></p>
                     <p class="control">
-                        <textarea class="textarea" rows="10" th:field="*{description}"></textarea>
+                        <textarea id="desc" class="textarea" rows="10" th:field="*{description}"></textarea>
                     </p>
                 </div>
                 <div class="field has-text-right">
@@ -71,5 +71,8 @@
         </div>
     </div>
 </section>
+<th:block layout:fragment="optional">
+    <script th:src="@{/js/main.js}"></script>
+</th:block>
 </body>
 </html>

@@ -1,12 +1,11 @@
 package se.joeldegerman.javaeewebshop.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.joeldegerman.javaeewebshop.exceptions.UsernameAlreadyExistsException;
 import se.joeldegerman.javaeewebshop.models.entity.User;
 import se.joeldegerman.javaeewebshop.repositories.UserRepository;
-import se.joeldegerman.javaeewebshop.security.UserRole;
+import se.joeldegerman.javaeewebshop.security.EUserRole;
 import se.joeldegerman.javaeewebshop.services.interfaces.AuthService;
 
 import java.util.Optional;
@@ -28,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
             throw new UsernameAlreadyExistsException("Username already exists");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setUserRole(UserRole.CUSTOMER);
+        user.setUserRole(EUserRole.CUSTOMER);
         return userRepository.save(user);
     }
 }

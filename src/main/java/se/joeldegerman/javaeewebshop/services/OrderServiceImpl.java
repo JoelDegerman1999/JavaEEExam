@@ -1,5 +1,6 @@
 package se.joeldegerman.javaeewebshop.services;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import se.joeldegerman.javaeewebshop.models.CartItem;
 import se.joeldegerman.javaeewebshop.models.entity.User;
@@ -61,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+        return orderRepository.findAll(Sort.by("id"));
     }
 
     @Override

@@ -19,7 +19,10 @@ import se.joeldegerman.javaeewebshop.services.ProductServiceImpl;
 import se.joeldegerman.javaeewebshop.services.interfaces.CartService;
 import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -47,10 +50,9 @@ public class HomeController {
     public String getUserProfile(@AuthenticationPrincipal CustomUserDetail user, Model model) {
         List<Order> orders = orderRepository.findByUser(user.getUsername());
         model.addAttribute("orders", orders);
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         return "Profile";
     }
-
 
     @GetMapping("/product/{id}")
     public String product(@PathVariable long id, Model model) {
@@ -89,10 +91,13 @@ public class HomeController {
         if (pageNo != null) {
             Page<Product> productPage = productService.findPaginated(pageNo, 12);
             List<Product> products = productPage.getContent();
+            // Creating new list since the above list is immutable, and therefore can't sort it
+            List<Product> sortedList = products.stream().collect(Collectors.toList());
+            sortedList.sort(Comparator.comparing(Product::getId));
             model.addAttribute("currentPage", pageNo);
             model.addAttribute("totalPages", productPage.getTotalPages());
             model.addAttribute("totalItems", productPage.getTotalElements());
-            model.addAttribute("products", products);
+            model.addAttribute("products", sortedList);
         }
         return "Index";
     }

@@ -7,48 +7,53 @@
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 </head>
 <body>
-<section class="container py-6" layout:fragment="content" th:if="${cart.cartSize > 0}">
-    <div class="card p-5" style="max-width: 60rem; margin: 0 auto">
-        <div class="columns has-text-centered" style="border-bottom: 1px dotted rgba(0,0,0,.2)">
-            <div class="column is-flex is-align-items-center is-justify-content-space-around">
-                <p>Bild</p>
-                <p>Namn</p>
+<section class="container py-6" layout:fragment="content">
+    <div th:if="${cart.cartSize > 0}">
+
+        <div class="card p-5" style="max-width: 60rem; margin: 0 auto">
+            <div class="columns has-text-centered" style="border-bottom: 1px dotted rgba(0,0,0,.2)">
+                <div class="column is-flex is-align-items-center is-justify-content-space-around">
+                    <p>Bild</p>
+                    <p>Namn</p>
+                </div>
+                <div class="column">Antal</div>
+                <div class="column">Pris</div>
             </div>
-            <div class="column">Antal</div>
-            <div class="column">Pris</div>
-        </div>
-        <div class="columns is-vcentered has-text-centered" th:each="item : ${cart.getCartItems()}" th:object="${item}">
-            <div class="column">
-                <div class="is-flex is-align-items-center is-justify-content-space-between">
-                    <img alt="Product image" src="" style="height: 50px" th:src="*{product.imgUrl}">
-                    <p th:text="*{product.name}"></p>
+            <div class="columns is-vcentered has-text-centered" th:each="item : ${cart.getCartItems()}"
+                 th:object="${item}">
+                <div class="column">
+                    <div class="is-flex is-align-items-center is-justify-content-space-between">
+                        <img alt="Product image" src="" style="height: 50px" th:src="*{product.imgUrl}">
+                        <p th:text="*{product.name}"></p>
+                    </div>
+                </div>
+                <div class="column">
+                    <a class="plus" style="font-size: 2rem" th:data-productid="*{product.id}">+</a>
+                    <p th:text="*{quantity}"></p>
+                    <a class="minus" style="font-size: 2rem" th:data-productid="*{product.id}">-</a>
+                </div>
+                <div class="column">
+                    <p th:text="*{price}"></p>
                 </div>
             </div>
-            <div class="column">
-                <a class="plus" th:data-productid="*{product.id}">+</a>
-                <p th:text="*{quantity}"></p>
-                <a class="minus" th:data-productid="*{product.id}">-</a>
-            </div>
-            <div class="column">
-                <p th:text="*{price}"></p>
+        </div>
+        <div class="columns has-text-centered" style="max-width: 50rem; margin: 0 auto">
+            <div class="column is-12 is-flex is-justify-content-flex-end">
+                <p><strong>Totalt :</strong></p>
+                <p class="px-3" th:text="${cart.grandTotal} + ' SEK'"></p>
             </div>
         </div>
-    </div>
-    <div class="columns has-text-centered" style="max-width: 50rem; margin: 0 auto">
-        <div class="column is-12 is-flex is-justify-content-flex-end">
-            <p><strong>Totalt :</strong></p>
-            <p class="px-3" th:text="${cart.grandTotal} + ' SEK'"></p>
+        <div class="has-text-right pt-3" style="max-width: 60rem; margin: 0 auto">
+            <form action="" method="post" th:action="@{/order/checkout}">
+                <button class="button is-primary" type="submit">Proceed to checkout</button>
+            </form>
         </div>
     </div>
-    <div class="has-text-right pt-3" style="max-width: 60rem; margin: 0 auto">
-        <form action="" method="post" th:action="@{/order/checkout}">
-            <button class="button is-primary" type="submit">Proceed to checkout</button>
-        </form>
-    </div>
+    <section class="container" th:unless="${cart.cartSize > 0}">
+        <h2 class="subtitle">No items in cart.....</h2>
+        <p>Goto <a href="/">product page</a></p>
+    </section>
 </section>
-<div class="is-flex is-align-items-center is-justify-content-center" th:unless="${cart.cartSize > 0}">No items added to
-    Cart
-</div>
 <th:block layout:fragment="optional">
     <script src="" th:src="@{js/main.js}" type="text/javascript"></script>
 </th:block>

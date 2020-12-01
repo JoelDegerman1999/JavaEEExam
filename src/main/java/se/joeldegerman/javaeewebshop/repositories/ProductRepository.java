@@ -2,9 +2,6 @@ package se.joeldegerman.javaeewebshop.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.mapping.model.SpELExpressionEvaluator;
-import se.joeldegerman.javaeewebshop.models.Category;
-import se.joeldegerman.javaeewebshop.models.dto.ProductDto;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package se.joeldegerman.javaeewebshop.security;
 
-public enum UserAuthorities {
+public enum EUserAuthorities {
     PRODUCT_READ("product:read"),
     PRODUCT_WRITE("product:write"),
     CATEGORY_READ("category:read"),
@@ -10,7 +10,7 @@ public enum UserAuthorities {
 
     private final String authorities;
 
-    UserAuthorities(String authorities) {
+    EUserAuthorities(String authorities) {
         this.authorities = authorities;
     }
 

@@ -35,7 +35,8 @@
                             </div>
                         </div>
                     </div>
-                </div> <div class="field is-horizontal">
+                </div>
+                <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         <label class="label">Street</label>
                     </div>
@@ -46,7 +47,8 @@
                             </div>
                         </div>
                     </div>
-                </div> <div class="field is-horizontal">
+                </div>
+                <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         <label class="label">Zipcode</label>
                     </div>
@@ -57,7 +59,8 @@
                             </div>
                         </div>
                     </div>
-                </div> <div class="field is-horizontal">
+                </div>
+                <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         <label class="label">Country</label>
                     </div>
@@ -72,14 +75,28 @@
             </div> <!--Box slutar här-->
         </div>
     </div>
-    <div class="columns is-centered">
-        <div id="order-container" class="column is-6 has-text-centered">
-            <button id="loadOrders" class="button is-primary">Load all your orders</button>
+    <div class="columns is-centered mt-6">
+        <div class="column is-6" id="order-container">
+            <h1 class="title has-text-centered has-text-weight-light">Your placed orders</h1>
+            <div class="box" th:each="order : ${orders}" th:object="${order}">
+                <h2 class="is-size-4 has-text-weight-bold has-text-centered">Order id : [[*{id}]]</h2>
+                <div class="column" style="width: 100%" th:each="item : *{orderItems}">
+                    <div class="is-flex is-align-items-center is-justify-content-space-between">
+                        <div class="is-flex-grow-1">
+                            <img alt="Product image" src="" style="width: 50px;" th:src="${item.product.imgUrl}">
+                        </div>
+                        <div class="is-flex-grow-1 is-flex is-justify-content-space-between">
+                            <p th:text="${item.product.name}"></p>
+                            <p th:text="${item.quantity}"></p>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="subtitle has-text-right">Grandtotal : [[${order.orderGrandTotal}]].0 SEK</h1>
+            </div>
         </div>
     </div>
 </div>
 <th:block layout:fragment="optional">
-    <script th:src="@{/js/main.js}"></script>
 </th:block>
 </body>
 </html>

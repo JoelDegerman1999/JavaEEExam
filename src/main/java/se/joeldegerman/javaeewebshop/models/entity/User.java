@@ -1,13 +1,10 @@
 package se.joeldegerman.javaeewebshop.models.entity;
 
 import lombok.Data;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import se.joeldegerman.javaeewebshop.security.UserRole;
+import se.joeldegerman.javaeewebshop.security.EUserRole;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "my_user")
@@ -29,7 +26,7 @@ public class User {
     private boolean isActive = true;
 
     @Enumerated(EnumType.ORDINAL)
-    private UserRole userRole;
+    private EUserRole userRole;
 
     @Embedded
     private Address address;
