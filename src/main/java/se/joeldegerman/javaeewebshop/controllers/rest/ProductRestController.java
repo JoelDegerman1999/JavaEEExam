@@ -2,7 +2,7 @@ package se.joeldegerman.javaeewebshop.controllers.rest;
 
 import org.springframework.web.bind.annotation.*;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
-import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
+import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,39 +10,34 @@ import java.util.Optional;
 @RestController
 public class ProductRestController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    public ProductRestController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductRestController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping("/api/products")
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        return productService.getAll();
     }
 
     @GetMapping("/api/products/{id}")
     public Product getProductById(@PathVariable long id) {
-        Optional<Product> product = productRepository.findById(id);
+        Optional<Product> product = productService.getById(id);
         return product.orElse(null);
     }
 
-    @GetMapping(value = "/api/products", params = "name")
-    public Product getProductByName(@RequestParam String name) {
-        Optional<Product> product = productRepository.findByName(name);
-        return product.orElse(null);
-    }
 
     @PostMapping("/api/products")
     public Product createProduct(@RequestBody Product product) {
-        return productRepository.save(product);
+        return productService.create(product);
     }
 
     @DeleteMapping("api/products/{id}")
     public String deleteProduct(@PathVariable long id) {
-        Optional<Product> product = productRepository.findById(id);
+        Optional<Product> product = productService.getById(id);
         if (product.isEmpty()) return "Product not found";
-        productRepository.delete(product.get());
+        productService.delete(product.get().getId());
         return "Product deleted successfully";
     }
 }

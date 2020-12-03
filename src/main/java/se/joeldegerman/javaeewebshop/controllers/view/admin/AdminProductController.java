@@ -13,10 +13,8 @@ import se.joeldegerman.javaeewebshop.services.ProductServiceImpl;
 import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/product/")
@@ -52,9 +50,11 @@ public class AdminProductController {
 
     @GetMapping("update/{id}")
     public String showUpdatePage(@PathVariable(name = "id") long productId, Model model) {
-        Product product = productService.getProductById(productId);
+        Optional<Product> optionalProduct = productService.getById(productId);
         model.addAttribute("categories", categoryRepository.findAll());
-        model.addAttribute("product", product);
+        if(optionalProduct.isPresent()) {
+        model.addAttribute("product", optionalProduct.get());
+        }
         return "Admin/Product/Update";
     }
 
@@ -62,7 +62,7 @@ public class AdminProductController {
     public RedirectView updateProduct(@ModelAttribute Product product, @PathVariable long id) {
         var redirectView = new RedirectView();
         product.setId(id);
-        Product updatedProduct = productService.updateProduct(product);
+        Product updatedProduct = productService.update(product);
         if (updatedProduct != null) {
             redirectView.setUrl("/admin/product/all");
         } else {
@@ -85,13 +85,13 @@ public class AdminProductController {
             model.addAttribute("categories", categoryRepository.findAll());
             return "Admin/Product/Create";
         }
-        productService.createProduct(product);
+        productService.create(product);
         return "redirect:/admin/product/all";
     }
 
     @PostMapping("delete/{id}")
     public RedirectView deleteProduct(@PathVariable long id) {
-        productService.deleteProduct(id);
+        productService.delete(id);
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl("/admin/product/all");
         return redirectView;

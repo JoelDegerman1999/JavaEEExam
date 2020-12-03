@@ -11,34 +11,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import se.joeldegerman.javaeewebshop.models.entity.Order;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.models.security.CustomUserDetail;
-import se.joeldegerman.javaeewebshop.repositories.CategoryRepository;
-import se.joeldegerman.javaeewebshop.repositories.OrderRepository;
 import se.joeldegerman.javaeewebshop.repositories.UserRepository;
 import se.joeldegerman.javaeewebshop.services.CartServiceImpl;
 import se.joeldegerman.javaeewebshop.services.ProductServiceImpl;
 import se.joeldegerman.javaeewebshop.services.interfaces.CartService;
+import se.joeldegerman.javaeewebshop.services.interfaces.CategoryService;
+import se.joeldegerman.javaeewebshop.services.interfaces.OrderService;
 import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
 
-    final ProductService productService;
-    final CartService cartService;
-    private final UserRepository userRepository;
-    private final CategoryRepository categoryRepository;
-    private final OrderRepository orderRepository;
+    private final ProductService productService;
+    private final CategoryService categoryService;
+    private final CartService cartService;
+    private final OrderService orderService;
 
-    public HomeController(ProductServiceImpl productService, CategoryRepository categoryRepository, CartServiceImpl cartService, UserRepository userRepository, OrderRepository orderRepository) {
+    public HomeController(ProductServiceImpl productService, CategoryService categoryService, CartServiceImpl cartService, OrderService orderService) {
         this.productService = productService;
-        this.categoryRepository = categoryRepository;
+        this.categoryService = categoryService;
         this.cartService = cartService;
-        this.userRepository = userRepository;
-        this.orderRepository = orderRepository;
+        this.orderService = orderService;
     }
 
     @GetMapping("/")
@@ -48,7 +46,7 @@ public class HomeController {
 
     @GetMapping("/profile")
     public String getUserProfile(@AuthenticationPrincipal CustomUserDetail user, Model model) {
-        List<Order> orders = orderRepository.findByUser(user.getUsername());
+        List<Order> orders = orderService.findOrderByUsername(user.getUsername());
         model.addAttribute("orders", orders);
         model.addAttribute("user", user);
         return "Profile";
@@ -56,9 +54,9 @@ public class HomeController {
 
     @GetMapping("/product/{id}")
     public String product(@PathVariable long id, Model model) {
-        Product product = productService.getProductById(id);
-        if (product != null) {
-            model.addAttribute("product", product);
+        Optional<Product> optionalProduct = productService.getById(id);
+        if (optionalProduct.isPresent()) {
+            model.addAttribute("product", optionalProduct.get());
             return "ProductDetail";
         }
         return index(model);
@@ -66,17 +64,17 @@ public class HomeController {
 
     @GetMapping("/category/{category}")
     public String productsByCategory(@PathVariable String category, Model model) {
-        model.addAttribute("products", productService.findAllProductsByCategory(category));
-        model.addAttribute("categories", categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "categoryName")));
+        model.addAttribute("products", productService.findAllByCategory(category));
+        model.addAttribute("categories", categoryService.getAll(Sort.by(Sort.Direction.ASC, "categoryName")));
         return "Index";
     }
 
     @GetMapping("search")
     public String search(@RequestParam(value = "s", required = false) String search, Model model) {
-        model.addAttribute("categories", categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "categoryName")));
+        model.addAttribute("categories", categoryService.getAll(Sort.by(Sort.Direction.ASC, "categoryName")));
         if (search != null) {
             if (!search.isBlank()) {
-                model.addAttribute("products", productService.searchProducts(search));
+                model.addAttribute("products", productService.search(search));
                 model.addAttribute("search", search);
             } else {
                 return index(model);
@@ -87,7 +85,7 @@ public class HomeController {
 
     @GetMapping("page")
     public String findPaginated(@RequestParam(value = "pageNo", required = false) Integer pageNo, Model model) {
-        model.addAttribute("categories", categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "categoryName")));
+        model.addAttribute("categories", categoryService.getAll(Sort.by(Sort.Direction.ASC, "categoryName")));
         if (pageNo != null) {
             Page<Product> productPage = productService.findPaginated(pageNo, 12);
             List<Product> products = productPage.getContent();

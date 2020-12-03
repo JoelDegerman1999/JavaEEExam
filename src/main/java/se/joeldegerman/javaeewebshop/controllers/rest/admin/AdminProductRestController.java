@@ -19,24 +19,24 @@ public class AdminProductRestController {
 
     @GetMapping("all")
     public List<Product> getAllProducts() {
-        List<Product> products = productService.getAllProducts();
+        List<Product> products = productService.getAll();
         return products;
     }
 
     @PostMapping("create")
     public Product createProduct(@RequestBody Product product) {
-        return productService.createProduct(product);
+        return productService.create(product);
     }
 
     @PutMapping("update/{id}")
     public Product updateProduct(@PathVariable long id, @RequestBody Product product) {
         product.setId(id);
-        return productService.updateProduct(product);
+        return productService.update(product);
     }
 
     @DeleteMapping("delete/{id}")
     public void deleteProduct(@PathVariable long id) {
-        productService.deleteProduct(id);
+        productService.delete(id);
     }
 
 }

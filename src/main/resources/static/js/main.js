@@ -16,6 +16,7 @@ $(function () {
     if (checkIfCartIsEmpty()) {
         $('.cart-blue-dot').hide()
     }
+
     checkIfCartIsEmpty()
     highlightCategoryChosen()
     checkIfCartIsEmpty()

@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,6 @@ public class AuthRestController {
 
     @PostMapping("auth")
     public ResponseEntity login(@RequestBody AuthenticationLoginRequest authenticationLoginRequest) {
-
         try {
             auth(authenticationLoginRequest.getUsername(), authenticationLoginRequest.getPassword());
         } catch (BadCredentialsException e) {
@@ -39,6 +39,7 @@ public class AuthRestController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationLoginRequest.getUsername());
         String token = jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse(token));
+
     }
 
     private void auth(String username, String password) throws BadCredentialsException {

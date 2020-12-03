@@ -1,26 +1,25 @@
 package se.joeldegerman.javaeewebshop.controllers.view;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import se.joeldegerman.javaeewebshop.helpers.UserHelper;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
 import se.joeldegerman.javaeewebshop.services.interfaces.CartService;
 import se.joeldegerman.javaeewebshop.services.CartServiceImpl;
+import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import java.util.Optional;
 
 @Controller
 public class CartController {
 
-    private CartService cartService;
-    private ProductRepository productRepository;
+    private final CartService cartService;
+    private final ProductService productService;
 
-    public CartController(CartServiceImpl service, ProductRepository productRepository) {
+    public CartController(CartServiceImpl service, ProductService productService) {
         this.cartService = service;
-        this.productRepository = productRepository;
+        this.productService = productService;
     }
 
     @GetMapping("/cart")
@@ -31,7 +30,7 @@ public class CartController {
 
     @PostMapping("/cart/add/{id}")
     public String addProductToCart(@PathVariable(name = "id") long productId) {
-        Optional<Product> product = productRepository.findById(productId);
+        Optional<Product> product = productService.getById(productId);
         if (product.isPresent()) {
             cartService.addToCart(product.get());
         }
@@ -43,7 +42,7 @@ public class CartController {
     @PostMapping("/ajax/cart/add/{id}")
     @ResponseBody
     public void addProductToCartAjax(@PathVariable(name = "id") long productId) {
-        Optional<Product> product = productRepository.findById(productId);
+        Optional<Product> product = productService.getById(productId);
         if (product.isPresent()) {
             cartService.addToCart(product.get());
         }
@@ -52,14 +51,14 @@ public class CartController {
     @PutMapping("/ajax/cart/decrease/{id}")
     @ResponseBody
     public void decreaseItemQuantity(@PathVariable(name = "id") long productId) {
-        Optional<Product> product = productRepository.findById(productId);
+        Optional<Product> product = productService.getById(productId);
         product.ifPresent(cartService::decreaseItemCount);
     }
 
     @PutMapping("/ajax/cart/increase/{id}")
     @ResponseBody
     public void increaseItemQuantity(@PathVariable(name = "id") long productId) {
-        Optional<Product> product = productRepository.findById(productId);
+        Optional<Product> product = productService.getById(productId);
         product.ifPresent(cartService::increaseItemCount);
     }
 

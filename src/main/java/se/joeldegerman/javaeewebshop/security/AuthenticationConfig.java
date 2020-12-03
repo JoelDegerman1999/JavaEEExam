@@ -33,19 +33,6 @@ public class AuthenticationConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
-
     @Configuration
     @Order(1)
     public static class RestApiSecurity extends WebSecurityConfigurerAdapter {
@@ -67,6 +54,7 @@ public class AuthenticationConfig {
                     .antMatchers("/api/auth").permitAll()
                     .antMatchers("/api/admin/**").hasRole(ADMIN.name())
                     .antMatchers("/api/**").hasAnyRole(ADMIN.name(), CUSTOMER.name());
+
         }
 
         @Override
@@ -78,6 +66,19 @@ public class AuthenticationConfig {
         @Override
         public AuthenticationManager authenticationManagerBean() throws Exception {
             return super.authenticationManagerBean();
+        }
+
+        @Bean
+        public CorsFilter corsFilter() {
+            UrlBasedCorsConfigurationSource source =
+                    new UrlBasedCorsConfigurationSource();
+            CorsConfiguration config = new CorsConfiguration();
+            config.setAllowCredentials(true);
+            config.addAllowedOrigin("*");
+            config.addAllowedHeader("*");
+            config.addAllowedMethod("*");
+            source.registerCorsConfiguration("/**", config);
+            return new CorsFilter(source);
         }
     }
 
@@ -100,6 +101,7 @@ public class AuthenticationConfig {
         protected void configure(HttpSecurity http) throws Exception {
             http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
                     .mvcMatcher("/**").authorizeRequests()
+
                     .mvcMatchers("/admin/**").hasRole(ADMIN.name())
                     .mvcMatchers("/cart/**").hasAnyRole(CUSTOMER.name(), ADMIN.name())
                     .mvcMatchers("/order/**").hasAnyRole(CUSTOMER.name(), ADMIN.name())
@@ -114,8 +116,6 @@ public class AuthenticationConfig {
                     .and().logout().logoutSuccessUrl("/login?logout").permitAll()
                     .invalidateHttpSession(true).deleteCookies("JSESSIONID")
                     .and().rememberMe();
-
-//            http.sessionManagement().maximumSessions(1).expiredUrl("/login?expired");
         }
 
     }

@@ -13,11 +13,11 @@
         <div class="card p-5" style="max-width: 60rem; margin: 0 auto">
             <div class="columns has-text-centered" style="border-bottom: 1px dotted rgba(0,0,0,.2)">
                 <div class="column is-flex is-align-items-center is-justify-content-space-around">
-                    <p>Bild</p>
-                    <p>Namn</p>
+                    <p>Image</p>
+                    <p>Name</p>
                 </div>
-                <div class="column">Antal</div>
-                <div class="column">Pris</div>
+                <div class="column">Quantity</div>
+                <div class="column">Price</div>
             </div>
             <div class="columns is-vcentered has-text-centered" th:each="item : ${cart.getCartItems()}"
                  th:object="${item}">
@@ -39,7 +39,7 @@
         </div>
         <div class="columns has-text-centered" style="max-width: 50rem; margin: 0 auto">
             <div class="column is-12 is-flex is-justify-content-flex-end">
-                <p><strong>Totalt :</strong></p>
+                <p><strong>Total :</strong></p>
                 <p class="px-3" th:text="${cart.grandTotal} + ' SEK'"></p>
             </div>
         </div>

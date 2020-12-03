@@ -3,9 +3,9 @@ package se.joeldegerman.javaeewebshop.controllers.rest;
 import org.springframework.web.bind.annotation.*;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
-import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
 import se.joeldegerman.javaeewebshop.services.interfaces.CartService;
 import se.joeldegerman.javaeewebshop.services.CartServiceImpl;
+import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
@@ -14,23 +14,23 @@ import java.util.Optional;
 @RequestMapping("api")
 public class CartRestController {
     private final CartService cartService;
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    public CartRestController(CartServiceImpl service, ProductRepository productRepository) {
+    public CartRestController(CartServiceImpl service, ProductService productService) {
         this.cartService = service;
-        this.productRepository = productRepository;
+        this.productService = productService;
     }
 
 
     @PostMapping("cart/add/{id}")
     public void addToCart(@PathVariable(name = "id") long productId) {
-        Optional<Product> product = productRepository.findById(productId);
+        Optional<Product> product = productService.getById(productId);
         product.ifPresent(cartService::addToCart);
     }
 
     @DeleteMapping("cart/delete/{id}")
     public void deleteProductFromCart(@PathVariable(name = "id") long productId) {
-        Optional<Product> product = productRepository.findById(productId);
+        Optional<Product> product = productService.getById(productId);
         product.ifPresent(cartService::removeFromCart);
     }
 

@@ -4,22 +4,23 @@ import org.springframework.data.domain.Page;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
 
-    List<Product> searchProducts(String keyword);
+    List<Product> search(String keyword);
 
-    List<Product> findAllProductsByCategory(String categoryName);
+    List<Product> findAllByCategory(String categoryName);
 
-    Product getProductById(long id);
+    Optional<Product> getById(long id);
 
-    Product createProduct(Product product);
+    Product create(Product product);
 
-    void deleteProduct(long id);
+    void delete(long id);
 
-    Product updateProduct(Product product);
+    Product update(Product product);
 
-    List<Product> getAllProducts();
+    List<Product> getAll();
 
     Page<Product> findPaginated(int page, int size);
 }

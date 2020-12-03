@@ -10,7 +10,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import se.joeldegerman.javaeewebshop.models.entity.Order;
 import se.joeldegerman.javaeewebshop.services.interfaces.OrderService;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -25,35 +24,22 @@ public class AdminOrderController {
 
     @GetMapping("order/all")
     public String getOrders(Model model) {
-        model.addAttribute("orders", orderService.getAllOrders());
+        model.addAttribute("orders", orderService.getAll());
         return "Admin/Order/Index";
     }
     @GetMapping("order/{id}")
     public String getOrderById(@PathVariable long id, Model model) {
-        Order order = orderService.getOrderById(id);
-        if(order != null) {
-            model.addAttribute("order", order);
+        Optional<Order> optionalOrder = orderService.getById(id);
+        if(optionalOrder.isPresent()) {
+            model.addAttribute("order", optionalOrder.get());
         }
         return "Admin/Order/Details";
     }
 
     @PostMapping("order/send/{id}")
     public RedirectView sendOrder(@PathVariable long id) {
-        orderService.sendOrder(id);
+        orderService.send(id);
         return new RedirectView("/admin/order/all");
     }
 
-//    @GetMapping("get/order/newOrder")
-//    public String getNonSentOrders(Model model) {
-//        List<Order> nonSentOrders = orderService.getAllNonSentOrders();
-//        model.addAttribute("nonSentOrders", nonSentOrders);
-//        return "admin/order/Index";
-//    }
-//
-//    @GetMapping("get/order/sentOrders")
-//    public String sendOrders() {
-//        List<Order> allSentOrders = orderService.getAllSentOrders();
-//
-//        return "redirect:/admin/";
-//    }
 }

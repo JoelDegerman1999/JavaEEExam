@@ -37,7 +37,7 @@
                     <div class="columns is-multiline has-text-centered is-vcentered is-centered">
                         <a class="product-link" th:href="@{'/product/' + ${product.id} + '?name=' + ${product.name}}">
                             <div class="column is-12 my-6">
-                                <img alt="Item Image" src="" style="max-height: 130px" th:src="*{imgUrl}">
+                                <img id="product-img" alt="Item Image" src="" style="max-height: 130px" th:src="*{imgUrl}">
                             </div>
                             <div class="column is-12 has-text-centered has-tooltip-bottom" th:data-tooltip="*{name}">
                                 <p class="is-size-5 text" th:text="*{name}"></p>
@@ -63,6 +63,7 @@
 </main>
 
 <th:block layout:fragment="optional">
+    <script th:src="@{/js/test.js}"></script>
     <script th:src="@{/js/main.js}"></script>
 </th:block>
 </body>

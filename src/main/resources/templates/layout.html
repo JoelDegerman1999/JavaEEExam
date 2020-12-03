@@ -10,14 +10,17 @@
     <link rel="stylesheet" th:href="@{/bulma/css/bulma.min.css}">
     <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
           integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" rel="stylesheet">
+    <script crossorigin="anonymous"
+            integrity="sha512-IQLehpLoVS4fNzl7IfH8Iowfm5+RiMGtHykgZJl9AWMgqx0AmJ6cRWcB+GaGVtIsnC4voMfm8f2vwtY+6oPjpQ=="
+            src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
 </head>
 </head>
 <body>
-<nav th:replace="Fragments/Navbar :: navbar"></nav>
+<nav th:insert="Fragments/Navbar :: navbar"></nav>
 
-<div class="py-4 container">
+<div style="margin-top: 3rem" class="container">
     <section layout:fragment="content">
-        <p>This is filled by content tempalte</p>
+        <p>This is filled by content template</p>
     </section>
 </div>
 

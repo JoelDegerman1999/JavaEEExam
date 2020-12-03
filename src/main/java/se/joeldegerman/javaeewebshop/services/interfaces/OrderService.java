@@ -13,11 +13,12 @@ public interface OrderService {
 
     List<Order> getAllSentOrders();
 
-    List<Order> getAllOrders();
+    List<Order> getAll();
+    List<Order> findOrderByUsername(String username);
 
-    Order getOrderById(long id);
+    Optional<Order> getById(long id);
 
-    Order saveOrder(Order order);
+    Order save(Order order);
 
-    Order sendOrder(long id);
+    Order send(long id);
 }

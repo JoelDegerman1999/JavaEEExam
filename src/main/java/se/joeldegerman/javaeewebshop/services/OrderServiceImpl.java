@@ -61,12 +61,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrders() {
+    public List<Order> getAll() {
         return orderRepository.findAll(Sort.by("id"));
     }
 
     @Override
-    public Order sendOrder(long id) {
+    public Order send(long id) {
         Optional<Order> optionalOrder = orderRepository.findById(id);
         if(optionalOrder.isPresent()) {
             Order order = optionalOrder.get();
@@ -79,13 +79,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOrderById(long id) {
+    public Optional<Order> getById(long id) {
         Optional<Order> optionalOrder = orderRepository.findById(id);
-        if(optionalOrder.isPresent()) return optionalOrder.get();
-        return null;
+        return optionalOrder;
     }
 
-    public Order saveOrder(Order order) {
+    @Override
+    public List<Order> findOrderByUsername(String username) {
+        return orderRepository.findByUser(username);
+    }
+
+    @Override
+    public Order save(Order order) {
         return orderRepository.save(order);
     }
 }

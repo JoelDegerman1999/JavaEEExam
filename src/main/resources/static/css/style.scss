@@ -11,6 +11,10 @@
   letter-spacing: 0.2rem;
 }
 
+.navbar {
+  z-index: 21000;
+}
+
 button {
   outline: none;
   border: none;
@@ -24,6 +28,7 @@ button {
 
 .product-link {
   width: 100%;
+
   .text {
     width: 100%;
     white-space: nowrap;
@@ -51,6 +56,7 @@ button {
 
 .cart-icon-container {
   position: relative;
+
   .cart-blue-dot {
     position: absolute;
     bottom: -3px;
@@ -60,6 +66,70 @@ button {
     border-radius: 50%;
     background-color: #1d72aa;
   }
+}
+
+.zoom {
+  height: 20px;
+  position: absolute;
+  top: 50px;
+  right: 50%;
+  z-index: 100;
+  opacity: 0;
+  animation: zoom 1s ease forwards;
+}
+
+.wiggle {
+  animation: wiggle 1s ease forwards;
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(10deg);
+  }
+  20% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(-10deg);
+  }
+  40% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+  70% {
+    transform: rotate(-10deg);
+  }
+  80% {
+    transform: rotate(0deg);
+  }
+  90% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes zoom {
+  0% {
+    opacity: 0
+  }
+  50% {
+    opacity: 1
+  }
+  100% {
+    opacity: 0;
+    right: 250px;
+  }
+
 }
 
 

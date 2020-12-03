@@ -9,16 +9,14 @@ import se.joeldegerman.javaeewebshop.models.entity.Category;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.repositories.CategoryRepository;
 import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
-import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements se.joeldegerman.javaeewebshop.services.interfaces.ProductService {
     private final ProductRepository repository;
     private final CategoryRepository categoryRepository;
 
@@ -27,32 +25,34 @@ public class ProductServiceImpl implements ProductService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Product getProductById(long id) {
-        Optional<Product> product = repository.findById(id);
-        if (product.isPresent()) return product.get();
-        return null;
+    @Override
+    public Optional<Product> getById(long id) {
+        return repository.findById(id);
     }
 
-    public Product createProduct(Product product) {
+    public Product create(Product product) {
         return repository.save(product);
     }
 
-    public void deleteProduct(long id) {
-        repository.delete(getProductById(id));
+    public void delete(long id) {
+        Optional<Product> optional = getById(id);
+        optional.ifPresent(repository::delete);
     }
 
-    public Product updateProduct(Product product) {
+    @Override
+    public Product update(Product product) {
         return repository.save(product);
     }
 
-    public List<Product> getAllProducts() {
+    @Override
+    public List<Product> getAll() {
         List<Product> products = repository.findAll();
         products.sort(Comparator.comparing(Product::getId));
         return products;
     }
 
     @Override
-    public List<Product> searchProducts(String keyword) {
+    public List<Product> search(String keyword) {
         Optional<List<Product>> optionalProducts = repository.searchProduct(keyword);
         if (optionalProducts.isPresent()) {
             return optionalProducts.get();
@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findAllProductsByCategory(String categoryName) {
+    public List<Product> findAllByCategory(String categoryName) {
         Optional<Category> optionalCategory = categoryRepository.findByCategoryName(categoryName);
         if (optionalCategory.isPresent()) {
             Optional<List<Product>> optionalProducts = repository.findAllByCategory(optionalCategory.get().getId());
