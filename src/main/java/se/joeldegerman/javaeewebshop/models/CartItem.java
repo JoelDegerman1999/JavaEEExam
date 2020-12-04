@@ -13,10 +13,12 @@ public class CartItem {
 
     public void incrementQuantity() {
         quantity++;
+        setPrice(getProduct().getPrice() * getQuantity());
     }
 
     public void decrementQuantity() {
         quantity--;
+        setPrice(getProduct().getPrice() * getQuantity());
     }
 
     @Override

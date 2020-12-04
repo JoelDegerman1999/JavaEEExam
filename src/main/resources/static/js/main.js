@@ -17,10 +17,11 @@ $(function () {
         $('.cart-blue-dot').hide()
     }
 
+    addToCart()
+
     checkIfCartIsEmpty()
     highlightCategoryChosen()
     checkIfCartIsEmpty()
-    addToCart()
     getAllOrders()
     changeCartItemQuantity();
 
@@ -45,7 +46,7 @@ function checkIfCartIsEmpty() {
         url: "/ajax/cart/notempty",
         type: "get",
         success: function (isEmpty) {
-            if(!isEmpty) {
+            if (!isEmpty) {
                 $('.cart-blue-dot').show()
             }
         }
@@ -60,9 +61,32 @@ function addToCart() {
             $.ajax({
                 url: "/ajax/cart/add/" + id,
                 type: "post",
-                success: function () {
-                    $('.cart-blue-dot').fadeIn()
-                }
+                success: function (resp) {
+                    //if i get a response it means spring boots tries to redirect me to a login page
+
+                    if (resp) {
+                        window.location.href = "/login"
+                    } else {
+                        $('.cart-blue-dot').fadeIn()
+                        $('.addbtn').on("click", function () {
+                            console.log($(this).closest("div").parent().find("img"))
+                            $(this).closest("div")
+                                .parent()
+                                .find("img")
+                                .clone()
+                                .addClass("zoom")
+                                .appendTo('body')
+                            setTimeout(function () {
+                                $(".zoom").remove()
+                            }, 1000)
+
+                            $(".fa-shopping-cart").addClass("wiggle")
+                            setTimeout(function () {
+                                $('.fa-shopping-cart').removeClass("wiggle")
+                            }, 1000)
+                        })
+                    }
+                },
             })
         })
     })

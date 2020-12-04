@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="columns is-centered">
-            <div class="column is-half is-flex is-flex-wrap-wrap ">
+            <div class="column is-half-desktop is-8-mobile is-10 is-flex is-flex-wrap-wrap ">
                 <div class="p-1" th:each="category : ${categories}">
                     <a class="button" id="category" th:data-categoryName="${category.categoryName}"
                        th:href="@{'/category/' + ${category.categoryName}}" th:text="${category.categoryName}">
@@ -31,8 +31,8 @@
                 </div>
             </div>
         </div>
-        <div class="columns is-multiline">
-            <div class="column is-3" th:each="product : ${products}" th:object="${product}">
+        <div class="columns is-centered is-multiline">
+            <div class="column is-10-mobile is-3-desktop is-5-tablet" th:each="product : ${products}" th:object="${product}">
                 <article class="card">
                     <div class="columns is-multiline has-text-centered is-vcentered is-centered">
                         <a class="product-link" th:href="@{'/product/' + ${product.id} + '?name=' + ${product.name}}">
@@ -63,7 +63,6 @@
 </main>
 
 <th:block layout:fragment="optional">
-    <script th:src="@{/js/test.js}"></script>
     <script th:src="@{/js/main.js}"></script>
 </th:block>
 </body>

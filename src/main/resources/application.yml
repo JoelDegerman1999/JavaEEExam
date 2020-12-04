@@ -3,10 +3,15 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/webshop
-#    password: root
-#    username: root
+  datasource:
+    url: jdbc:postgresql://localhost:5432/webshop
+    password: root
+    username: root
+
+server:
+  servlet:
+    session:
+      persistent: true
 application:
   jwt:
     secret: secret1234secret1234secret1234secret1234secret1234

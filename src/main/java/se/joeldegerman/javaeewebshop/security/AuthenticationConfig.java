@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -98,16 +99,22 @@ public class AuthenticationConfig {
         }
 
         @Override
+        public void configure(WebSecurity web) throws Exception {
+            web.ignoring().antMatchers("/css/**", "/bulma/**", "/js/**", "/webjars/**");
+        }
+
+        @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
                     .mvcMatcher("/**").authorizeRequests()
-
                     .mvcMatchers("/admin/**").hasRole(ADMIN.name())
                     .mvcMatchers("/cart/**").hasAnyRole(CUSTOMER.name(), ADMIN.name())
                     .mvcMatchers("/order/**").hasAnyRole(CUSTOMER.name(), ADMIN.name())
                     .mvcMatchers("/profile").hasAnyRole(CUSTOMER.name(), ADMIN.name())
+                    .mvcMatchers(("/ajax/**")).hasAnyRole(CUSTOMER.name(), ADMIN.name())
                     .mvcMatchers("/signup").permitAll()
                     .mvcMatchers("/").permitAll()
+                    .anyRequest().authenticated()
                     .and()
                     .formLogin()
                     .loginPage("/login")

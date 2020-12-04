@@ -15,69 +15,55 @@ public class Cart {
     }
 
     public void addCartItem(CartItem item) {
-        if (cartItems.contains(item)) {
-            for (CartItem cartItem : cartItems) {
-                if (item.equals(cartItem)) {
-                    cartItem.incrementQuantity();
-                    cartItem.setPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
-                }
-            }
-        } else {
+        if (!cartItems.contains(item)) {
             item.setPrice(item.getProduct().getPrice());
-            cartItems.add(item);
+            getCartItems().add(item);
+
+        } else {
+            getCartItems().forEach(cartItem -> {
+                if (cartItem.equals(item)) cartItem.incrementQuantity();
+            });
         }
         calculateGrandTotal();
     }
 
     public void deleteCartItem(CartItem item) {
-        cartItems.remove(item);
+        getCartItems().remove(item);
         calculateGrandTotal();
     }
 
     public void decreaseItemQuantity(CartItem item) {
-        if (cartItems.contains(item)) {
-            for (CartItem cartItem : cartItems) {
-                if (item.equals(cartItem)) {
-                    if (cartItem.getQuantity() == 1) {
-                        deleteCartItem(item);
-                        break;
-                    } else {
-                        cartItem.decrementQuantity();
-                        cartItem.setPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
-                    }
-                }
+        if (!getCartItems().contains(item)) return;
+        for (CartItem cartItem : getCartItems()) {
+            if (!item.equals(cartItem)) continue;
+            if (cartItem.getQuantity() == 1) {
+                deleteCartItem(item);
+                break;
             }
+            cartItem.decrementQuantity();
         }
         calculateGrandTotal();
     }
 
     public void increaseItemQuantity(CartItem item) {
-        if (cartItems.contains(item)) {
-            for (CartItem cartItem : cartItems) {
-                if (item.equals(cartItem)) {
-                    cartItem.incrementQuantity();
-                    cartItem.setPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
-                }
-            }
+        if (!getCartItems().contains(item)) return;
+        for (CartItem cartItem : getCartItems()) {
+            if (!cartItem.equals(item)) continue;
+            cartItem.incrementQuantity();
         }
         calculateGrandTotal();
     }
 
     public void calculateGrandTotal() {
-        grandTotal = 0;
-        for (CartItem item : cartItems) {
-            for (int i = 0; i < item.getQuantity(); i++) {
-                grandTotal += item.getProduct().getPrice();
-            }
-        }
+        setGrandTotal(getCartItems().stream().mapToInt(value -> (int) (value.getPrice())).sum());
     }
 
     public void clearCart() {
-        cartItems.clear();
+        getCartItems().clear();
     }
 
     public int getCartSize() {
-        return cartItems.size();
+        return getCartItems().stream().mapToInt(CartItem::getQuantity).sum();
     }
 
 }

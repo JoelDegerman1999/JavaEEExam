@@ -1,12 +1,12 @@
 package se.joeldegerman.javaeewebshop.controllers.view;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
-import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
-import se.joeldegerman.javaeewebshop.services.interfaces.CartService;
 import se.joeldegerman.javaeewebshop.services.CartServiceImpl;
+import se.joeldegerman.javaeewebshop.services.interfaces.CartService;
 import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
 import java.util.Optional;
@@ -37,8 +37,7 @@ public class CartController {
         return "redirect:/";
     }
 
-
-//    AJAX METHODS
+    //    AJAX METHODS
     @PostMapping("/ajax/cart/add/{id}")
     @ResponseBody
     public void addProductToCartAjax(@PathVariable(name = "id") long productId) {
@@ -68,6 +67,5 @@ public class CartController {
         boolean b = cartService.getCartSize() > 0;
         return !b;
     }
-
 
 }
