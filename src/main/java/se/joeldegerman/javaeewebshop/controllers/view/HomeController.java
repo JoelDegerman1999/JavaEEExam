@@ -19,6 +19,7 @@ import se.joeldegerman.javaeewebshop.services.interfaces.CategoryService;
 import se.joeldegerman.javaeewebshop.services.interfaces.OrderService;
 import se.joeldegerman.javaeewebshop.services.interfaces.ProductService;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -29,15 +30,12 @@ public class HomeController {
 
     private final ProductService productService;
     private final CategoryService categoryService;
-    private final CartService cartService;
     private final OrderService orderService;
 
-    public HomeController(ProductServiceImpl productService, CategoryService categoryService, CartServiceImpl cartService, OrderService orderService) {
+    public HomeController(ProductServiceImpl productService, CategoryService categoryService, OrderService orderService) {
         this.productService = productService;
         this.categoryService = categoryService;
-        this.cartService = cartService;
-        this.orderService = orderService;
-    }
+        this.orderService = orderService; }
 
     @GetMapping("/")
     public String index(Model model) {
@@ -90,7 +88,7 @@ public class HomeController {
             Page<Product> productPage = productService.findPaginated(pageNo, 12);
             List<Product> products = productPage.getContent();
             // Creating new list since the above list is immutable, and therefore can't sort it
-            List<Product> sortedList = products.stream().collect(Collectors.toList());
+            List<Product> sortedList = new ArrayList<>(products);
             sortedList.sort(Comparator.comparing(Product::getId));
             model.addAttribute("currentPage", pageNo);
             model.addAttribute("totalPages", productPage.getTotalPages());

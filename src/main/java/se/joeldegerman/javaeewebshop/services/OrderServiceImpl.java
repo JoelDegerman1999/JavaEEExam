@@ -2,6 +2,7 @@ package se.joeldegerman.javaeewebshop.services;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import se.joeldegerman.javaeewebshop.models.Cart;
 import se.joeldegerman.javaeewebshop.models.CartItem;
 import se.joeldegerman.javaeewebshop.models.entity.User;
 import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
@@ -13,6 +14,7 @@ import se.joeldegerman.javaeewebshop.services.interfaces.OrderService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -27,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public Optional<Order> createAndReturnOrder(User user) {
-        CartViewModel cart = cartService.getCartVM();
+        Cart cart = cartService.getCart();
         List<CartItem> cartItems = cart.getCartItems();
         if (cartItems.size() > 0) {
             Order order = new Order();

@@ -17,7 +17,7 @@
                              th:if="${param.error != null}">
                             <p>Email already exist | <a class="has-text-primary" href="/login">Login instead</a></p>
                         </div>
-                        <form class="box" method="post" th:action="@{/signup}" th:object="${user}">
+                        <form class="box" method="post" th:action="@{/signup}" th:object="${userDto}">
                             <div class="field">
                                 <h2 class="subtitle">Sign up and start buying</h2>
                             </div>
@@ -25,6 +25,8 @@
                                 <label class="label">
                                     Full Name
                                 </label>
+                                <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{fullName}"
+                                   th:if="${#fields.hasErrors('fullName')}"></p>
                                 <p class="control has-icons-left">
                                     <input class="input" placeholder="Full name" th:field="*{fullName}" type="text">
                                     <span class="icon is-small is-left">
@@ -51,7 +53,8 @@
                             </div>
                             <div class="field">
                                 <p class="control has-icons-left">
-                                    <input class="input" placeholder="Zip code" th:field="*{address.zipCode}" type="text">
+                                    <input class="input" placeholder="Zip code" th:field="*{address.zipCode}"
+                                           type="text">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-code"></i>
                                     </span>
@@ -59,7 +62,8 @@
                             </div>
                             <div class="field">
                                 <p class="control has-icons-left">
-                                    <input class="input" placeholder="Country" th:field="*{address.country}" type="text">
+                                    <input class="input" placeholder="Country" th:field="*{address.country}"
+                                           type="text">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-globe-europe"></i>
                                     </span>
@@ -69,6 +73,8 @@
                                 <label class="label">
                                     Credentials
                                 </label>
+                                <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{username}"
+                                   th:if="${#fields.hasErrors('username')}"></p>
                                 <p class="control has-icons-left">
                                     <input class="input" placeholder="Email" th:field="*{username}" type="email">
                                     <span class="icon is-small is-left">
@@ -77,8 +83,21 @@
                                 </p>
                             </div>
                             <div class="field">
+                                <p class="has-text-danger mb-1 has-text-weight-bold" th:errors="*{password}"
+                                   th:if="${#fields.hasErrors('password')}"></p>
+                                <p class="has-text-danger mb-1 has-text-weight-bold"
+                                   th:if="${#fields.hasErrors('global')}">Password doesn't match</p>
                                 <p class="control has-icons-left">
                                     <input class="input" placeholder="Password" th:field="*{password}" type="password">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <input class="input" placeholder="Confirm Password" th:field="*{matchingPassword}"
+                                           type="password">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-lock"></i>
                                     </span>

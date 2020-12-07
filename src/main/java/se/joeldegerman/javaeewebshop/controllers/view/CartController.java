@@ -1,6 +1,5 @@
 package se.joeldegerman.javaeewebshop.controllers.view;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,16 +23,15 @@ public class CartController {
 
     @GetMapping("/cart")
     public String showCart(Model model) {
-        model.addAttribute("cart", cartService.getCartVM());
+        var a = "hej";
+        model.addAttribute("cart", cartService.getCart());
         return "Cart";
     }
 
     @PostMapping("/cart/add/{id}")
     public String addProductToCart(@PathVariable(name = "id") long productId) {
         Optional<Product> product = productService.getById(productId);
-        if (product.isPresent()) {
-            cartService.addToCart(product.get());
-        }
+        product.ifPresent(cartService::addToCart);
         return "redirect:/";
     }
 
@@ -42,9 +40,7 @@ public class CartController {
     @ResponseBody
     public void addProductToCartAjax(@PathVariable(name = "id") long productId) {
         Optional<Product> product = productService.getById(productId);
-        if (product.isPresent()) {
-            cartService.addToCart(product.get());
-        }
+        product.ifPresent(cartService::addToCart);
     }
 
     @PutMapping("/ajax/cart/decrease/{id}")
@@ -64,8 +60,8 @@ public class CartController {
     @GetMapping("/ajax/cart/notempty")
     @ResponseBody
     public boolean checkIfCartIsNotEmpty() {
-        boolean b = cartService.getCartSize() > 0;
-        return !b;
+        boolean cartSizeBiggerThanZero = cartService.getCartSize() > 0;
+        return !cartSizeBiggerThanZero;
     }
 
 }

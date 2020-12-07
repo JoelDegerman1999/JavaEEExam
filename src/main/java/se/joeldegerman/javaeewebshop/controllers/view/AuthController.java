@@ -1,45 +1,56 @@
 package se.joeldegerman.javaeewebshop.controllers.view;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import se.joeldegerman.javaeewebshop.exceptions.UsernameAlreadyExistsException;
+import se.joeldegerman.javaeewebshop.models.dto.UserDto;
 import se.joeldegerman.javaeewebshop.models.entity.User;
 import se.joeldegerman.javaeewebshop.services.AuthServiceImpl;
 import se.joeldegerman.javaeewebshop.services.interfaces.AuthService;
 
-import javax.validation.ConstraintViolationException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
 public class AuthController {
 
     private final AuthService userService;
+    private final UserDetailsService userDetailsService;
 
-    public AuthController(AuthServiceImpl userService) {
+    public AuthController(AuthServiceImpl userService, UserDetailsService userDetailsService) {
         this.userService = userService;
+        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping("/signup")
     public String signup(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("userDto", new UserDto());
         return "Auth/SignUp";
     }
 
     @PostMapping("/signup")
-    public RedirectView signupSubmit(@Valid @ModelAttribute User user) {
-        var redirectView = new RedirectView();
+    public String signupSubmit(@Valid @ModelAttribute UserDto userDto, BindingResult result) {
+        if (result.hasErrors()) {
+            return "Auth/SignUp";
+        }
+
         try {
+//            request.getSession();
+            var user = new User(userDto);
             userService.registerNewUser(user);
-            redirectView.setUrl("/login?success");
-            return redirectView;
+//            var userDetail = userDetailsService.loadUserByUsername(userDto.getUsername());
+//            var token = new UsernamePasswordAuthenticationToken(userDetail, null, userDetail.getAuthorities());
+//            SecurityContextHolder.getContext().setAuthentication(token);
+            return "redirect:/";
         } catch (UsernameAlreadyExistsException e) {
-            redirectView.setUrl("/signup/?error");
-            return redirectView;
+            return "redirect:/signup?error";
         }
     }
 

@@ -1,10 +1,10 @@
 package se.joeldegerman.javaeewebshop.models.entity;
 
 import lombok.Data;
+import se.joeldegerman.javaeewebshop.models.dto.UserDto;
 import se.joeldegerman.javaeewebshop.security.EUserRole;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "my_user")
@@ -14,13 +14,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank(message = "Full name cant be blank")
     private String fullName;
 
-    @NotBlank(message = "Email cant be blank")
     private String username;
 
-    @NotBlank(message = "Password cant be blank")
     private String password;
 
     private boolean isActive = true;
@@ -32,6 +29,13 @@ public class User {
     private Address address;
 
     public User() {
+    }
+
+    public User(UserDto userDto) {
+        this.fullName = userDto.getFullName();
+        this.username = userDto.getUsername();
+        this.password = userDto.getPassword();
+        this.address = userDto.getAddress();
     }
 }
 

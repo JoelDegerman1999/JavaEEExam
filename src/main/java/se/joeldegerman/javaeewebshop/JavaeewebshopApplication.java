@@ -5,10 +5,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
+import se.joeldegerman.javaeewebshop.models.entity.Address;
 import se.joeldegerman.javaeewebshop.models.entity.Category;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
+import se.joeldegerman.javaeewebshop.models.entity.User;
 import se.joeldegerman.javaeewebshop.repositories.CategoryRepository;
 import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
+import se.joeldegerman.javaeewebshop.security.EUserRole;
+import se.joeldegerman.javaeewebshop.services.interfaces.AuthService;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan("se.joeldegerman.javaeewebshop.security.jwt")
@@ -19,7 +23,7 @@ public class JavaeewebshopApplication {
     }
 
     @Bean
-    CommandLineRunner runner(CategoryRepository c, ProductRepository p) {
+    CommandLineRunner runner(CategoryRepository c, ProductRepository p, AuthService authService) {
         return args -> {
             if (p.findAll().size() == 0) {
                 Category laptop = c.save(new Category("Laptop"));
@@ -40,6 +44,22 @@ public class JavaeewebshopApplication {
                 p.save(new Product("Sony Playstation 5", 5999, "https://inetimg3.se/img/688x386/6609649_5.jpg", "PS5 -konsolen möjliggör det du aldrig hade förväntat dig i spelväg. Upplev blixtsnabb laddning med en ultrahög hastighet SSD, med stöd för haptisk feedback, adaptiva utlösare och 3D-ljud och en helt ny generation av otroliga spel.", console));
                 p.save(new Product("Acer 24\" Gaming", 2349, "https://inetimg2.se/img/688x386/2216903_0.jpg", "EG240YP är en 24”-skärm som är perfekt för dig som tar gaming på allvar, och som inte tillåter att din utrustning håller dig tillbaka. Den har en skärmpanel på upp till 165 Hz, så att din reaktionsförmåga inte hindras av en långsam uppdateringshastighet. Den är dessutom utrustad med Freesync, så att du inte behöver oroa dig för tearing. Både DP- och HDMI-kabel medföljer och den går utmärkt att montera på vägg- eller bordsfäste med VESA.", monitor));
                 p.save(new Product("Acer 38\" Predator", 14999, "https://inetimg3.se/img/688x386/2216313_0.jpg", "- Eliminera tearing med riktig G-Sync-modul.", monitor));
+
+
+//                var user = new User();
+//                var address = new Address();
+//                address.setCity("Piteå");
+//                address.setCountry("Svergie");
+//                address.setStreet("Barksjövägen 49");
+//                address.setZipCode("94494");
+//                user.setActive(true);
+//                user.setAddress(address);
+//                user.setFullName("Joel Degerman");
+//                user.setUserRole(EUserRole.ADMIN);
+//                user.setUsername("joel.degerman1999@gmail.com");
+//                user.setPassword("123123");
+//                user.setConfirmPassword("123123");
+//                authService.registerNewUser(user);
             }
         };
     }

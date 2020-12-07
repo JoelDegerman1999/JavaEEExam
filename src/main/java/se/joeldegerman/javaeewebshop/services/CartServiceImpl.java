@@ -44,8 +44,8 @@ public class CartServiceImpl  implements CartService {
         cart.increaseItemQuantity(cartItem);
     }
 
-    public CartViewModel getCartVM() {
-        return new CartViewModel(cart.getCartItems(), cart.getGrandTotal());
+    public Cart getCart() {
+        return this.cart;
     }
 
     public int getCartSize() {

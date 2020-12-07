@@ -37,7 +37,7 @@ public class CartServiceMockImpl implements CartService {
     }
 
     @Override
-    public CartViewModel getCartVM() {
+    public Cart getCart() {
         return null;
     }
 

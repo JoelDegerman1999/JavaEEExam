@@ -1,5 +1,6 @@
 package se.joeldegerman.javaeewebshop.services.interfaces;
 
+import se.joeldegerman.javaeewebshop.models.Cart;
 import se.joeldegerman.javaeewebshop.models.entity.Product;
 import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
 
@@ -12,7 +13,7 @@ public interface CartService {
 
     void increaseItemCount(Product product);
 
-    CartViewModel getCartVM();
+    Cart getCart();
 
     int getCartSize();
 

@@ -21,12 +21,10 @@ import java.util.Optional;
 public class AdminProductController {
 
     private final ProductService productService;
-    private final OrderRepository orderRepository;
     private final CategoryRepository categoryRepository;
 
     public AdminProductController(ProductServiceImpl productService, OrderRepository orderRepository, CategoryRepository categoryRepository) {
         this.productService = productService;
-        this.orderRepository = orderRepository;
         this.categoryRepository = categoryRepository;
     }
 
@@ -52,9 +50,7 @@ public class AdminProductController {
     public String showUpdatePage(@PathVariable(name = "id") long productId, Model model) {
         Optional<Product> optionalProduct = productService.getById(productId);
         model.addAttribute("categories", categoryRepository.findAll());
-        if(optionalProduct.isPresent()) {
-        model.addAttribute("product", optionalProduct.get());
-        }
+        optionalProduct.ifPresent(product -> model.addAttribute("product", product));
         return "Admin/Product/Update";
     }
 

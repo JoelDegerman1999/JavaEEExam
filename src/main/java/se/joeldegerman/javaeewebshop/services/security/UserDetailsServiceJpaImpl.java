@@ -15,7 +15,7 @@ import java.util.Optional;
 @Primary
 public class UserDetailsServiceJpaImpl implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserDetailsServiceJpaImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
