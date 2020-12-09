@@ -23,7 +23,6 @@ public class CartController {
 
     @GetMapping("/cart")
     public String showCart(Model model) {
-        var a = "hej";
         model.addAttribute("cart", cartService.getCart());
         return "Cart";
     }

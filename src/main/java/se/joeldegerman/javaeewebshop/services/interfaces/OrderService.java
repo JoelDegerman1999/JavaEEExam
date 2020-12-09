@@ -20,5 +20,5 @@ public interface OrderService {
 
     Order save(Order order);
 
-    Order send(long id);
+    Optional<Order> send(long id);
 }

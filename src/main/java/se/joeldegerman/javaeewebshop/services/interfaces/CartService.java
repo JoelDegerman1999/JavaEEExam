@@ -19,4 +19,6 @@ public interface CartService {
 
     void clearCart();
 
+    boolean isProductInCart(Product product);
+
 }

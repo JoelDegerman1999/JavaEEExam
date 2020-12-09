@@ -1,5 +1,6 @@
 package se.joeldegerman.javaeewebshop;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +14,11 @@ import se.joeldegerman.javaeewebshop.repositories.CategoryRepository;
 import se.joeldegerman.javaeewebshop.repositories.ProductRepository;
 import se.joeldegerman.javaeewebshop.security.EUserRole;
 import se.joeldegerman.javaeewebshop.services.interfaces.AuthService;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan("se.joeldegerman.javaeewebshop.security.jwt")
@@ -21,6 +27,15 @@ public class JavaeewebshopApplication {
     public static void main(String[] args) {
         SpringApplication.run(JavaeewebshopApplication.class, args);
     }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
+
+
+
 
     @Bean
     CommandLineRunner runner(CategoryRepository c, ProductRepository p, AuthService authService) {
@@ -45,21 +60,19 @@ public class JavaeewebshopApplication {
                 p.save(new Product("Acer 24\" Gaming", 2349, "https://inetimg2.se/img/688x386/2216903_0.jpg", "EG240YP är en 24”-skärm som är perfekt för dig som tar gaming på allvar, och som inte tillåter att din utrustning håller dig tillbaka. Den har en skärmpanel på upp till 165 Hz, så att din reaktionsförmåga inte hindras av en långsam uppdateringshastighet. Den är dessutom utrustad med Freesync, så att du inte behöver oroa dig för tearing. Både DP- och HDMI-kabel medföljer och den går utmärkt att montera på vägg- eller bordsfäste med VESA.", monitor));
                 p.save(new Product("Acer 38\" Predator", 14999, "https://inetimg3.se/img/688x386/2216313_0.jpg", "- Eliminera tearing med riktig G-Sync-modul.", monitor));
 
-
-//                var user = new User();
-//                var address = new Address();
-//                address.setCity("Piteå");
-//                address.setCountry("Svergie");
-//                address.setStreet("Barksjövägen 49");
-//                address.setZipCode("94494");
-//                user.setActive(true);
-//                user.setAddress(address);
-//                user.setFullName("Joel Degerman");
-//                user.setUserRole(EUserRole.ADMIN);
-//                user.setUsername("joel.degerman1999@gmail.com");
-//                user.setPassword("123123");
-//                user.setConfirmPassword("123123");
-//                authService.registerNewUser(user);
+                var user = new User();
+                var address = new Address();
+                address.setCity("Piteå");
+                address.setCountry("Svergie");
+                address.setStreet("Barksjövägen 49");
+                address.setZipCode("94494");
+                user.setActive(true);
+                user.setAddress(address);
+                user.setFullName("Joel Degerman");
+                user.setUserRole(EUserRole.ADMIN);
+                user.setUsername("joel.degerman1999@gmail.com");
+                user.setPassword("123123");
+                authService.registerNewUser(user);
             }
         };
     }

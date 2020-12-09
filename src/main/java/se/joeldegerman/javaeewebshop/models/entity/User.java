@@ -1,7 +1,7 @@
 package se.joeldegerman.javaeewebshop.models.entity;
 
 import lombok.Data;
-import se.joeldegerman.javaeewebshop.models.dto.UserDto;
+import se.joeldegerman.javaeewebshop.models.dto.UserAuthDto;
 import se.joeldegerman.javaeewebshop.security.EUserRole;
 
 import javax.persistence.*;
@@ -31,7 +31,7 @@ public class User {
     public User() {
     }
 
-    public User(UserDto userDto) {
+    public User(UserAuthDto userDto) {
         this.fullName = userDto.getFullName();
         this.username = userDto.getUsername();
         this.password = userDto.getPassword();

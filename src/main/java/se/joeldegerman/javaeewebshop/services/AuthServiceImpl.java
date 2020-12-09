@@ -23,11 +23,13 @@ public class AuthServiceImpl implements AuthService {
 
     public User registerNewUser(User user) throws UsernameAlreadyExistsException {
         Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
-        if(optionalUser.isPresent())  {
+        if (optionalUser.isPresent()) {
             throw new UsernameAlreadyExistsException("Username already exists");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setUserRole(EUserRole.CUSTOMER);
+        if (user.getUserRole() != EUserRole.ADMIN) {
+            user.setUserRole(EUserRole.CUSTOMER);
+        }
         return userRepository.save(user);
     }
 }

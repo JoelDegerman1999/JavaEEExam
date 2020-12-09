@@ -1,11 +1,11 @@
 package se.joeldegerman.javaeewebshop.services;
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import se.joeldegerman.javaeewebshop.models.Cart;
 import se.joeldegerman.javaeewebshop.models.CartItem;
 import se.joeldegerman.javaeewebshop.models.entity.User;
-import se.joeldegerman.javaeewebshop.models.viewmodels.CartViewModel;
 import se.joeldegerman.javaeewebshop.models.entity.OrderItem;
 import se.joeldegerman.javaeewebshop.models.entity.Order;
 import se.joeldegerman.javaeewebshop.repositories.OrderRepository;
@@ -14,7 +14,6 @@ import se.joeldegerman.javaeewebshop.services.interfaces.OrderService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -51,15 +50,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getAllNonSentOrders() {
         Optional<List<Order>> optionalNonSentOrders = orderRepository.getNonSentOrders();
-        if(optionalNonSentOrders.isPresent()) return optionalNonSentOrders.get();
-        return new ArrayList<>();
+        return optionalNonSentOrders.orElseGet(ArrayList::new);
     }
 
     @Override
     public List<Order> getAllSentOrders() {
         Optional<List<Order>> optionalSentOrders = orderRepository.getSentOrders();
-        if(optionalSentOrders.isPresent()) return optionalSentOrders.get();
-        return new ArrayList<>();
+        return optionalSentOrders.orElseGet(ArrayList::new);
     }
 
     @Override
@@ -68,22 +65,21 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order send(long id) {
+    public Optional<Order> send(long id) {
         Optional<Order> optionalOrder = orderRepository.findById(id);
         if(optionalOrder.isPresent()) {
             Order order = optionalOrder.get();
-            if(order.isOrderSent() == false) {
+            if(!order.isOrderSent()) {
                 order.setOrderSent(true);
             }
-            return orderRepository.save(order);
+            return Optional.of(orderRepository.save(order));
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
     public Optional<Order> getById(long id) {
-        Optional<Order> optionalOrder = orderRepository.findById(id);
-        return optionalOrder;
+        return orderRepository.findById(id);
     }
 
     @Override

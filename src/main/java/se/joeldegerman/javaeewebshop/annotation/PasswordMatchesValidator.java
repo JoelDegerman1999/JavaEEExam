@@ -1,8 +1,6 @@
 package se.joeldegerman.javaeewebshop.annotation;
 
-import org.codehaus.groovy.ast.tools.BeanUtils;
-import se.joeldegerman.javaeewebshop.models.dto.UserDto;
-import se.joeldegerman.javaeewebshop.models.entity.User;
+import se.joeldegerman.javaeewebshop.models.dto.UserAuthDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -14,7 +12,7 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
     }
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context){
-        UserDto user = (UserDto) obj;
+        UserAuthDto user = (UserAuthDto) obj;
         return user.getPassword().equals(user.getMatchingPassword());
     }
 

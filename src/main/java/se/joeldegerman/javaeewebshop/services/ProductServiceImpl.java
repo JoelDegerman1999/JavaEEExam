@@ -36,7 +36,10 @@ public class ProductServiceImpl implements se.joeldegerman.javaeewebshop.service
 
     public void delete(long id) {
         Optional<Product> optional = getById(id);
-        optional.ifPresent(repository::delete);
+        if (optional.isPresent()) {
+            optional.get().setCategory(null);
+            repository.delete(optional.get());
+        }
     }
 
     @Override
@@ -76,7 +79,7 @@ public class ProductServiceImpl implements se.joeldegerman.javaeewebshop.service
 
     @Override
     public Page<Product> findPaginated(int page, int size) {
-        Pageable pageable = PageRequest.of(page -1, size, Sort.by("id"));
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<Product> products = repository.findAll(pageable);
         return products;
     }

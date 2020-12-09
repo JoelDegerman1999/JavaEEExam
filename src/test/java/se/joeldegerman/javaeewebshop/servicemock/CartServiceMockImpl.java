@@ -50,4 +50,9 @@ public class CartServiceMockImpl implements CartService {
     public void clearCart() {
 
     }
+
+    @Override
+    public boolean isProductInCart(Product product) {
+        return false;
+    }
 }

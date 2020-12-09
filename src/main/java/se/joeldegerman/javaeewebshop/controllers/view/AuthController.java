@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import se.joeldegerman.javaeewebshop.exceptions.UsernameAlreadyExistsException;
-import se.joeldegerman.javaeewebshop.models.dto.UserDto;
+import se.joeldegerman.javaeewebshop.models.dto.UserAuthDto;
 import se.joeldegerman.javaeewebshop.models.entity.User;
 import se.joeldegerman.javaeewebshop.services.AuthServiceImpl;
 import se.joeldegerman.javaeewebshop.services.interfaces.AuthService;
@@ -31,23 +31,23 @@ public class AuthController {
 
     @GetMapping("/signup")
     public String signup(Model model) {
-        model.addAttribute("userDto", new UserDto());
+        model.addAttribute("userDto", new UserAuthDto());
         return "Auth/SignUp";
     }
 
     @PostMapping("/signup")
-    public String signupSubmit(@Valid @ModelAttribute UserDto userDto, BindingResult result) {
+    public String signupSubmit(@Valid @ModelAttribute UserAuthDto userDto, BindingResult result, HttpServletRequest request) {
         if (result.hasErrors()) {
             return "Auth/SignUp";
         }
 
         try {
-//            request.getSession();
+            request.getSession();
             var user = new User(userDto);
             userService.registerNewUser(user);
-//            var userDetail = userDetailsService.loadUserByUsername(userDto.getUsername());
-//            var token = new UsernamePasswordAuthenticationToken(userDetail, null, userDetail.getAuthorities());
-//            SecurityContextHolder.getContext().setAuthentication(token);
+            var userDetail = userDetailsService.loadUserByUsername(userDto.getUsername());
+            var token = new UsernamePasswordAuthenticationToken(userDetail, null, userDetail.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(token);
             return "redirect:/";
         } catch (UsernameAlreadyExistsException e) {
             return "redirect:/signup?error";

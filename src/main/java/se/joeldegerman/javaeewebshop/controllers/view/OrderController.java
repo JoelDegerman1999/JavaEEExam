@@ -39,10 +39,8 @@ public class OrderController {
                 redirectAttributes.addFlashAttribute("order", persistedOrder);
                 return "redirect:/order/success";
             }
-
         }
-        //TODO show a error page
-        return "Index";
+        return "error/500";
     }
 
     @GetMapping("/order/success")

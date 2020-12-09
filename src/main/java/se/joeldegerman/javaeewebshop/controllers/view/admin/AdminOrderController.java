@@ -13,7 +13,7 @@ import se.joeldegerman.javaeewebshop.services.interfaces.OrderService;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin/order/")
 public class AdminOrderController {
 
     private final OrderService orderService;
@@ -22,21 +22,20 @@ public class AdminOrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("order/all")
+    @GetMapping("all")
     public String getOrders(Model model) {
         model.addAttribute("orders", orderService.getAll());
         return "Admin/Order/Index";
     }
-    @GetMapping("order/{id}")
+
+    @GetMapping("{id}")
     public String getOrderById(@PathVariable long id, Model model) {
         Optional<Order> optionalOrder = orderService.getById(id);
-        if(optionalOrder.isPresent()) {
-            model.addAttribute("order", optionalOrder.get());
-        }
+        optionalOrder.ifPresent(order -> model.addAttribute("order", order));
         return "Admin/Order/Details";
     }
 
-    @PostMapping("order/send/{id}")
+    @PostMapping("send/{id}")
     public RedirectView sendOrder(@PathVariable long id) {
         orderService.send(id);
         return new RedirectView("/admin/order/all");
