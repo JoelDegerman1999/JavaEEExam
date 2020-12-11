@@ -8,10 +8,6 @@ spring:
 #    password: root
 #    username: root
 
-server:
-  servlet:
-    session:
-      persistent: true
 application:
   jwt:
     secret: secret1234secret1234secret1234secret1234secret1234
