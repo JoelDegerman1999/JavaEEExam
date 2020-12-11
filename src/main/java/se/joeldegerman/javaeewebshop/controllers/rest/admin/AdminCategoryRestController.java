@@ -47,4 +47,10 @@ public class AdminCategoryRestController {
     }
 
 
+    @GetMapping("total")
+    public Integer totalAmountOfCategories() {
+        List<Category> categories = categoryService.getAll();
+        return categories.size();
+    }
+
 }

@@ -1,7 +1,10 @@
 package se.joeldegerman.javaeewebshop.controllers.rest;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import se.joeldegerman.javaeewebshop.models.dto.OrderDto;
 import se.joeldegerman.javaeewebshop.models.dto.UserDto;
 import se.joeldegerman.javaeewebshop.models.entity.Order;
@@ -43,9 +46,9 @@ public class OrderRestController {
             Order order = orderService.save(optionalOrder.get());
             return Optional.of(order);
         }
+
         return Optional.empty();
     }
-
 
     /*
     Mapper methods

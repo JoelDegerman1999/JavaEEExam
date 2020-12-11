@@ -73,6 +73,14 @@ public class AdminProductRestController {
 
 
 
+    @GetMapping("total")
+    public Integer totalAmountOfCategories() {
+        List<Product> products = productService.getAll();
+        return products.size();
+    }
+
+
+
     /*
     Mapper methods
      */

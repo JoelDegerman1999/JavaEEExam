@@ -41,6 +41,12 @@ public class AdminOrderRestController {
         return Optional.of(convertToDto(optionalOrder.get()));
     }
 
+    @GetMapping("total")
+    public Integer totalAmountOfCategories() {
+        List<Order> orders = orderService.getAll();
+        return orders.size();
+    }
+
 
     /*
     Mapper methods
