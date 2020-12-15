@@ -26,7 +26,9 @@ public class AuthServiceImpl implements AuthService {
         if (optionalUser.isPresent()) {
             throw new UsernameAlreadyExistsException("Username already exists");
         }
+        //                                          123123
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //                                          $2a$10$8avNrlq/1VREZhAXjEd.zeaXCf56QPDg/cRuDtxnuvkv6yfHgUVTm
         if (user.getUserRole() != EUserRole.ADMIN) {
             user.setUserRole(EUserRole.CUSTOMER);
         }

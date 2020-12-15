@@ -25,7 +25,7 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/auth/")
 public class AuthRestController {
 
     private final UserDetailsService userDetailsService;
@@ -42,7 +42,7 @@ public class AuthRestController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("auth")
+    @PostMapping("login")
     public ResponseEntity<Object> login(@RequestBody AuthenticationLoginRequest authenticationLoginRequest) {
         try {
             auth(authenticationLoginRequest.getUsername(), authenticationLoginRequest.getPassword());
