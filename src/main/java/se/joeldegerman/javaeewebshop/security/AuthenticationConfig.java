@@ -53,7 +53,7 @@ public class AuthenticationConfig {
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                     .addFilterBefore(jwtTokenVerifier, UsernamePasswordAuthenticationFilter.class)
                     .antMatcher("/api/**").authorizeRequests()
-                    .antMatchers("/api/auth").permitAll()
+                    .antMatchers("/api/auth/**").permitAll()
                     .antMatchers("/api/admin/**").hasRole(ADMIN.name())
                     .antMatchers("/api/**").hasAnyRole(ADMIN.name(), CUSTOMER.name());
 
