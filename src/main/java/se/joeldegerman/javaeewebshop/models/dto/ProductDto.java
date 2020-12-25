@@ -20,6 +20,7 @@ public class ProductDto {
     private String description;
     @NotNull(message = "Category must be chosen")
     private CategoryDto category;
+    private long id;
 
     public ProductDto() {
     }
