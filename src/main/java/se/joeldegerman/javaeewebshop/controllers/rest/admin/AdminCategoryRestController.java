@@ -23,7 +23,7 @@ public class AdminCategoryRestController {
     }
 
     @GetMapping("all")
-    public List<Category> allCategories() {
+    public List<Category> all() {
         return categoryService.getAll();
     }
 
