@@ -54,7 +54,7 @@ public class AuthenticationConfig {
                     .addFilterBefore(jwtTokenVerifier, UsernamePasswordAuthenticationFilter.class)
                     .antMatcher("/api/**").authorizeRequests()
                     .antMatchers("/api/auth/**").permitAll()
-                    .antMatchers("/api/admin/**").hasRole(ADMIN.name())
+                    .antMatchers("/api/admin/**").hasAnyAuthority(EUserAuthorities.CATEGORY_READ.name())
                     .antMatchers("/api/**").hasAnyRole(ADMIN.name(), CUSTOMER.name());
 
         }

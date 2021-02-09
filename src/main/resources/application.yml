@@ -1,12 +1,12 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/webshop
-#    password: root
-#    username: root
+  datasource:
+    url: jdbc:postgresql://localhost:5432/webshop
+    password: root
+    username: postgres
 
 application:
   jwt:

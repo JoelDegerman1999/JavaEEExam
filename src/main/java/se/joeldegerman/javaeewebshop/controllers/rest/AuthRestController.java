@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +17,7 @@ import se.joeldegerman.javaeewebshop.models.dto.UserDto;
 import se.joeldegerman.javaeewebshop.models.dto.jwt.AuthenticationLoginRequest;
 import se.joeldegerman.javaeewebshop.models.dto.jwt.AuthenticationResponse;
 import se.joeldegerman.javaeewebshop.models.entity.User;
+import se.joeldegerman.javaeewebshop.models.security.CustomUserDetail;
 import se.joeldegerman.javaeewebshop.security.jwt.JwtUtil;
 import se.joeldegerman.javaeewebshop.services.interfaces.AuthService;
 
@@ -49,10 +49,10 @@ public class AuthRestController {
         } catch (BadCredentialsException e) {
             return ResponseEntity.badRequest().body("Wrong username and/or password");
         }
-        UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationLoginRequest.getUsername());
+
+        CustomUserDetail userDetails = (CustomUserDetail) userDetailsService.loadUserByUsername(authenticationLoginRequest.getUsername());
         String token = jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse(token));
-
     }
 
     @PostMapping("register")

@@ -6,8 +6,8 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import se.joeldegerman.javaeewebshop.models.security.CustomUserDetail;
 
 import javax.crypto.SecretKey;
 import java.time.LocalDate;
@@ -28,10 +28,11 @@ public class JwtUtil {
         this.secretKey = secretKey;
     }
 
-    public String generateToken(UserDetails userDetail) {
+    public String generateToken(CustomUserDetail userDetail) {
         return Jwts.builder()
                 .setSubject(userDetail.getUsername())
                 .claim("authorities", userDetail.getAuthorities())
+                .claim("name", userDetail.getFullName())
                 .setIssuedAt(new Date())
                 .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
                 .signWith(secretKey)
