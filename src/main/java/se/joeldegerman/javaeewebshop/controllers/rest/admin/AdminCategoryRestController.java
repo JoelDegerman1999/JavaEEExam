@@ -23,12 +23,12 @@ public class AdminCategoryRestController {
     }
 
     @GetMapping("all")
-    public List<Category> allCategories() {
+    public List<Category> all() {
         return categoryService.getAll();
     }
 
     @GetMapping("{id}")
-    public Optional<Category> getCategoryById(@PathVariable long id) {
+    public Optional<Category> getById(@PathVariable long id) {
         return categoryService.getById(id);
     }
 
