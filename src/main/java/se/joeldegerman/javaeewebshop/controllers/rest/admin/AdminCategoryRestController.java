@@ -8,7 +8,6 @@ import se.joeldegerman.javaeewebshop.models.dto.CategoryDto;
 import se.joeldegerman.javaeewebshop.models.entity.Category;
 import se.joeldegerman.javaeewebshop.services.interfaces.CategoryService;
 
-import javax.validation.constraints.Null;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +23,7 @@ public class AdminCategoryRestController {
     }
 
     @GetMapping("all")
-    public List<Category> all() {
+    public List<Category> allCategories() {
         return categoryService.getAll();
     }
 
