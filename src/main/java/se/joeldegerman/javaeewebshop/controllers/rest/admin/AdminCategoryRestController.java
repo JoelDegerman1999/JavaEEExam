@@ -28,7 +28,7 @@ public class AdminCategoryRestController {
     }
 
     @GetMapping("{id}")
-    public Optional<Category> getCategoryById(@PathVariable long id) {
+    public Optional<Category> getById(@PathVariable long id) {
         return categoryService.getById(id);
     }
 
